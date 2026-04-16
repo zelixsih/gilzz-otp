@@ -1,0 +1,31 @@
+[
+  {
+    "code": "sc-push",
+    "name": "Script pushkontak autosev",
+    "price": 15000,
+    "link": "https://drive.google.com/file/d/12J83a4NUy6pqO8lm5Hx62J6j089xpaVY/view?usp=drivesdk",
+    "features": [
+      " Hii @${m.sender.split(\"@\")[0]} 👋",
+      "  ",
+      "  *# Mainmenu*",
+      "   .tourl",
+      "   .idch",
+      "   .sticker",
+      "   .igdl",
+      "   .ttdl",
+      "   ",
+      "  *# Storemenu*",
+      "   .jpm",
+      "   .jpmch",
+      "   .bljpm",
+      "   .delbljpm",
+      "   .pushkontak (otomatis svkontak)",
+      "   .pushkontak2",
+      "   .savekontak",
+      "   .stopsave",
+      "   .stoppush",
+      "   ",
+      "  *# Ownermenu* .save"
+    ]
+  }
+]

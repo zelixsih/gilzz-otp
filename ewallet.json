@@ -1,0 +1,2474 @@
+{
+  "DANA_PRODUCTS": [
+    {
+      "code": "D1",
+      "name": "Dana 1.000",
+      "nominal": 1000,
+      "default_price": 1038
+    },
+    {
+      "code": "D2",
+      "name": "Dana 2.000",
+      "nominal": 2000,
+      "default_price": 2038
+    },
+    {
+      "code": "D3",
+      "name": "Dana 3.000",
+      "nominal": 3000,
+      "default_price": 3038
+    },
+    {
+      "code": "D4",
+      "name": "Dana 4.000",
+      "nominal": 4000,
+      "default_price": 4038
+    },
+    {
+      "code": "D5",
+      "name": "Dana 5.000",
+      "nominal": 5000,
+      "default_price": 5038
+    },
+    {
+      "code": "D10",
+      "name": "Dana 10.000",
+      "nominal": 10000,
+      "default_price": 10038
+    },
+    {
+      "code": "D15",
+      "name": "Dana 15.000",
+      "nominal": 15000,
+      "default_price": 15038
+    },
+    {
+      "code": "D20",
+      "name": "Dana 20.000",
+      "nominal": 20000,
+      "default_price": 20038
+    },
+    {
+      "code": "D25",
+      "name": "Dana 25.000",
+      "nominal": 25000,
+      "default_price": 25038
+    },
+    {
+      "code": "D30",
+      "name": "Dana 30.000",
+      "nominal": 30000,
+      "default_price": 30038
+    },
+    {
+      "code": "D35",
+      "name": "Dana 35.000",
+      "nominal": 35000,
+      "default_price": 35038
+    },
+    {
+      "code": "D40",
+      "name": "Dana 40.000",
+      "nominal": 40000,
+      "default_price": 40038
+    },
+    {
+      "code": "D45",
+      "name": "Dana 45.000",
+      "nominal": 45000,
+      "default_price": 45038
+    },
+    {
+      "code": "D50",
+      "name": "Dana 50.000",
+      "nominal": 50000,
+      "default_price": 50038
+    },
+    {
+      "code": "D55",
+      "name": "Dana 55.000",
+      "nominal": 55000,
+      "default_price": 55038
+    },
+    {
+      "code": "D60",
+      "name": "Dana 60.000",
+      "nominal": 60000,
+      "default_price": 60038
+    },
+    {
+      "code": "D65",
+      "name": "Dana 65.000",
+      "nominal": 65000,
+      "default_price": 65038
+    },
+    {
+      "code": "D70",
+      "name": "Dana 70.000",
+      "nominal": 70000,
+      "default_price": 70038
+    },
+    {
+      "code": "D75",
+      "name": "Dana 75.000",
+      "nominal": 75000,
+      "default_price": 75038
+    },
+    {
+      "code": "D80",
+      "name": "Dana 80.000",
+      "nominal": 80000,
+      "default_price": 80038
+    },
+    {
+      "code": "D85",
+      "name": "Dana 85.000",
+      "nominal": 85000,
+      "default_price": 85038
+    },
+    {
+      "code": "D90",
+      "name": "Dana 90.000",
+      "nominal": 90000,
+      "default_price": 90038
+    },
+    {
+      "code": "D95",
+      "name": "Dana 95.000",
+      "nominal": 95000,
+      "default_price": 95038
+    },
+    {
+      "code": "D100",
+      "name": "Dana 100.000",
+      "nominal": 100000,
+      "default_price": 100038
+    },
+    {
+      "code": "D125",
+      "name": "Dana 125.000",
+      "nominal": 125000,
+      "default_price": 125038
+    },
+    {
+      "code": "D150",
+      "name": "Dana 150.000",
+      "nominal": 150000,
+      "default_price": 150038
+    },
+    {
+      "code": "D200",
+      "name": "Dana 200.000",
+      "nominal": 200000,
+      "default_price": 200038
+    },
+    {
+      "code": "D250",
+      "name": "Dana 250.000",
+      "nominal": 250000,
+      "default_price": 250038
+    },
+    {
+      "code": "D300",
+      "name": "Dana 300.000",
+      "nominal": 300000,
+      "default_price": 300038
+    },
+    {
+      "code": "D400",
+      "name": "Dana 400.000",
+      "nominal": 400000,
+      "default_price": 400038
+    },
+    {
+      "code": "D500",
+      "name": "Dana 500.000",
+      "nominal": 500000,
+      "default_price": 500038
+    },
+    {
+      "code": "D600",
+      "name": "Dana 600.000",
+      "nominal": 600000,
+      "default_price": 600038
+    },
+    {
+      "code": "D700",
+      "name": "Dana 700.000",
+      "nominal": 700000,
+      "default_price": 700038
+    },
+    {
+      "code": "D800",
+      "name": "Dana 800.000",
+      "nominal": 800000,
+      "default_price": 800038
+    },
+    {
+      "code": "D900",
+      "name": "Dana 900.000",
+      "nominal": 900000,
+      "default_price": 900038
+    },
+    {
+      "code": "D1000",
+      "name": "Dana 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000038
+    }
+  ],
+  "GOPAY_DRIVER_PRODUCTS": [
+    {
+      "code": "GJD10",
+      "name": "GOPAY Pengemudi 10.000",
+      "nominal": 10000,
+      "default_price": 10200
+    },
+    {
+      "code": "GJD15",
+      "name": "GOPAY Pengemudi 15.000",
+      "nominal": 15000,
+      "default_price": 15200
+    },
+    {
+      "code": "GJD20",
+      "name": "GOPAY Pengemudi 20.000",
+      "nominal": 20000,
+      "default_price": 20200
+    },
+    {
+      "code": "GJD25",
+      "name": "GOPAY Pengemudi 25.000",
+      "nominal": 25000,
+      "default_price": 25200
+    },
+    {
+      "code": "GJD30",
+      "name": "GOPAY Pengemudi 30.000",
+      "nominal": 30000,
+      "default_price": 30200
+    },
+    {
+      "code": "GJD35",
+      "name": "GOPAY Pengemudi 35.000",
+      "nominal": 35000,
+      "default_price": 35200
+    },
+    {
+      "code": "GJD40",
+      "name": "GOPAY Pengemudi 40.000",
+      "nominal": 40000,
+      "default_price": 40200
+    },
+    {
+      "code": "GJD45",
+      "name": "GOPAY Pengemudi 45.000",
+      "nominal": 45000,
+      "default_price": 45200
+    },
+    {
+      "code": "GJD50",
+      "name": "GOPAY Pengemudi 50.000",
+      "nominal": 50000,
+      "default_price": 50200
+    },
+    {
+      "code": "GJD55",
+      "name": "GOPAY Pengemudi 55.000",
+      "nominal": 55000,
+      "default_price": 55200
+    },
+    {
+      "code": "GJD60",
+      "name": "GOPAY Pengemudi 60.000",
+      "nominal": 60000,
+      "default_price": 60200
+    },
+    {
+      "code": "GJD65",
+      "name": "GOPAY Pengemudi 65.000",
+      "nominal": 65000,
+      "default_price": 65200
+    },
+    {
+      "code": "GJD70",
+      "name": "GOPAY Pengemudi 70.000",
+      "nominal": 70000,
+      "default_price": 70200
+    },
+    {
+      "code": "GJD75",
+      "name": "GOPAY Pengemudi 75.000",
+      "nominal": 75000,
+      "default_price": 75200
+    },
+    {
+      "code": "GJD80",
+      "name": "GOPAY Pengemudi 80.000",
+      "nominal": 80000,
+      "default_price": 80200
+    },
+    {
+      "code": "GJD85",
+      "name": "GOPAY Pengemudi 85.000",
+      "nominal": 85000,
+      "default_price": 85200
+    },
+    {
+      "code": "GJD90",
+      "name": "GOPAY Pengemudi 90.000",
+      "nominal": 90000,
+      "default_price": 90200
+    },
+    {
+      "code": "GJD95",
+      "name": "GOPAY Pengemudi 95.000",
+      "nominal": 95000,
+      "default_price": 95200
+    },
+    {
+      "code": "GJD100",
+      "name": "GOPAY Pengemudi 100.000",
+      "nominal": 100000,
+      "default_price": 100200
+    },
+    {
+      "code": "GJD125",
+      "name": "GOPAY Pengemudi 125.000",
+      "nominal": 125000,
+      "default_price": 125250
+    },
+    {
+      "code": "GJD150",
+      "name": "GOPAY Pengemudi 150.000",
+      "nominal": 150000,
+      "default_price": 150200
+    },
+    {
+      "code": "GJD200",
+      "name": "GOPAY Pengemudi 200.000",
+      "nominal": 200000,
+      "default_price": 200200
+    },
+    {
+      "code": "GJD250",
+      "name": "GOPAY Pengemudi 250.000",
+      "nominal": 250000,
+      "default_price": 250200
+    },
+    {
+      "code": "GJD300",
+      "name": "GOPAY Pengemudi 300.000",
+      "nominal": 300000,
+      "default_price": 300200
+    },
+    {
+      "code": "GJD400",
+      "name": "GOPAY Pengemudi 400.000",
+      "nominal": 400000,
+      "default_price": 400200
+    },
+    {
+      "code": "GJD500",
+      "name": "GOPAY Pengemudi 500.000",
+      "nominal": 500000,
+      "default_price": 500200
+    }
+  ],
+  "GOPAY_PRODUCTS": [
+    {
+      "code": "GPY1",
+      "name": "Gopay Customer 1.000",
+      "nominal": 1000,
+      "default_price": 1850
+    },
+    {
+      "code": "GPY2",
+      "name": "Gopay Customer 2.000",
+      "nominal": 2000,
+      "default_price": 2850
+    },
+    {
+      "code": "GPY3",
+      "name": "Gopay Customer 3.000",
+      "nominal": 3000,
+      "default_price": 3850
+    },
+    {
+      "code": "GPY4",
+      "name": "Gopay Customer 4.000",
+      "nominal": 4000,
+      "default_price": 4850
+    },
+    {
+      "code": "GPY5",
+      "name": "Gopay Customer 5.000",
+      "nominal": 5000,
+      "default_price": 5850
+    },
+    {
+      "code": "GPY6",
+      "name": "Gopay Customer 6.000",
+      "nominal": 6000,
+      "default_price": 6850
+    },
+    {
+      "code": "GPY7",
+      "name": "Gopay Customer 7.000",
+      "nominal": 7000,
+      "default_price": 7850
+    },
+    {
+      "code": "GPY8",
+      "name": "Gopay Customer 8.000",
+      "nominal": 8000,
+      "default_price": 8850
+    },
+    {
+      "code": "GPY9",
+      "name": "Gopay Customer 9.000",
+      "nominal": 9000,
+      "default_price": 9850
+    },
+    {
+      "code": "GPY10",
+      "name": "Gopay Customer 10.000",
+      "nominal": 10000,
+      "default_price": 10850
+    },
+    {
+      "code": "GPY15",
+      "name": "Gopay Customer 15.000",
+      "nominal": 15000,
+      "default_price": 15850
+    },
+    {
+      "code": "GPY20",
+      "name": "Gopay Customer 20.000",
+      "nominal": 20000,
+      "default_price": 20850
+    },
+    {
+      "code": "GPY25",
+      "name": "Gopay Customer 25.000",
+      "nominal": 25000,
+      "default_price": 25850
+    },
+    {
+      "code": "GPY30",
+      "name": "Gopay Customer 30.000",
+      "nominal": 30000,
+      "default_price": 30850
+    },
+    {
+      "code": "GPY35",
+      "name": "Gopay Customer 35.000",
+      "nominal": 35000,
+      "default_price": 35850
+    },
+    {
+      "code": "GPY40",
+      "name": "Gopay Customer 40.000",
+      "nominal": 40000,
+      "default_price": 40850
+    },
+    {
+      "code": "GPY45",
+      "name": "Gopay Customer 45.000",
+      "nominal": 45000,
+      "default_price": 45850
+    },
+    {
+      "code": "GPY50",
+      "name": "Gopay Customer 50.000",
+      "nominal": 50000,
+      "default_price": 50850
+    },
+    {
+      "code": "GPY55",
+      "name": "Gopay Customer 55.000",
+      "nominal": 55000,
+      "default_price": 55850
+    },
+    {
+      "code": "GPY60",
+      "name": "Gopay Customer 60.000",
+      "nominal": 60000,
+      "default_price": 60850
+    },
+    {
+      "code": "GPY65",
+      "name": "Gopay Customer 65.000",
+      "nominal": 65000,
+      "default_price": 65850
+    },
+    {
+      "code": "GPY70",
+      "name": "Gopay Customer 70.000",
+      "nominal": 70000,
+      "default_price": 70850
+    },
+    {
+      "code": "GPY75",
+      "name": "Gopay Customer 75.000",
+      "nominal": 75000,
+      "default_price": 75850
+    },
+    {
+      "code": "GPY80",
+      "name": "Gopay Customer 80.000",
+      "nominal": 80000,
+      "default_price": 80850
+    },
+    {
+      "code": "GPY85",
+      "name": "Gopay Customer 85.000",
+      "nominal": 85000,
+      "default_price": 85850
+    },
+    {
+      "code": "GPY90",
+      "name": "Gopay Customer 90.000",
+      "nominal": 90000,
+      "default_price": 90850
+    },
+    {
+      "code": "GPY95",
+      "name": "Gopay Customer 95.000",
+      "nominal": 95000,
+      "default_price": 95850
+    },
+    {
+      "code": "GPY100",
+      "name": "Gopay Customer 100.000",
+      "nominal": 100000,
+      "default_price": 100850
+    },
+    {
+      "code": "GPY125",
+      "name": "Gopay Customer 125.000",
+      "nominal": 125000,
+      "default_price": 125850
+    },
+    {
+      "code": "GPY150",
+      "name": "Gopay Customer 150.000",
+      "nominal": 150000,
+      "default_price": 150850
+    },
+    {
+      "code": "GPY200",
+      "name": "Gopay Customer 200.000",
+      "nominal": 200000,
+      "default_price": 200850
+    },
+    {
+      "code": "GPY250",
+      "name": "Gopay Customer 250.000",
+      "nominal": 250000,
+      "default_price": 250850
+    },
+    {
+      "code": "GPY300",
+      "name": "Gopay Customer 300.000",
+      "nominal": 300000,
+      "default_price": 300850
+    },
+    {
+      "code": "GPY400",
+      "name": "Gopay Customer 400.000",
+      "nominal": 400000,
+      "default_price": 400850
+    },
+    {
+      "code": "GPY500",
+      "name": "Gopay Customer 500.000",
+      "nominal": 500000,
+      "default_price": 500850
+    },
+    {
+      "code": "GPY600",
+      "name": "Gopay Customer 600.000",
+      "nominal": 600000,
+      "default_price": 600850
+    },
+    {
+      "code": "GPY700",
+      "name": "Gopay Customer 700.000",
+      "nominal": 700000,
+      "default_price": 700850
+    },
+    {
+      "code": "GPY800",
+      "name": "Gopay Customer 800.000",
+      "nominal": 800000,
+      "default_price": 800850
+    },
+    {
+      "code": "GPY900",
+      "name": "Gopay Customer 900.000",
+      "nominal": 900000,
+      "default_price": 900850
+    },
+    {
+      "code": "GPY1000",
+      "name": "Gopay Customer 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000850
+    },
+    {
+      "code": "GJK10",
+      "name": "GOPAY Customer 10.000 (Promo)",
+      "nominal": 10000,
+      "default_price": 10300
+    },
+    {
+      "code": "GJK15",
+      "name": "GOPAY Customer 15.000 (Promo)",
+      "nominal": 15000,
+      "default_price": 15300
+    },
+    {
+      "code": "GJK20",
+      "name": "GOPAY Customer 20.000 (Promo)",
+      "nominal": 20000,
+      "default_price": 20300
+    },
+    {
+      "code": "GJK25",
+      "name": "GOPAY Customer 25.000 (Promo)",
+      "nominal": 25000,
+      "default_price": 25300
+    },
+    {
+      "code": "GJK30",
+      "name": "GOPAY Customer 30.000 (Promo)",
+      "nominal": 30000,
+      "default_price": 30300
+    },
+    {
+      "code": "GJK35",
+      "name": "GOPAY Customer 35.000 (Promo)",
+      "nominal": 35000,
+      "default_price": 35300
+    },
+    {
+      "code": "GJK40",
+      "name": "GOPAY Customer 40.000 (Promo)",
+      "nominal": 40000,
+      "default_price": 40300
+    },
+    {
+      "code": "GJK45",
+      "name": "GOPAY Customer 45.000 (Promo)",
+      "nominal": 45000,
+      "default_price": 45305
+    },
+    {
+      "code": "GJK50",
+      "name": "GOPAY Customer 50.000 (Promo)",
+      "nominal": 50000,
+      "default_price": 50305
+    },
+    {
+      "code": "GJK55",
+      "name": "GOPAY Customer 55.000 (Promo)",
+      "nominal": 55000,
+      "default_price": 55370
+    },
+    {
+      "code": "GJK60",
+      "name": "GOPAY Customer 60.000 (Promo)",
+      "nominal": 60000,
+      "default_price": 60370
+    },
+    {
+      "code": "GJK65",
+      "name": "GOPAY Customer 65.000 (Promo)",
+      "nominal": 65000,
+      "default_price": 65370
+    },
+    {
+      "code": "GJK70",
+      "name": "GOPAY Customer 70.000 (Promo)",
+      "nominal": 70000,
+      "default_price": 70370
+    },
+    {
+      "code": "GJK75",
+      "name": "GOPAY Customer 75.000 (Promo)",
+      "nominal": 75000,
+      "default_price": 75370
+    },
+    {
+      "code": "GJK80",
+      "name": "GOPAY Customer 80.000 (Promo)",
+      "nominal": 80000,
+      "default_price": 80370
+    },
+    {
+      "code": "GJK85",
+      "name": "GOPAY Customer 85.000 (Promo)",
+      "nominal": 85000,
+      "default_price": 85370
+    },
+    {
+      "code": "GJK90",
+      "name": "GOPAY Customer 90.000 (Promo)",
+      "nominal": 90000,
+      "default_price": 90370
+    },
+    {
+      "code": "GJK95",
+      "name": "GOPAY Customer 95.000 (Promo)",
+      "nominal": 95000,
+      "default_price": 95370
+    },
+    {
+      "code": "GJK100",
+      "name": "GOPAY Customer 100.000 (Promo)",
+      "nominal": 100000,
+      "default_price": 100370
+    },
+    {
+      "code": "GJK125",
+      "name": "GOPAY Customer 125.000 (Promo)",
+      "nominal": 125000,
+      "default_price": 125839
+    },
+    {
+      "code": "GJK150",
+      "name": "GOPAY Customer 150.000 (Promo)",
+      "nominal": 150000,
+      "default_price": 150800
+    },
+    {
+      "code": "GJK200",
+      "name": "GOPAY Customer 200.000 (Promo)",
+      "nominal": 200000,
+      "default_price": 200800
+    }
+  ],
+  "OVO_PRODUCTS": [
+    {
+      "code": "NOVO10",
+      "name": "OVO 10.000",
+      "nominal": 10000,
+      "default_price": 10750
+    },
+    {
+      "code": "OVOTUVMOPEN-10000",
+      "name": "OVO tanpa potongan 10.000",
+      "nominal": 10000,
+      "default_price": 10726
+    },
+    {
+      "code": "NOVO15",
+      "name": "OVO 15.000",
+      "nominal": 15000,
+      "default_price": 15750
+    },
+    {
+      "code": "NOVO20",
+      "name": "OVO 20.000",
+      "nominal": 20000,
+      "default_price": 20750
+    },
+    {
+      "code": "NOVO25",
+      "name": "OVO 25.000",
+      "nominal": 25000,
+      "default_price": 25750
+    },
+    {
+      "code": "NOVO30",
+      "name": "OVO 30.000",
+      "nominal": 30000,
+      "default_price": 30750
+    },
+    {
+      "code": "NOVO35",
+      "name": "OVO 35.000",
+      "nominal": 35000,
+      "default_price": 35750
+    },
+    {
+      "code": "NOVO40",
+      "name": "OVO 40.000",
+      "nominal": 40000,
+      "default_price": 40750
+    },
+    {
+      "code": "NOVO45",
+      "name": "OVO 45.000",
+      "nominal": 45000,
+      "default_price": 45750
+    },
+    {
+      "code": "NOVO50",
+      "name": "OVO 50.000",
+      "nominal": 50000,
+      "default_price": 50750
+    },
+    {
+      "code": "NOVO55",
+      "name": "OVO 55.000",
+      "nominal": 55000,
+      "default_price": 55750
+    },
+    {
+      "code": "NOVO60",
+      "name": "OVO 60.000",
+      "nominal": 60000,
+      "default_price": 60750
+    },
+    {
+      "code": "NOVO65",
+      "name": "OVO 65.000",
+      "nominal": 65000,
+      "default_price": 65750
+    },
+    {
+      "code": "NOVO70",
+      "name": "OVO 70.000",
+      "nominal": 70000,
+      "default_price": 70750
+    },
+    {
+      "code": "NOVO75",
+      "name": "OVO 75.000",
+      "nominal": 75000,
+      "default_price": 75750
+    },
+    {
+      "code": "NOVO80",
+      "name": "OVO 80.000",
+      "nominal": 80000,
+      "default_price": 80750
+    },
+    {
+      "code": "NOVO85",
+      "name": "OVO 85.000",
+      "nominal": 85000,
+      "default_price": 85750
+    },
+    {
+      "code": "NOVO90",
+      "name": "OVO 90.000",
+      "nominal": 90000,
+      "default_price": 90750
+    },
+    {
+      "code": "NOVO95",
+      "name": "OVO 95.000",
+      "nominal": 95000,
+      "default_price": 95750
+    },
+    {
+      "code": "NOVO100",
+      "name": "OVO 100.000",
+      "nominal": 100000,
+      "default_price": 100750
+    },
+    {
+      "code": "NOVO125",
+      "name": "OVO 125.000",
+      "nominal": 125000,
+      "default_price": 125750
+    },
+    {
+      "code": "NOVO150",
+      "name": "OVO 150.000",
+      "nominal": 150000,
+      "default_price": 150750
+    },
+    {
+      "code": "NOVO200",
+      "name": "OVO 200.000",
+      "nominal": 200000,
+      "default_price": 200750
+    },
+    {
+      "code": "NOVO250",
+      "name": "OVO 250.000",
+      "nominal": 250000,
+      "default_price": 250750
+    },
+    {
+      "code": "NOVO300",
+      "name": "OVO 300.000",
+      "nominal": 300000,
+      "default_price": 300750
+    },
+    {
+      "code": "NOVO350",
+      "name": "OVO 350.000",
+      "nominal": 350000,
+      "default_price": 350750
+    },
+    {
+      "code": "NOVO400",
+      "name": "OVO 400.000",
+      "nominal": 400000,
+      "default_price": 400750
+    },
+    {
+      "code": "NOVO450",
+      "name": "OVO 450.000",
+      "nominal": 450000,
+      "default_price": 450750
+    },
+    {
+      "code": "NOVO500",
+      "name": "OVO 500.000",
+      "nominal": 500000,
+      "default_price": 500750
+    },
+    {
+      "code": "NOVO550",
+      "name": "OVO 550.000",
+      "nominal": 550000,
+      "default_price": 550750
+    },
+    {
+      "code": "NOVO600",
+      "name": "OVO 600.000",
+      "nominal": 600000,
+      "default_price": 600750
+    },
+    {
+      "code": "NOVO650",
+      "name": "OVO 650.000",
+      "nominal": 650000,
+      "default_price": 650750
+    },
+    {
+      "code": "NOVO700",
+      "name": "OVO 700.000",
+      "nominal": 700000,
+      "default_price": 700750
+    },
+    {
+      "code": "NOVO750",
+      "name": "OVO 750.000",
+      "nominal": 750000,
+      "default_price": 750750
+    },
+    {
+      "code": "NOVO800",
+      "name": "OVO 800.000",
+      "nominal": 800000,
+      "default_price": 800750
+    },
+    {
+      "code": "NOVO850",
+      "name": "OVO 850.000",
+      "nominal": 850000,
+      "default_price": 850750
+    },
+    {
+      "code": "NOVO900",
+      "name": "OVO 900.000",
+      "nominal": 900000,
+      "default_price": 900750
+    },
+    {
+      "code": "NOVO950",
+      "name": "OVO 950.000",
+      "nominal": 950000,
+      "default_price": 950750
+    },
+    {
+      "code": "NOVO1000",
+      "name": "OVO 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000750
+    }
+  ],
+  "SHOPEEPAY_PRODUCTS": [
+    {
+      "code": "SHOPE10",
+      "name": "ShopeePay 10.000",
+      "nominal": 10000,
+      "default_price": 9640
+    },
+    {
+      "code": "SHOPE15",
+      "name": "ShopeePay 15.000",
+      "nominal": 15000,
+      "default_price": 14640
+    },
+    {
+      "code": "SHOPE20",
+      "name": "ShopeePay 20.000",
+      "nominal": 20000,
+      "default_price": 19640
+    },
+    {
+      "code": "SHOPE25",
+      "name": "ShopeePay 25.000",
+      "nominal": 25000,
+      "default_price": 24640
+    },
+    {
+      "code": "SHOPE30",
+      "name": "ShopeePay 30.000",
+      "nominal": 30000,
+      "default_price": 29640
+    },
+    {
+      "code": "SHOPE35",
+      "name": "ShopeePay 35.000",
+      "nominal": 35000,
+      "default_price": 34640
+    },
+    {
+      "code": "SHOPE40",
+      "name": "ShopeePay 40.000",
+      "nominal": 40000,
+      "default_price": 39640
+    },
+    {
+      "code": "SHOPE45",
+      "name": "ShopeePay 45.000",
+      "nominal": 45000,
+      "default_price": 44640
+    },
+    {
+      "code": "SHOPE50",
+      "name": "ShopeePay 50.000",
+      "nominal": 50000,
+      "default_price": 49640
+    },
+    {
+      "code": "SHOPE55",
+      "name": "ShopeePay 55.000",
+      "nominal": 55000,
+      "default_price": 54640
+    },
+    {
+      "code": "SHOPE60",
+      "name": "ShopeePay 60.000",
+      "nominal": 60000,
+      "default_price": 59640
+    },
+    {
+      "code": "SHOPE65",
+      "name": "ShopeePay 65.000",
+      "nominal": 65000,
+      "default_price": 64640
+    },
+    {
+      "code": "SHOPE70",
+      "name": "ShopeePay 70.000",
+      "nominal": 70000,
+      "default_price": 69640
+    },
+    {
+      "code": "SHOPE75",
+      "name": "ShopeePay 75.000",
+      "nominal": 75000,
+      "default_price": 74640
+    },
+    {
+      "code": "SHOPE80",
+      "name": "ShopeePay 80.000",
+      "nominal": 80000,
+      "default_price": 79640
+    },
+    {
+      "code": "SHOPE85",
+      "name": "ShopeePay 85.000",
+      "nominal": 85000,
+      "default_price": 84640
+    },
+    {
+      "code": "SHOPE90",
+      "name": "ShopeePay 90.000",
+      "nominal": 90000,
+      "default_price": 89640
+    },
+    {
+      "code": "SHOPE95",
+      "name": "ShopeePay 95.000",
+      "nominal": 95000,
+      "default_price": 94640
+    },
+    {
+      "code": "SHOPE100",
+      "name": "ShopeePay 100.000",
+      "nominal": 100000,
+      "default_price": 99640
+    },
+    {
+      "code": "SHOPE125",
+      "name": "ShopeePay 125.000",
+      "nominal": 125000,
+      "default_price": 124640
+    },
+    {
+      "code": "SHOPE150",
+      "name": "ShopeePay 150.000",
+      "nominal": 150000,
+      "default_price": 149640
+    },
+    {
+      "code": "SHOPE200",
+      "name": "ShopeePay 200.000",
+      "nominal": 200000,
+      "default_price": 199640
+    },
+    {
+      "code": "SHOPE250",
+      "name": "ShopeePay 250.000",
+      "nominal": 250000,
+      "default_price": 249640
+    },
+    {
+      "code": "SHOPE300",
+      "name": "ShopeePay 300.000",
+      "nominal": 300000,
+      "default_price": 299640
+    },
+    {
+      "code": "SHOPE350",
+      "name": "ShopeePay 350.000",
+      "nominal": 350000,
+      "default_price": 349640
+    },
+    {
+      "code": "SHOPE400",
+      "name": "ShopeePay 400.000",
+      "nominal": 400000,
+      "default_price": 399640
+    },
+    {
+      "code": "SHOPE450",
+      "name": "ShopeePay 450.000",
+      "nominal": 450000,
+      "default_price": 449640
+    },
+    {
+      "code": "SHOPE500",
+      "name": "ShopeePay 500.000",
+      "nominal": 500000,
+      "default_price": 499640
+    },
+    {
+      "code": "SHOPE550",
+      "name": "ShopeePay 550.000",
+      "nominal": 550000,
+      "default_price": 549640
+    },
+    {
+      "code": "SHOPE600",
+      "name": "ShopeePay 600.000",
+      "nominal": 600000,
+      "default_price": 599640
+    },
+    {
+      "code": "SHOPE650",
+      "name": "ShopeePay 650.000",
+      "nominal": 650000,
+      "default_price": 649640
+    },
+    {
+      "code": "SHOPE700",
+      "name": "ShopeePay 700.000",
+      "nominal": 700000,
+      "default_price": 699640
+    },
+    {
+      "code": "SHOPE750",
+      "name": "ShopeePay 750.000",
+      "nominal": 750000,
+      "default_price": 749640
+    },
+    {
+      "code": "SHOPE800",
+      "name": "ShopeePay 800.000",
+      "nominal": 800000,
+      "default_price": 799640
+    },
+    {
+      "code": "SHOPE850",
+      "name": "ShopeePay 850.000",
+      "nominal": 850000,
+      "default_price": 849640
+    },
+    {
+      "code": "SHOPE900",
+      "name": "ShopeePay 900.000",
+      "nominal": 900000,
+      "default_price": 899640
+    },
+    {
+      "code": "SHOPE950",
+      "name": "ShopeePay 950.000",
+      "nominal": 950000,
+      "default_price": 949640
+    },
+    {
+      "code": "SHOPE1000",
+      "name": "ShopeePay 1.000.000",
+      "nominal": 1000000,
+      "default_price": 999640
+    },
+    {
+      "code": "SHP10",
+      "name": "ShopeePay Admin 10.000",
+      "nominal": 10000,
+      "default_price": 10640
+    },
+    {
+      "code": "SHP15",
+      "name": "ShopeePay Admin 15.000",
+      "nominal": 15000,
+      "default_price": 15640
+    },
+    {
+      "code": "SHP20",
+      "name": "ShopeePay Admin 20.000",
+      "nominal": 20000,
+      "default_price": 20640
+    },
+    {
+      "code": "SHP25",
+      "name": "ShopeePay Admin 25.000",
+      "nominal": 25000,
+      "default_price": 25640
+    },
+    {
+      "code": "SHP30",
+      "name": "ShopeePay Admin 30.000",
+      "nominal": 30000,
+      "default_price": 30640
+    },
+    {
+      "code": "SHP35",
+      "name": "ShopeePay Admin 35.000",
+      "nominal": 35000,
+      "default_price": 35640
+    },
+    {
+      "code": "SHP40",
+      "name": "ShopeePay Admin 40.000",
+      "nominal": 40000,
+      "default_price": 40640
+    },
+    {
+      "code": "SHP45",
+      "name": "ShopeePay Admin 45.000",
+      "nominal": 45000,
+      "default_price": 45640
+    },
+    {
+      "code": "SHP50",
+      "name": "ShopeePay Admin 50.000",
+      "nominal": 50000,
+      "default_price": 50640
+    },
+    {
+      "code": "SHP55",
+      "name": "ShopeePay Admin 55.000",
+      "nominal": 55000,
+      "default_price": 55640
+    },
+    {
+      "code": "SHP60",
+      "name": "ShopeePay Admin 60.000",
+      "nominal": 60000,
+      "default_price": 60640
+    },
+    {
+      "code": "SHP65",
+      "name": "ShopeePay Admin 65.000",
+      "nominal": 65000,
+      "default_price": 65640
+    },
+    {
+      "code": "SHP70",
+      "name": "ShopeePay Admin 70.000",
+      "nominal": 70000,
+      "default_price": 70640
+    },
+    {
+      "code": "SHP75",
+      "name": "ShopeePay Admin 75.000",
+      "nominal": 75000,
+      "default_price": 75640
+    },
+    {
+      "code": "SHP80",
+      "name": "ShopeePay Admin 80.000",
+      "nominal": 80000,
+      "default_price": 80640
+    },
+    {
+      "code": "SHP85",
+      "name": "ShopeePay Admin 85.000",
+      "nominal": 85000,
+      "default_price": 85640
+    },
+    {
+      "code": "SHP90",
+      "name": "ShopeePay Admin 90.000",
+      "nominal": 90000,
+      "default_price": 90640
+    },
+    {
+      "code": "SHP95",
+      "name": "ShopeePay Admin 95.000",
+      "nominal": 95000,
+      "default_price": 95640
+    },
+    {
+      "code": "SHP100",
+      "name": "ShopeePay Admin 100.000",
+      "nominal": 100000,
+      "default_price": 100640
+    },
+    {
+      "code": "SHP125",
+      "name": "ShopeePay Admin 125.000",
+      "nominal": 125000,
+      "default_price": 125640
+    },
+    {
+      "code": "SHP150",
+      "name": "ShopeePay Admin 150.000",
+      "nominal": 150000,
+      "default_price": 150640
+    },
+    {
+      "code": "SHP200",
+      "name": "ShopeePay Admin 200.000",
+      "nominal": 200000,
+      "default_price": 200640
+    },
+    {
+      "code": "SHP250",
+      "name": "ShopeePay Admin 250.000",
+      "nominal": 250000,
+      "default_price": 250640
+    },
+    {
+      "code": "SHP300",
+      "name": "ShopeePay Admin 300.000",
+      "nominal": 300000,
+      "default_price": 300640
+    },
+    {
+      "code": "SHP350",
+      "name": "ShopeePay Admin 350.000",
+      "nominal": 350000,
+      "default_price": 350640
+    },
+    {
+      "code": "SHP400",
+      "name": "ShopeePay Admin 400.000",
+      "nominal": 400000,
+      "default_price": 400640
+    },
+    {
+      "code": "SHP450",
+      "name": "ShopeePay Admin 450.000",
+      "nominal": 450000,
+      "default_price": 450640
+    },
+    {
+      "code": "SHP500",
+      "name": "ShopeePay Admin 500.000",
+      "nominal": 500000,
+      "default_price": 500640
+    },
+    {
+      "code": "SHP550",
+      "name": "ShopeePay Admin 550.000",
+      "nominal": 550000,
+      "default_price": 550640
+    },
+    {
+      "code": "SHP600",
+      "name": "ShopeePay Admin 600.000",
+      "nominal": 600000,
+      "default_price": 600640
+    },
+    {
+      "code": "SHP650",
+      "name": "ShopeePay Admin 650.000",
+      "nominal": 650000,
+      "default_price": 650640
+    },
+    {
+      "code": "SHP700",
+      "name": "ShopeePay Admin 700.000",
+      "nominal": 700000,
+      "default_price": 700640
+    },
+    {
+      "code": "SHP750",
+      "name": "ShopeePay Admin 750.000",
+      "nominal": 750000,
+      "default_price": 750640
+    },
+    {
+      "code": "SHP800",
+      "name": "ShopeePay Admin 800.000",
+      "nominal": 800000,
+      "default_price": 800640
+    },
+    {
+      "code": "SHP850",
+      "name": "ShopeePay Admin 850.000",
+      "nominal": 850000,
+      "default_price": 850640
+    },
+    {
+      "code": "SHP900",
+      "name": "ShopeePay Admin 900.000",
+      "nominal": 900000,
+      "default_price": 900640
+    },
+    {
+      "code": "SHP950",
+      "name": "ShopeePay Admin 950.000",
+      "nominal": 950000,
+      "default_price": 950640
+    },
+    {
+      "code": "SHP1000",
+      "name": "ShopeePay Admin 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000640
+    }
+  ],
+  "LINKAJA_PRODUCTS": [
+    {
+      "code": "LINK10",
+      "name": "LinkAja 10.000",
+      "nominal": 10000,
+      "default_price": 10250
+    },
+    {
+      "code": "LINK15",
+      "name": "LinkAja 15.000",
+      "nominal": 15000,
+      "default_price": 15250
+    },
+    {
+      "code": "LINK20",
+      "name": "LinkAja 20.000",
+      "nominal": 20000,
+      "default_price": 20250
+    },
+    {
+      "code": "LINK25",
+      "name": "LinkAja 25.000",
+      "nominal": 25000,
+      "default_price": 25250
+    },
+    {
+      "code": "LINK30",
+      "name": "LinkAja 30.000",
+      "nominal": 30000,
+      "default_price": 30250
+    },
+    {
+      "code": "LINK35",
+      "name": "LinkAja 35.000",
+      "nominal": 35000,
+      "default_price": 35250
+    },
+    {
+      "code": "LINK40",
+      "name": "LinkAja 40.000",
+      "nominal": 40000,
+      "default_price": 40250
+    },
+    {
+      "code": "LINK45",
+      "name": "LinkAja 45.000",
+      "nominal": 45000,
+      "default_price": 45250
+    },
+    {
+      "code": "LINK50",
+      "name": "LinkAja 50.000",
+      "nominal": 50000,
+      "default_price": 50250
+    },
+    {
+      "code": "LINK55",
+      "name": "LinkAja 55.000",
+      "nominal": 55000,
+      "default_price": 55250
+    },
+    {
+      "code": "LINK60",
+      "name": "LinkAja 60.000",
+      "nominal": 60000,
+      "default_price": 60250
+    },
+    {
+      "code": "LINK65",
+      "name": "LinkAja 65.000",
+      "nominal": 65000,
+      "default_price": 65250
+    },
+    {
+      "code": "LINK70",
+      "name": "LinkAja 70.000",
+      "nominal": 70000,
+      "default_price": 70250
+    },
+    {
+      "code": "LINK75",
+      "name": "LinkAja 75.000",
+      "nominal": 75000,
+      "default_price": 75250
+    },
+    {
+      "code": "LINK80",
+      "name": "LinkAja 80.000",
+      "nominal": 80000,
+      "default_price": 80250
+    },
+    {
+      "code": "LINK85",
+      "name": "LinkAja 85.000",
+      "nominal": 85000,
+      "default_price": 85250
+    },
+    {
+      "code": "LINK90",
+      "name": "LinkAja 90.000",
+      "nominal": 90000,
+      "default_price": 90250
+    },
+    {
+      "code": "LINK95",
+      "name": "LinkAja 95.000",
+      "nominal": 95000,
+      "default_price": 95250
+    },
+    {
+      "code": "LINK100",
+      "name": "LinkAja 100.000",
+      "nominal": 100000,
+      "default_price": 100250
+    },
+    {
+      "code": "LINK125",
+      "name": "LinkAja 125.000",
+      "nominal": 125000,
+      "default_price": 125250
+    },
+    {
+      "code": "LINK150",
+      "name": "LinkAja 150.000",
+      "nominal": 150000,
+      "default_price": 150250
+    },
+    {
+      "code": "LINK200",
+      "name": "LinkAja 200.000",
+      "nominal": 200000,
+      "default_price": 200290
+    },
+    {
+      "code": "LINK250",
+      "name": "LinkAja 250.000",
+      "nominal": 250000,
+      "default_price": 250500
+    },
+    {
+      "code": "LINK300",
+      "name": "LinkAja 300.000",
+      "nominal": 300000,
+      "default_price": 300530
+    },
+    {
+      "code": "LINK400",
+      "name": "LinkAja 400.000",
+      "nominal": 400000,
+      "default_price": 400500
+    },
+    {
+      "code": "LINK500",
+      "name": "LinkAja 500.000",
+      "nominal": 500000,
+      "default_price": 500500
+    },
+    {
+      "code": "LINK600",
+      "name": "LinkAja 600.000",
+      "nominal": 600000,
+      "default_price": 600500
+    },
+    {
+      "code": "LINK700",
+      "name": "LinkAja 700.000",
+      "nominal": 700000,
+      "default_price": 700500
+    },
+    {
+      "code": "LINK800",
+      "name": "LinkAja 800.000",
+      "nominal": 800000,
+      "default_price": 800530
+    },
+    {
+      "code": "LINK900",
+      "name": "LinkAja 900.000",
+      "nominal": 900000,
+      "default_price": 900500
+    },
+    {
+      "code": "LINK1000",
+      "name": "LinkAja 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000500
+    },
+    {
+      "code": "LJAE10",
+      "name": "LinkAja Entitas 10.000",
+      "nominal": 10000,
+      "default_price": 10500
+    },
+    {
+      "code": "LJAE15",
+      "name": "LinkAja Entitas 15.000",
+      "nominal": 15000,
+      "default_price": 15500
+    },
+    {
+      "code": "LJAE20",
+      "name": "LinkAja Entitas 20.000",
+      "nominal": 20000,
+      "default_price": 20500
+    },
+    {
+      "code": "LJAE25",
+      "name": "LinkAja Entitas 25.000",
+      "nominal": 25000,
+      "default_price": 25500
+    },
+    {
+      "code": "LJAE30",
+      "name": "LinkAja Entitas 30.000",
+      "nominal": 30000,
+      "default_price": 30500
+    },
+    {
+      "code": "LJAE35",
+      "name": "LinkAja Entitas 35.000",
+      "nominal": 35000,
+      "default_price": 35500
+    },
+    {
+      "code": "LJAE40",
+      "name": "LinkAja Entitas 40.000",
+      "nominal": 40000,
+      "default_price": 40500
+    },
+    {
+      "code": "LJAE45",
+      "name": "LinkAja Entitas 45.000",
+      "nominal": 45000,
+      "default_price": 45500
+    },
+    {
+      "code": "LJAE50",
+      "name": "LinkAja Entitas 50.000",
+      "nominal": 50000,
+      "default_price": 50500
+    },
+    {
+      "code": "LJAE55",
+      "name": "LinkAja Entitas 55.000",
+      "nominal": 55000,
+      "default_price": 55500
+    },
+    {
+      "code": "LJAE60",
+      "name": "LinkAja Entitas 60.000",
+      "nominal": 60000,
+      "default_price": 60500
+    },
+    {
+      "code": "LJAE65",
+      "name": "LinkAja Entitas 65.000",
+      "nominal": 65000,
+      "default_price": 65500
+    },
+    {
+      "code": "LJAE70",
+      "name": "LinkAja Entitas 70.000",
+      "nominal": 70000,
+      "default_price": 70500
+    },
+    {
+      "code": "LJAE75",
+      "name": "LinkAja Entitas 75.000",
+      "nominal": 75000,
+      "default_price": 75500
+    },
+    {
+      "code": "LJAE80",
+      "name": "LinkAja Entitas 80.000",
+      "nominal": 80000,
+      "default_price": 80500
+    },
+    {
+      "code": "LJAE85",
+      "name": "LinkAja Entitas 85.000",
+      "nominal": 85000,
+      "default_price": 85500
+    },
+    {
+      "code": "LJAE90",
+      "name": "LinkAja Entitas 90.000",
+      "nominal": 90000,
+      "default_price": 90500
+    },
+    {
+      "code": "LJAE95",
+      "name": "LinkAja Entitas 95.000",
+      "nominal": 95000,
+      "default_price": 95500
+    },
+    {
+      "code": "LJAE100",
+      "name": "LinkAja Entitas 100.000",
+      "nominal": 100000,
+      "default_price": 100500
+    },
+    {
+      "code": "LJAE125",
+      "name": "LinkAja Entitas 125.000",
+      "nominal": 125000,
+      "default_price": 125500
+    },
+    {
+      "code": "LJAE150",
+      "name": "LinkAja Entitas 150.000",
+      "nominal": 150000,
+      "default_price": 150500
+    },
+    {
+      "code": "LJAE200",
+      "name": "LinkAja Entitas 200.000",
+      "nominal": 200000,
+      "default_price": 200500
+    },
+    {
+      "code": "LJAE250",
+      "name": "LinkAja Entitas 250.000",
+      "nominal": 250000,
+      "default_price": 250500
+    },
+    {
+      "code": "LJAE300",
+      "name": "LinkAja Entitas 300.000",
+      "nominal": 300000,
+      "default_price": 300500
+    },
+    {
+      "code": "LJAE350",
+      "name": "LinkAja Entitas 350.000",
+      "nominal": 350000,
+      "default_price": 350500
+    },
+    {
+      "code": "LJAE400",
+      "name": "LinkAja Entitas 400.000",
+      "nominal": 400000,
+      "default_price": 400500
+    },
+    {
+      "code": "LJAE450",
+      "name": "LinkAja Entitas 450.000",
+      "nominal": 450000,
+      "default_price": 450500
+    },
+    {
+      "code": "LJAE500",
+      "name": "LinkAja Entitas 500.000",
+      "nominal": 500000,
+      "default_price": 500500
+    },
+    {
+      "code": "LJAE550",
+      "name": "LinkAja Entitas 550.000",
+      "nominal": 550000,
+      "default_price": 550500
+    },
+    {
+      "code": "LJAE600",
+      "name": "LinkAja Entitas 600.000",
+      "nominal": 600000,
+      "default_price": 600500
+    },
+    {
+      "code": "LJAE650",
+      "name": "LinkAja Entitas 650.000",
+      "nominal": 650000,
+      "default_price": 650500
+    },
+    {
+      "code": "LJAE700",
+      "name": "LinkAja Entitas 700.000",
+      "nominal": 700000,
+      "default_price": 700500
+    },
+    {
+      "code": "LJAE750",
+      "name": "LinkAja Entitas 750.000",
+      "nominal": 750000,
+      "default_price": 750500
+    },
+    {
+      "code": "LJAE800",
+      "name": "LinkAja Entitas 800.000",
+      "nominal": 800000,
+      "default_price": 800500
+    },
+    {
+      "code": "LJAE850",
+      "name": "LinkAja Entitas 850.000",
+      "nominal": 850000,
+      "default_price": 850500
+    },
+    {
+      "code": "LJAE900",
+      "name": "LinkAja Entitas 900.000",
+      "nominal": 900000,
+      "default_price": 900500
+    },
+    {
+      "code": "LJAE950",
+      "name": "LinkAja Entitas 950.000",
+      "nominal": 950000,
+      "default_price": 950500
+    },
+    {
+      "code": "LJAE1000",
+      "name": "LinkAja Entitas 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000500
+    }
+  ],
+  "ASTRAPAY_PRODUCTS": [
+    {
+      "code": "ASPY10",
+      "name": "Astrapay 10.000",
+      "nominal": 10000,
+      "default_price": 10800
+    },
+    {
+      "code": "ASPY15",
+      "name": "Astrapay 15.000",
+      "nominal": 15000,
+      "default_price": 15800
+    },
+    {
+      "code": "ASPY20",
+      "name": "Astrapay 20.000",
+      "nominal": 20000,
+      "default_price": 20800
+    },
+    {
+      "code": "ASPY25",
+      "name": "Astrapay 25.000",
+      "nominal": 25000,
+      "default_price": 25800
+    },
+    {
+      "code": "ASPY30",
+      "name": "Astrapay 30.000",
+      "nominal": 30000,
+      "default_price": 30800
+    },
+    {
+      "code": "ASPY35",
+      "name": "Astrapay 35.000",
+      "nominal": 35000,
+      "default_price": 35800
+    },
+    {
+      "code": "ASPY40",
+      "name": "Astrapay 40.000",
+      "nominal": 40000,
+      "default_price": 40800
+    },
+    {
+      "code": "ASPY45",
+      "name": "Astrapay 45.000",
+      "nominal": 45000,
+      "default_price": 45800
+    },
+    {
+      "code": "ASPY50",
+      "name": "Astrapay 50.000",
+      "nominal": 50000,
+      "default_price": 50800
+    },
+    {
+      "code": "ASPY55",
+      "name": "Astrapay 55.000",
+      "nominal": 55000,
+      "default_price": 55800
+    },
+    {
+      "code": "ASPY60",
+      "name": "Astrapay 60.000",
+      "nominal": 60000,
+      "default_price": 60800
+    },
+    {
+      "code": "ASPY65",
+      "name": "Astrapay 65.000",
+      "nominal": 65000,
+      "default_price": 65800
+    },
+    {
+      "code": "ASPY70",
+      "name": "Astrapay 70.000",
+      "nominal": 70000,
+      "default_price": 70800
+    },
+    {
+      "code": "ASPY75",
+      "name": "Astrapay 75.000",
+      "nominal": 75000,
+      "default_price": 75800
+    },
+    {
+      "code": "ASPY80",
+      "name": "Astrapay 80.000",
+      "nominal": 80000,
+      "default_price": 80800
+    },
+    {
+      "code": "ASPY85",
+      "name": "Astrapay 85.000",
+      "nominal": 85000,
+      "default_price": 85800
+    },
+    {
+      "code": "ASPY90",
+      "name": "Astrapay 90.000",
+      "nominal": 90000,
+      "default_price": 90800
+    },
+    {
+      "code": "ASPY95",
+      "name": "Astrapay 95.000",
+      "nominal": 95000,
+      "default_price": 95800
+    },
+    {
+      "code": "ASPY100",
+      "name": "Astrapay 100.000",
+      "nominal": 100000,
+      "default_price": 100800
+    },
+    {
+      "code": "ASPY125",
+      "name": "Astrapay 125.000",
+      "nominal": 125000,
+      "default_price": 125800
+    },
+    {
+      "code": "ASPY150",
+      "name": "Astrapay 150.000",
+      "nominal": 150000,
+      "default_price": 150800
+    },
+    {
+      "code": "ASPY200",
+      "name": "Astrapay 200.000",
+      "nominal": 200000,
+      "default_price": 200800
+    },
+    {
+      "code": "ASPY250",
+      "name": "Astrapay 250.000",
+      "nominal": 250000,
+      "default_price": 250800
+    },
+    {
+      "code": "ASPY300",
+      "name": "Astrapay 300.000",
+      "nominal": 300000,
+      "default_price": 300800
+    },
+    {
+      "code": "ASPY400",
+      "name": "Astrapay 400.000",
+      "nominal": 400000,
+      "default_price": 400800
+    },
+    {
+      "code": "ASPY500",
+      "name": "Astrapay 500.000",
+      "nominal": 500000,
+      "default_price": 500800
+    },
+    {
+      "code": "ASPY600",
+      "name": "Astrapay 600.000",
+      "nominal": 600000,
+      "default_price": 600800
+    },
+    {
+      "code": "ASPY700",
+      "name": "Astrapay 700.000",
+      "nominal": 700000,
+      "default_price": 700800
+    },
+    {
+      "code": "ASPY800",
+      "name": "Astrapay 800.000",
+      "nominal": 800000,
+      "default_price": 800800
+    },
+    {
+      "code": "ASPY900",
+      "name": "Astrapay 900.000",
+      "nominal": 900000,
+      "default_price": 900800
+    },
+    {
+      "code": "ASPY1000",
+      "name": "Astrapay 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000800
+    }
+  ],
+  "ISAKU_PRODUCTS": [
+    {
+      "code": "ISAKU10",
+      "name": "iSaku 10.000",
+      "nominal": 10000,
+      "default_price": 10650
+    },
+    {
+      "code": "ISAKU15",
+      "name": "iSaku 15.000",
+      "nominal": 15000,
+      "default_price": 15650
+    },
+    {
+      "code": "ISAKU20",
+      "name": "iSaku 20.000",
+      "nominal": 20000,
+      "default_price": 20650
+    },
+    {
+      "code": "ISAKU25",
+      "name": "iSaku 25.000",
+      "nominal": 25000,
+      "default_price": 25650
+    },
+    {
+      "code": "ISAKU30",
+      "name": "iSaku 30.000",
+      "nominal": 30000,
+      "default_price": 30650
+    },
+    {
+      "code": "ISAKU35",
+      "name": "iSaku 35.000",
+      "nominal": 35000,
+      "default_price": 35650
+    },
+    {
+      "code": "ISAKU40",
+      "name": "iSaku 40.000",
+      "nominal": 40000,
+      "default_price": 40650
+    },
+    {
+      "code": "ISAKU45",
+      "name": "iSaku 45.000",
+      "nominal": 45000,
+      "default_price": 45650
+    },
+    {
+      "code": "ISAKU50",
+      "name": "iSaku 50.000",
+      "nominal": 50000,
+      "default_price": 50650
+    },
+    {
+      "code": "ISAKU55",
+      "name": "iSaku 55.000",
+      "nominal": 55000,
+      "default_price": 55650
+    },
+    {
+      "code": "ISAKU60",
+      "name": "iSaku 60.000",
+      "nominal": 60000,
+      "default_price": 60650
+    },
+    {
+      "code": "ISAKU65",
+      "name": "iSaku 65.000",
+      "nominal": 65000,
+      "default_price": 65650
+    },
+    {
+      "code": "ISAKU70",
+      "name": "iSaku 70.000",
+      "nominal": 70000,
+      "default_price": 70650
+    },
+    {
+      "code": "ISAKU75",
+      "name": "iSaku 75.000",
+      "nominal": 75000,
+      "default_price": 75650
+    },
+    {
+      "code": "ISAKU80",
+      "name": "iSaku 80.000",
+      "nominal": 80000,
+      "default_price": 80650
+    },
+    {
+      "code": "ISAKU85",
+      "name": "iSaku 85.000",
+      "nominal": 85000,
+      "default_price": 85650
+    },
+    {
+      "code": "ISAKU90",
+      "name": "iSaku 90.000",
+      "nominal": 90000,
+      "default_price": 90650
+    },
+    {
+      "code": "ISAKU95",
+      "name": "iSaku 95.000",
+      "nominal": 95000,
+      "default_price": 95650
+    },
+    {
+      "code": "ISAKU100",
+      "name": "iSaku 100.000",
+      "nominal": 100000,
+      "default_price": 100650
+    },
+    {
+      "code": "ISAKU125",
+      "name": "iSaku 125.000",
+      "nominal": 125000,
+      "default_price": 125650
+    },
+    {
+      "code": "ISAKU150",
+      "name": "iSaku 150.000",
+      "nominal": 150000,
+      "default_price": 150650
+    },
+    {
+      "code": "ISAKU200",
+      "name": "iSaku 200.000",
+      "nominal": 200000,
+      "default_price": 200650
+    },
+    {
+      "code": "ISAKU250",
+      "name": "iSaku 250.000",
+      "nominal": 250000,
+      "default_price": 250650
+    },
+    {
+      "code": "ISAKU300",
+      "name": "iSaku 300.000",
+      "nominal": 300000,
+      "default_price": 300650
+    },
+    {
+      "code": "ISAKU350",
+      "name": "iSaku 350.000",
+      "nominal": 350000,
+      "default_price": 350800
+    },
+    {
+      "code": "ISAKU400",
+      "name": "iSaku 400.000",
+      "nominal": 400000,
+      "default_price": 400650
+    },
+    {
+      "code": "ISAKU450",
+      "name": "iSaku 450.000",
+      "nominal": 450000,
+      "default_price": 450800
+    },
+    {
+      "code": "ISAKU500",
+      "name": "iSaku 500.000",
+      "nominal": 500000,
+      "default_price": 500650
+    },
+    {
+      "code": "ISAKU550",
+      "name": "iSaku 550.000",
+      "nominal": 550000,
+      "default_price": 550800
+    },
+    {
+      "code": "ISAKU600",
+      "name": "iSaku 600.000",
+      "nominal": 600000,
+      "default_price": 600650
+    },
+    {
+      "code": "ISAKU650",
+      "name": "iSaku 650.000",
+      "nominal": 650000,
+      "default_price": 650800
+    },
+    {
+      "code": "ISAKU700",
+      "name": "iSaku 700.000",
+      "nominal": 700000,
+      "default_price": 700650
+    },
+    {
+      "code": "ISAKU750",
+      "name": "iSaku 750.000",
+      "nominal": 750000,
+      "default_price": 750800
+    },
+    {
+      "code": "ISAKU800",
+      "name": "iSaku 800.000",
+      "nominal": 800000,
+      "default_price": 800650
+    },
+    {
+      "code": "ISAKU850",
+      "name": "iSaku 850.000",
+      "nominal": 850000,
+      "default_price": 850800
+    },
+    {
+      "code": "ISAKU900",
+      "name": "iSaku 900.000",
+      "nominal": 900000,
+      "default_price": 900650
+    },
+    {
+      "code": "ISAKU950",
+      "name": "iSaku 950.000",
+      "nominal": 950000,
+      "default_price": 950800
+    },
+    {
+      "code": "ISAKU1000",
+      "name": "iSaku 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000650
+    }
+  ],
+  "KASPRO_PRODUCTS": [
+    {
+      "code": "DANA1",
+      "name": "TES DANA 1000",
+      "nominal": 1000,
+      "default_price": 1056
+    },
+    {
+      "code": "KASP10",
+      "name": "Kaspro 10.000",
+      "nominal": 10000,
+      "default_price": 10800
+    },
+    {
+      "code": "KASP15",
+      "name": "Kaspro 15.000",
+      "nominal": 15000,
+      "default_price": 15800
+    },
+    {
+      "code": "KASP20",
+      "name": "Kaspro 20.000",
+      "nominal": 20000,
+      "default_price": 20800
+    },
+    {
+      "code": "KASP25",
+      "name": "Kaspro 25.000",
+      "nominal": 25000,
+      "default_price": 25800
+    },
+    {
+      "code": "KASP30",
+      "name": "Kaspro 30.000",
+      "nominal": 30000,
+      "default_price": 30800
+    },
+    {
+      "code": "KASP35",
+      "name": "Kaspro 35.000",
+      "nominal": 35000,
+      "default_price": 35800
+    },
+    {
+      "code": "KASP40",
+      "name": "Kaspro 40.000",
+      "nominal": 40000,
+      "default_price": 40800
+    },
+    {
+      "code": "KASP45",
+      "name": "Kaspro 45.000",
+      "nominal": 45000,
+      "default_price": 45800
+    },
+    {
+      "code": "KASP50",
+      "name": "Kaspro 50.000",
+      "nominal": 50000,
+      "default_price": 50800
+    },
+    {
+      "code": "KASP55",
+      "name": "Kaspro 55.000",
+      "nominal": 55000,
+      "default_price": 55800
+    },
+    {
+      "code": "KASP60",
+      "name": "Kaspro 60.000",
+      "nominal": 60000,
+      "default_price": 60800
+    },
+    {
+      "code": "KASP65",
+      "name": "Kaspro 65.000",
+      "nominal": 65000,
+      "default_price": 65800
+    },
+    {
+      "code": "KASP70",
+      "name": "Kaspro 70.000",
+      "nominal": 70000,
+      "default_price": 70800
+    },
+    {
+      "code": "KASP75",
+      "name": "Kaspro 75.000",
+      "nominal": 75000,
+      "default_price": 75800
+    },
+    {
+      "code": "KASP80",
+      "name": "Kaspro 80.000",
+      "nominal": 80000,
+      "default_price": 80800
+    },
+    {
+      "code": "KASP85",
+      "name": "Kaspro 85.000",
+      "nominal": 85000,
+      "default_price": 85800
+    },
+    {
+      "code": "KASP90",
+      "name": "Kaspro 90.000",
+      "nominal": 90000,
+      "default_price": 90800
+    },
+    {
+      "code": "KASP95",
+      "name": "Kaspro 95.000",
+      "nominal": 95000,
+      "default_price": 95800
+    },
+    {
+      "code": "KASP100",
+      "name": "Kaspro 100.000",
+      "nominal": 100000,
+      "default_price": 100800
+    },
+    {
+      "code": "KASP125",
+      "name": "Kaspro 125.000",
+      "nominal": 125000,
+      "default_price": 125800
+    },
+    {
+      "code": "KASP150",
+      "name": "Kaspro 150.000",
+      "nominal": 150000,
+      "default_price": 150800
+    },
+    {
+      "code": "KASP200",
+      "name": "Kaspro 200.000",
+      "nominal": 200000,
+      "default_price": 200800
+    },
+    {
+      "code": "KASP250",
+      "name": "Kaspro 250.000",
+      "nominal": 250000,
+      "default_price": 250800
+    },
+    {
+      "code": "KASP300",
+      "name": "Kaspro 300.000",
+      "nominal": 300000,
+      "default_price": 300800
+    },
+    {
+      "code": "KASP400",
+      "name": "Kaspro 400.000",
+      "nominal": 400000,
+      "default_price": 400800
+    },
+    {
+      "code": "KASP500",
+      "name": "Kaspro 500.000",
+      "nominal": 500000,
+      "default_price": 500800
+    },
+    {
+      "code": "KASP600",
+      "name": "Kaspro 600.000",
+      "nominal": 600000,
+      "default_price": 600800
+    },
+    {
+      "code": "KASP700",
+      "name": "Kaspro 700.000",
+      "nominal": 700000,
+      "default_price": 700800
+    },
+    {
+      "code": "KASP800",
+      "name": "Kaspro 800.000",
+      "nominal": 800000,
+      "default_price": 800800
+    },
+    {
+      "code": "KASP900",
+      "name": "Kaspro 900.000",
+      "nominal": 900000,
+      "default_price": 900800
+    },
+    {
+      "code": "KASP1000",
+      "name": "Kaspro 1.000.000",
+      "nominal": 1000000,
+      "default_price": 1000800
+    }
+  ]
+}

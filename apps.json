@@ -1,0 +1,58 @@
+[
+  {
+    "code": "nf-share",
+    "name": "Netflix Sharing 1 Bulan",
+    "price": 30000,
+    "icon": "https://cdn-icons-png.flaticon.com/512/5977/5977590.png",
+    "tutorial": "Dilarang ganti password & profil. Cukup login dan nonton.",
+    "stock": []
+  },
+  {
+    "code": "sp-ind",
+    "name": "Spotify Individual 1 Bulan",
+    "price": 20000,
+    "icon": "https://cdn-icons-png.flaticon.com/512/2111/2111624.png",
+    "tutorial": "Login menggunakan email & pass yang diberikan. Jika minta verif, chat admin.",
+    "stock": []
+  },
+  {
+    "code": "canva-pro",
+    "name": "Canva Pro (Invite Team)",
+    "price": 15000,
+    "icon": "https://cdn-icons-png.flaticon.com/512/16503/16503527.png",
+    "tutorial": "Klik link invite yang diberikan, lalu login akun Canva Anda.",
+    "stock": []
+  },
+  {
+    "code": "capcut-pro",
+    "name": "CapCut Pro 1 Tahun",
+    "price": 35000,
+    "icon": "https://cdn-icons-png.flaticon.com/512/11104/11104255.png",
+    "tutorial": "Login via Email. Dilarang logout device lain.",
+    "stock": []
+  },
+  {
+    "code": "am-pro",
+    "name": "Alight Motion premium",
+    "price": 10000,
+    "icon": "https://api.deline.web.id/1gU1YgNtlZ.png",
+    "tutorial": "login via email yang di berikan.",
+    "stock": []
+  },
+  {
+    "code": "viu-prem",
+    "name": "Viu Premium Private",
+    "price": 18000,
+    "icon": "https://cdn-icons-png.flaticon.com/512/12535/12535730.png",
+    "tutorial": "Login no hp/email. Akun private bebas atur.",
+    "stock": []
+  },
+  {
+    "code": "gpt-plus",
+    "name": "ChatGPT Plus (Shared)",
+    "price": 50000,
+    "icon": "https://cdn-icons-png.flaticon.com/512/12222/12222560.png",
+    "tutorial": "Login di chat.openai.com. Jangan hapus chat history orang lain.",
+    "stock": []
+  }
+]

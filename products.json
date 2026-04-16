@@ -1,0 +1,68 @@
+[
+  {
+    "code": "1gb",
+    "name": "Paket 1GB",
+    "price": 5000,
+    "spec": { "ram": 1000, "disk": 1000, "cpu": 40 }
+  },
+  {
+    "code": "2gb",
+    "name": "Paket 2GB",
+    "price": 7000,
+    "spec": { "ram": 2000, "disk": 1000, "cpu": 60 }
+  },
+  {
+    "code": "3gb",
+    "name": "Paket 3GB",
+    "price": 10000,
+    "spec": { "ram": 3000, "disk": 2000, "cpu": 80 }
+  },
+  {
+    "code": "4gb",
+    "name": "Paket 4GB",
+    "price": 13000,
+    "spec": { "ram": 4000, "disk": 2000, "cpu": 100 }
+  },
+  {
+    "code": "5gb",
+    "name": "Paket 5GB",
+    "price": 15000,
+    "spec": { "ram": 5000, "disk": 3000, "cpu": 120 }
+  },
+  {
+    "code": "6gb",
+    "name": "Paket 6GB",
+    "price": 17000,
+    "spec": { "ram": 6000, "disk": 3000, "cpu": 140 }
+  },
+  {
+    "code": "7gb",
+    "name": "Paket 7GB",
+    "price": 20000,
+    "spec": { "ram": 7000, "disk": 4000, "cpu": 160 }
+  },
+  {
+    "code": "8gb",
+    "name": "Paket 8GB",
+    "price": 25000,
+    "spec": { "ram": 8000, "disk": 4000, "cpu": 180 }
+  },
+  {
+    "code": "9gb",
+    "name": "Paket 9GB",
+    "price": 35000,
+    "spec": { "ram": 9000, "disk": 5000, "cpu": 200 }
+  },
+  {
+    "code": "10gb",
+    "name": "Paket 10GB",
+    "price": 40000,
+    "spec": { "ram": 10000, "disk": 5000, "cpu": 220 }
+  },
+  {
+    "code": "unlimited",
+    "name": "Paket Unlimited Sultan",
+    "price": 50000,
+    "spec": { "ram": 0, "disk": 0, "cpu": 0 }
+  }
+]

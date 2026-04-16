@@ -1,0 +1,9 @@
+[
+  { "tld": ".my.id", "price": 5000 },
+  { "tld": ".biz.id", "price": 4000 },
+  { "tld": ".com", "price": 18000 },
+  { "tld": ".xyz", "price": 10000 },
+  { "tld": ".net", "price": 15000 },
+  { "tld": ".org", "price": 12000 },
+  { "tld": ".id", "price": 25000 }
+]
