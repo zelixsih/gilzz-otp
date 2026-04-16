@@ -1,0 +1,3217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gilzzotp Admin Pro</title>
+    <link rel="icon" type="image/jpeg" href="images/Riki.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        :root {
+            /* Palette Biru (Tema Utama) */
+            --primary: #2196F3;
+            --primary-dark: #1976D2;
+            --primary-light: #E3F2FD;
+            
+            /* Light Mode Defaults */
+            --bg-body: #f5f7fb;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --input-bg: #ffffff;
+            --shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Konfigurasi Dark Mode */
+        body.dark-mode {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --border: #334155;
+            --input-bg: #334155;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+            --primary-light: rgba(33, 150, 243, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-main);
+        }
+
+        /* Login Page */
+        .login-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-card {
+            background: white;
+            width: 90%;
+            max-width: 350px;
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            color: var(--primary);
+        }
+
+        .login-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+
+        .login-card p {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            background: white;
+            color: #1e293b;
+        }
+
+        .login-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+            background: var(--primary-dark);
+        }
+
+        /* Main App */
+        #mainApp {
+            display: none;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background: var(--bg-card);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .menu-btn {
+            font-size: 20px;
+            color: var(--text-sub);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .menu-btn:active {
+            background: var(--bg-body);
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-sub);
+            background: var(--bg-body);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .action-icon:active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-card);
+            z-index: 1000;
+            transition: 0.3s;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            border-right: 1px solid var(--border);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .sidebar-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .sidebar-menu {
+            padding: 15px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .menu-item i {
+            width: 20px;
+            font-size: 16px;
+        }
+
+        .menu-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .menu-item:active {
+            background: var(--bg-body);
+        }
+        
+        .menu-item.active:active {
+            background: var(--primary-dark);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 15px;
+            padding-bottom: 80px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .stat-icon.income { background: var(--primary-light); color: var(--primary); }
+        .stat-icon.users { background: #e3f2fd; color: #1976D2; }
+        .stat-icon.trx { background: #fff3e0; color: #f39c12; }
+        .stat-icon.balance { background: #fce4ec; color: #e91e63; }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Search Box */
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text-main);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th {
+            background: var(--bg-body);
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 12px 10px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        /* Badges */
+        .badge-new {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 12px;
+            margin-left: 5px;
+            display: inline-block;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .status-failed {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            gap: 5px;
+            justify-content: flex-end;
+        }
+
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-body);
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .action-btn.edit:active { background: #f39c12; color: white; border-color: #f39c12; }
+        .action-btn.delete:active { background: #ef4444; color: white; border-color: #ef4444; }
+        
+        /* Tombol View (Mata) */
+        .action-btn.btn-view:active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* New Product Button (Petir) */
+        .new-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .new-btn.active {
+            background: #ef4444; /* Warna Merah saat aktif */
+        }
+
+        /* New Products Info */
+        .new-info {
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #d35400;
+        }
+
+        .new-info i {
+            font-size: 16px;
+        }
+
+        .new-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-left: auto;
+        }
+
+        .new-tags span {
+            background: #f39c12;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+        }
+
+        /* Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: var(--text-main);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-body);
+            cursor: pointer;
+            color: var(--text-sub);
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-sub);
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text-main);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Views */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* --- USER DETAIL MODAL STYLE --- */
+        .user-profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar-lg {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            padding: 3px;
+            background: var(--bg-card);
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .user-username {
+            font-size: 13px;
+            color: var(--text-sub);
+            background: var(--bg-body);
+            padding: 4px 10px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        /* Grid Statistik User */
+        .user-stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-stat-box {
+            background: var(--bg-body);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .us-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-bottom: 4px;
+        }
+
+        .us-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .us-value.money {
+            color: var(--primary);
+        }
+
+        .us-value.expense {
+            color: #ef4444;
+        }
+
+        /* List Info */
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-val {
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: right;
+        }
+
+        /* Responsive for larger screens */
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .modal-content {
+                max-width: 500px;
+                border-radius: 20px;
+                margin-bottom: 0;
+            }
+
+            .modal {
+                align-items: center;
+            }
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+        
+        .reaction-stats {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+}
+.react-badge {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.rb-love { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
+.rb-like { background: rgba(41, 128, 185, 0.1); color: #2980b9; }
+.rb-dislike { background: rgba(44, 62, 80, 0.1); color: #2c3e50; }
+.swal2-container {
+            z-index: 99999 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrap" id="loginPage">
+        <div class="login-card">
+            <div class="login-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h2>Admin Access</h2>
+            <p>Masukkan kunci keamanan</p>
+            <input type="password" id="adminPass" class="login-input" placeholder="******">
+            <button class="login-btn" onclick="authAdmin()">
+                <i class="fas fa-arrow-right-to-bracket"></i> MASUK
+            </button>
+        </div>
+    </div>
+
+    <div id="mainApp">
+
+        <div class="top-nav">
+            <div class="menu-btn" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="page-title" id="pageTitle">Dashboard</div>
+            <div class="top-actions">
+                <div class="action-icon" onclick="refreshData()">
+                    <i class="fas fa-sync-alt" id="refreshIcon"></i>
+                </div>
+                <div class="action-icon" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>GILZOTP</h3>
+                <p>Admin website v2.0</p>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" onclick="switchView('dashboard', this)">
+                    <i class="fas fa-home"></i> Dashboard
+                </div>
+                <div class="menu-item" onclick="switchView('products', this)">
+                    <i class="fas fa-box"></i> Produk
+                </div>
+                <div class="menu-item" onclick="switchView('users', this)">
+                    <i class="fas fa-users"></i> Member
+                </div>
+                <div class="menu-item" onclick="switchView('transactions', this)">
+                    <i class="fas fa-receipt"></i> Transaksi
+                </div>
+                <div class="menu-item" onclick="switchView('panels', this)">
+                    <i class="fas fa-server"></i> Server
+                </div>
+                <div class="menu-item" onclick="switchView('all-servers', this)">
+    <i class="fas fa-network-wired"></i> Semua Server Ptero
+</div>
+                <div class="menu-item" onclick="switchView('reviews', this)">
+                    <i class="fas fa-comment-dots"></i> Ulasan
+                </div>
+                <div class="menu-item" onclick="switchView('info', this)">
+                    <i class="fas fa-bullhorn"></i> Informasi
+                </div>
+                <div class="menu-item" onclick="switchView('promos', this)">
+    <i class="fas fa-tags"></i> Kode Promo
+</div>
+<div class="menu-item" onclick="switchView('system', this)">
+    <i class="fas fa-microchip"></i> Sistem & DB
+</div>
+<div class="menu-item" onclick="switchView('gacha', this)">
+    <i class="fas fa-gift" style="color: #f39c12;"></i> Event Gacha
+</div>
+                <div style="height: 1px; background: var(--border); margin: 20px 0;"></div>
+                <div class="menu-item" onclick="logout()" style="color: #ef4444;">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div id="view-dashboard" class="view active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon income">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-label">Total Omset</div>
+                        <div class="stat-value" id="d-income">Rp 0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-label">Member</div>
+                        <div class="stat-value" id="d-users">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon trx">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <div class="stat-label">Transaksi</div>
+                        <div class="stat-value" id="d-trx">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon balance">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="stat-label">Saldo Member</div>
+                        <div class="stat-value" id="d-balance">Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Grafik Pendapatan</div>
+                    <div style="height: 200px;">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-products" class="view">
+                <div class="card">
+                    <div class="tabs" id="productTabs">
+                        <div class="tab active" onclick="setCategory('panel', this)">Panel</div>
+                        <div class="tab" onclick="setCategory('script', this)">Script</div>
+                        <div class="tab" onclick="setCategory('vps', this)">VPS</div>
+                        <div class="tab" onclick="setCategory('murid', this)">Murid</div>
+                        <div class="tab" onclick="setCategory('apps', this)">Apps</div>
+                    </div>
+
+                    <div id="newProductsInfo" style="display: none;" class="new-info">
+                        <i class="fas fa-bell"></i>
+                        <span>Produk Baru:</span>
+                        <div class="new-tags" id="newTags"></div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <div style="flex: 1;">
+                <div class="search-box" style="margin-bottom: 0;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="productSearch" placeholder="Cari produk..." onkeyup="searchTable('productTable', this.value)">
+                </div>
+            </div>
+            
+            <button class="action-icon" onclick="openProductModal('add')" style="background: var(--primary); color: white; width: 45px; border:none;" title="Tambah Produk Baru">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        
+                    <div class="table-responsive">
+                        <table id="productTable">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-users" class="view">
+                <div class="card">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="userSearch" placeholder="Cari user..." onkeyup="searchTable('userTable', this.value)">
+                    </div>
+                    <div class="table-responsive">
+                        <table id="userTable">
+    <thead>
+        <tr>
+            <th style="width: 40px;">No</th> <th>Username</th>
+            <th>WA</th>
+            <th>Saldo</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody id="userTableBody"></tbody>
+</table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-transactions" class="view">
+                <div class="card">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="trxSearch" placeholder="Cari transaksi..." onkeyup="searchTable('trxTable', this.value)">
+                    </div>
+                    <div class="table-responsive">
+                        <table id="trxTable">
+                            <thead>
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>User</th>
+                                    <th>Item</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trxTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-panels" class="view">
+    <div class="stats-grid" style="margin-bottom: 20px;">
+        <div class="stat-card" style="border-left: 4px solid #3b82f6;">
+            <div class="stat-label">Total Server Aktif</div>
+            <div class="stat-value" id="tot-panels">0</div>
+        </div>
+        <div class="stat-card" style="border-left: 4px solid #10b981;">
+            <div class="stat-label">Total User Panel</div>
+            <div class="stat-value" id="tot-ptero-users">0</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="panelSearch" placeholder="Cari panel..." onkeyup="searchTable('panelTable', this.value)">
+        </div>
+        <div class="table-responsive">
+            <table id="panelTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Info Akun</th>
+                        <th>Spesifikasi</th>
+                        <th>Masa Aktif</th> 
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="panelTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="view-all-servers" class="view">
+    <div class="card">
+        <div class="card-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Kontrol Seluruh Server Pterodactyl (Live)</span>
+                <button class="action-icon" onclick="loadAllPteroServers()" style="background: var(--primary); color: white; width: 40px; border:none;" title="Refresh Data">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-top: 15px; margin-bottom: 15px;">
+            <div style="flex: 1;">
+                <div class="search-box" style="margin-bottom: 0;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="allServerSearch" placeholder="Cari nama server atau owner..." onkeyup="searchTable('allServerTable', this.value)">
+                </div>
+            </div>
+            <button class="action-icon" onclick="checkAllStatusPtero()" style="background: #10b981; color: white; width: auto; padding: 0 15px; border:none; border-radius: 10px; font-size: 12px; font-weight: 600;" title="Cek Status Semua Server">
+                <i class="fas fa-radar"></i> Cek Semua
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table id="allServerTable">
+                <thead>
+                    <tr>
+                        <th>ID / Identifier</th>
+                        <th>Nama Server</th>
+                        <th>Owner (Pterodactyl)</th>
+                        <th>Spesifikasi</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="allServerTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+            <div id="view-system" class="view">
+    <div class="card">
+        <div class="card-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Kontrol Sistem & Database</span>
+                <button class="action-icon" onclick="loadSystemStats()" style="background: var(--primary); color: white; width: 40px; border:none;" title="Refresh Data">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="stats-grid" style="margin-top: 20px;">
+            <div class="stat-card" style="border-left: 4px solid #2196F3;">
+                <div class="stat-label">Total RAM Server</div>
+                <div class="stat-value" id="sys-ram-total">Memuat...</div>
+            </div>
+            <div class="stat-card" style="border-left: 4px solid #f59e0b;">
+                <div class="stat-label">RAM Terpakai</div>
+                <div class="stat-value" id="sys-ram-used" style="color: #f59e0b;">Memuat...</div>
+            </div>
+            <div class="stat-card" style="border-left: 4px solid #10b981;">
+                <div class="stat-label">Sisa RAM Kosong</div>
+                <div class="stat-value" id="sys-ram-free" style="color: #10b981;">Memuat...</div>
+            </div>
+            <div class="stat-card" style="border-left: 4px solid #8b5cf6;">
+                <div class="stat-label">Ukuran Data MongoDB</div>
+                <div class="stat-value" id="sys-db-size" style="color: #8b5cf6;">Memuat...</div>
+            </div>
+        </div>
+
+        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 15px; margin-top: 20px;">
+            <h4 style="color: #ef4444; margin-bottom: 10px; font-size: 14px;"><i class="fas fa-broom"></i> Pembersihan Otomatis</h4>
+            <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 15px;">
+                Tindakan ini akan melegakan RAM (Garbage Collection), menghapus file sesi WhatsApp yang menumpuk, dan membersihkan transaksi pending yang sudah kedaluwarsa.
+            </p>
+            <button class="btn" style="background: #ef4444; width: auto; padding: 10px 20px;" onclick="cleanupSystem()">
+                <i class="fas fa-trash-alt"></i> Bersihkan Sistem Sekarang
+            </button>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px; border: 1px solid var(--primary);">
+        <div class="card-header" style="color: var(--primary);">
+            <i class="fas fa-database"></i> Live Database Manager
+        </div>
+        
+        <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #d97706;">
+            <b>Peringatan:</b> Menghapus data dari sini adalah penghapusan mentah. Tidak memicu auto-sistem (seperti hapus server Ptero/Cloudflare). Gunakan hanya jika perlu!
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <select id="dbCollectionSelect" class="form-input" style="flex: 1;" onchange="loadDbDocs()">
+                <option value="users">Tabel: Users (Member)</option>
+                <option value="transactions">Tabel: Transactions (Riwayat Trx)</option>
+                <option value="panels">Tabel: Panels (Data Server)</option>
+                <option value="promos">Tabel: Promos (Kode Promo)</option>
+                <option value="reviews">Tabel: Reviews (Ulasan)</option>
+                <option value="broadcasts">Tabel: Broadcasts (Info)</option>
+                <option value="otpstorages">Tabel: OTP & Registrasi Nyangkut</option>
+            </select>
+            <button class="action-icon" onclick="loadDbDocs()" style="background: var(--primary); color: white; width: 45px; border:none;" title="Refresh Data DB">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table id="dbTable">
+                <thead>
+                    <tr>
+                        <th>_id Mentah</th>
+                        <th>Cuplikan Data</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="dbTableBody">
+                    <tr><td colspan="3" style="text-align:center;">Pilih tabel untuk melihat data</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> <div id="view-gacha" class="view">
+    <div class="card" style="border: 1px solid var(--primary);">
+        <div class="card-header" style="color: var(--primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span><i class="fas fa-gift"></i> Setting Hadiah Gacha</span>
+                <button class="action-icon" onclick="loadGachaSettings()" style="background: var(--primary); color: white; width: 40px; border:none;" title="Refresh Data">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px; margin-bottom: 15px; font-size: 11px; color: #d97706;">
+            <b>PENTING:</b> Pastikan total "Peluang (%)" jika dijumlahkan wajib <b>100%</b>. Jika tipe hadiah adalah "Barang", isi kolom Saldo Min & Max dengan angka 0.
+        </div>
+
+        <div id="gachaSettingsContainer" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="text-align:center; padding:20px; color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> Memuat Data...</div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:20px; padding-top: 15px; border-top: 1px solid var(--border);">
+            <button onclick="addGachaItem()" class="btn" style="background:#10b981; width:auto; padding:10px 20px;"><i class="fas fa-plus"></i> Tambah Hadiah</button>
+            <button onclick="saveGachaSettings()" class="btn" style="background:var(--primary); width:auto; padding:10px 20px;"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+        </div>
+    </div>
+</div> <div id="view-promos" class="view">
+    <div class="card">
+        <div class="card-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Daftar Kode Promo</span>
+                <button class="action-icon" onclick="openPromoModal('add')" style="background: var(--primary); color: white; width: 45px; border:none;">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="promoSearch" placeholder="Cari promo..." onkeyup="searchPromo()">
+        </div>
+        
+        <div class="table-responsive">
+            <table id="promoTable">
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Diskon</th>
+                        <th>Kategori</th>
+                        <th>Berlaku</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="promoTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+                        <div id="view-reviews" class="view">
+                <div id="reviewsContainer"></div>
+            </div>
+
+            <div id="view-info" class="view">
+                <div class="card">
+                    <div class="card-header">Kirim Informasi / Pengumuman</div>
+                    <div class="form-group">
+                        <label>Tipe Informasi</label>
+                        <select id="infoType" class="form-input">
+                            <option value="info">Info / Umum</option>
+                            <option value="promo">Promo / Diskon</option>
+                            <option value="warning">Maintenance / Peringatan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Pesan Informasi</label>
+                        <textarea id="infoMessage" class="form-input" rows="4" placeholder="Tulis pengumuman untuk member di sini..."></textarea>
+                    </div>
+                    <button class="btn" onclick="sendInfo()">KIRIM PENGUMUMAN</button>
+                </div>
+                
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header">Riwayat Informasi</div>
+                    <div class="table-responsive">
+                        <table id="infoTable">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Tipe</th>
+                                    <th>Pesan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="infoTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+
+    <div class="modal" id="productModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">Tambah Produk</h3>
+            <div class="close-btn" onclick="closeModal('productModal')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Kategori Produk</label>
+            <select id="modalCategory" class="form-input" onchange="updateModalFields()">
+                <option value="panel">Panel Pterodactyl</option>
+                <option value="script">Script Bot/Web</option>
+                <option value="vps">VPS</option>
+                <option value="murid">Murid/Course</option>
+                <option value="apps">Aplikasi Premium</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Kode Produk</label>
+            <input type="text" id="prodCode" class="form-input" placeholder="Contoh: PNL001">
+        </div>
+        <div class="form-group">
+            <label>Nama Produk</label>
+            <input type="text" id="prodName" class="form-input" placeholder="Nama Produk">
+        </div>
+        <div class="form-group">
+            <label>Harga (Rp)</label>
+            <input type="number" id="prodPrice" class="form-input" placeholder="15000">
+        </div>
+
+          <div id="dynamicInputArea" style="background: var(--bg-body); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+</div>
+
+        <button class="btn" onclick="saveProduct()">SIMPAN</button>
+    </div>
+</div>
+
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detail Member</h3>
+                <div class="close-btn" onclick="closeModal('userModal')">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div id="userDetailContent"></div>
+        </div>
+    </div>
+    
+    <div class="modal" id="promoModal">
+    <div class="modal-content" style="max-width: 500px; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header">
+            <h3 id="promoModalTitle">Tambah Promo</h3>
+            <div class="close-btn" onclick="closeModal('promoModal')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Kode Promo <span style="color:#e74c3c;">*</span></label>
+            <input type="text" id="promoCode" class="form-input" placeholder="Contoh: HEMAT50" maxlength="20" style="text-transform: uppercase;">
+        </div>
+        
+        <div class="form-group">
+            <label>Nama Promo</label>
+            <input type="text" id="promoName" class="form-input" placeholder="Contoh: Diskon Spesial">
+        </div>
+        
+        <div class="form-group">
+            <label>Deskripsi</label>
+            <textarea id="promoDesc" class="form-input" rows="2" placeholder="Keterangan promo..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Tipe Diskon</label>
+            <select id="promoType" class="form-input" onchange="toggleDiscountFields()">
+                <option value="percentage">Persen (%)</option>
+                <option value="fixed">Nominal (Rp)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Nilai Diskon</label>
+            <input type="number" id="promoValue" class="form-input" placeholder="Contoh: 20 atau 5000">
+        </div>
+        
+        <div id="maxDiscountField" class="form-group" style="display: none;">
+            <label>Maksimal Diskon (Rp) <small style="color:#888;">- Kosongkan jika tidak ada batas</small></label>
+            <input type="number" id="promoMax" class="form-input" placeholder="Contoh: 20000">
+        </div>
+        
+        <div class="form-group">
+            <label>Minimal Belanja (Rp) <small style="color:#888;">- 0 = tanpa minimal</small></label>
+            <input type="number" id="promoMin" class="form-input" value="0">
+        </div>
+        
+        <div class="form-group">
+            <label>Kategori Produk yang Berlaku</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px;">
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="panel"> Panel</label>
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="script"> Script</label>
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="murid"> Murid</label>
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="vps"> VPS</label>
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="apps"> Apps</label>
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="sosmed"> Sosmed</label>
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="subdomain"> Subdomain</label>
+                <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" value="nokos"> Nokos</label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Tanggal Mulai</label>
+            <input type="datetime-local" id="promoStart" class="form-input">
+        </div>
+        
+        <div class="form-group">
+            <label>Tanggal Berakhir <small style="color:#888;">- Kosongkan jika tidak ada batas</small></label>
+            <input type="datetime-local" id="promoEnd" class="form-input">
+        </div>
+        
+        <div class="form-group">
+            <label>Batas Pemakaian Total <small style="color:#888;">0 = unlimited</small></label>
+            <input type="number" id="promoLimit" class="form-input" value="0">
+        </div>
+        
+        <div class="form-group">
+            <label>Batas Per User</label>
+            <input type="number" id="promoPerUser" class="form-input" value="1">
+        </div>
+        
+        <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="promoStatus" checked> Status Aktif
+            </label>
+        </div>
+        
+        <input type="hidden" id="promoId">
+        
+        <button class="btn" onclick="savePromo()">SIMPAN PROMO</button>
+    </div>
+</div>
+
+<div class="modal" id="jsonModal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Detail Isi Dokumen MongoDB</h3>
+            <div class="close-btn" onclick="closeModal('jsonModal')">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <pre id="jsonViewer" style="background: #1e293b; color: #a5b4fc; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 12px; font-family: monospace; max-height: 400px;"></pre>
+    </div>
+</div>
+
+    <script>
+        // ==================== GLOBAL VARIABLES ====================
+        const API = '/api/admin';
+        let adminKey = localStorage.getItem('adminKey');
+        let currentCategory = 'panel';
+        let productsData = {};
+        let usersData = [];
+        let transactionsData = [];
+        let newProducts = [];
+        let revenueChart = null;
+        let allPteroServersData = [];
+
+        // ==================== INITIAL CHECK ====================
+        if (adminKey) {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            loadDashboard();
+        }
+
+        // ==================== AUTH FUNCTIONS ====================
+        async function authAdmin() {
+            const pass = document.getElementById('adminPass').value;
+            if (!pass) return Swal.fire('Error', 'Masukkan password!', 'warning');
+
+            const btn = document.querySelector('.login-btn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(API + '/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: pass })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    localStorage.setItem('adminKey', data.key);
+                    adminKey = data.key;
+                    
+                    // Memunculkan Popup Sukses
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Akses Diterima!',
+                        text: 'Selamat datang di Dashboard Admin',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        document.getElementById('loginPage').style.display = 'none';
+                        document.getElementById('mainApp').style.display = 'block';
+                        loadDashboard();
+                    });
+                } else {
+                    // Penangkal Undefined jika salah password
+                    Swal.fire('Akses Ditolak', data.message || 'Password yang Anda masukkan salah!', 'error');
+                    btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> MASUK';
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                Swal.fire('Error', 'Koneksi ke server gagal', 'error');
+                btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> MASUK';
+                btn.disabled = false;
+            }
+        }
+
+        function logout() {
+            Swal.fire({
+                title: 'Keluar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('adminKey');
+                    location.reload();
+                }
+            });
+        }
+
+        // ==================== NAVIGATION ====================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').style.display = 
+                document.getElementById('sidebar').classList.contains('active') ? 'block' : 'none';
+        }
+
+        function switchView(view, element) {
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'products': 'Produk',
+                'users': 'Member',
+                'transactions': 'Transaksi',
+                'panels': 'Server',
+                'reviews': 'Ulasan',
+                'info': 'Informasi',
+                'promos': 'Kode Promo', 
+                'system': 'Sistem & DB',
+                'all-servers': 'Semua Server Ptero', 
+                'gacha': 'Setting Hadiah Gacha',
+            };
+            document.getElementById('pageTitle').innerText = titles[view];
+
+            // Hide all views
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + view).classList.add('active');
+
+            // Update menu active state
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            if (element) element.classList.add('active');
+
+            // Close sidebar on mobile
+            if (window.innerWidth < 768) {
+                toggleSidebar();
+            }
+
+            if (view === 'dashboard') loadDashboard();
+            if (view === 'products') loadProducts();
+            if (view === 'users') loadUsers();
+            if (view === 'transactions') loadTransactions();
+            if (view === 'panels') loadPanels();
+            if (view === 'reviews') loadReviews();
+            if (view === 'info') loadInfo(); 
+            if (view === 'promos') loadPromos();
+            if (view === 'system') loadSystemStats();
+            if (view === 'all-servers') loadAllPteroServers();
+            if (view === 'gacha') loadGachaSettings();
+        }
+
+
+        // ==================== API HELPER ====================
+        async function apiCall(url, data = {}) {
+            data.password = adminKey;
+            const res = await fetch(API + url, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'admin-auth': adminKey 
+                },
+                body: JSON.stringify(data)
+            });
+            return await res.json();
+        }
+
+        // ==================== DASHBOARD ====================
+        async function loadDashboard() {
+            try {
+                const data = await apiCall('/stats');
+                if (data.success) {
+                    document.getElementById('d-income').innerText = 'Rp ' + formatNumber(data.total_income);
+                    document.getElementById('d-users').innerText = formatNumber(data.total_users);
+                    document.getElementById('d-balance').innerText = 'Rp ' + formatNumber(data.total_balance_user);
+                    
+                    const trxCount = data.chart.count.reduce((a, b) => a + b, 0);
+                    document.getElementById('d-trx').innerText = formatNumber(trxCount);
+                    
+                    renderChart(data.chart);
+                }
+            } catch (e) {}
+        }
+
+        function renderChart(chartData) {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            if (revenueChart) revenueChart.destroy();
+
+            revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        data: chartData.income,
+                        borderColor: '#2196F3', // Warna biru
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#e2e8f0' } },
+                        x: { grid: { color: 'transparent' } }
+                    }
+                }
+            });
+        }
+
+        // ==================== NEW PRODUCTS LOGIC (24 JAM) ====================
+        
+        function getNewProductsList() {
+            let list = JSON.parse(localStorage.getItem('newProductsList')) || [];
+            const now = Date.now();
+            const oneDay = 24 * 60 * 60 * 1000; 
+
+            const validList = list.filter(item => {
+                return (now - item.timestamp) < oneDay;
+            });
+
+            if (list.length !== validList.length) {
+                localStorage.setItem('newProductsList', JSON.stringify(validList));
+            }
+
+            return validList;
+        }
+
+        function toggleNewStatus(code) {
+            let list = getNewProductsList();
+            const index = list.findIndex(item => item.code === code);
+
+            if (index !== -1) {
+                list.splice(index, 1);
+                Swal.fire({
+                    toast: true, position: 'top-end', icon: 'info', 
+                    title: 'Badge New dihapus', showConfirmButton: false, timer: 1500
+                });
+            } else {
+                list.push({
+                    code: code,
+                    timestamp: Date.now()
+                });
+                Swal.fire({
+                    toast: true, position: 'top-end', icon: 'success', 
+                    title: 'Badge New aktif (24 Jam)', showConfirmButton: false, timer: 1500
+                });
+            }
+
+            localStorage.setItem('newProductsList', JSON.stringify(list));
+            renderProducts(); 
+            renderNewInfo();  
+        }
+
+        function renderNewInfo() {
+            const list = getNewProductsList();
+            const infoDiv = document.getElementById('newProductsInfo');
+            const tagsDiv = document.getElementById('newTags');
+
+            if (list.length > 0) {
+                tagsDiv.innerHTML = '';
+                list.slice(0, 3).forEach(item => {
+                    let prodName = item.code; 
+                    if(productsData[currentCategory]) {
+                         const found = productsData[currentCategory].find(p => p.code === item.code);
+                         if(found) prodName = found.name;
+                    }
+                    tagsDiv.innerHTML += `<span>${prodName}</span>`;
+                });
+
+                if (list.length > 3) {
+                    tagsDiv.innerHTML += `<span>+${list.length - 3} Lainnya</span>`;
+                }
+                infoDiv.style.display = 'flex';
+            } else {
+                infoDiv.style.display = 'none';
+            }
+        }
+
+        // ==================== PRODUCTS ====================
+        function setCategory(cat, element) {
+            currentCategory = cat;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            element.classList.add('active');
+            renderProducts();
+        }
+
+        async function loadProducts() {
+            try {
+                const data = await apiCall('/products');
+                if (data.success) {
+                    productsData = data.data;
+                    renderProducts();
+                }
+            } catch (e) {}
+        }
+
+        function renderProducts() {
+            const list = productsData[currentCategory] || [];
+            const tbody = document.getElementById('productTableBody');
+            tbody.innerHTML = '';
+            
+            const newProductsList = getNewProductsList();
+
+            if (list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-sub);">Belum ada produk</td></tr>';
+                return;
+            }
+
+            list.forEach(p => {
+                const isActive = p.active !== false;
+                const isNew = newProductsList.some(item => item.code === p.code);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" ${isActive ? 'checked' : ''} onchange="toggleProduct('${p.code}')">
+                            <span class="slider"></span>
+                        </label>
+                    </td>
+                    <td><span style="background:var(--bg-body); padding:4px 6px; border-radius:4px; font-size:12px;">${p.code}</span></td>
+                    <td>
+                        ${p.name}
+                        ${isNew ? '<span class="badge-new">NEW</span>' : ''}
+                    </td>
+                    <td style="color:var(--primary); font-weight:600;">Rp ${formatNumber(p.price)}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="new-btn ${isNew ? 'active' : ''}" onclick="toggleNewStatus('${p.code}')" title="Pasang Badge New (24 Jam)">
+                                <i class="fas fa-bolt"></i>
+                            </button>
+                            <div class="action-btn edit" onclick='editProduct(${JSON.stringify(p)})' title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="action-btn delete" onclick="deleteProduct('${p.code}')" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            renderNewInfo();
+        }
+
+        async function toggleProduct(code) {
+            await apiCall('/product-action', { 
+                action: 'toggle-active', 
+                category: currentCategory, 
+                product: { code } 
+            });
+            loadProducts();
+        }
+
+        async function deleteProduct(code) {
+            Swal.fire({
+                title: 'Hapus produk?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya'
+            }).then(async result => {
+                if (result.isConfirmed) {
+                    await apiCall('/product-action', { 
+                        action: 'delete', 
+                        category: currentCategory, 
+                        product: { code } 
+                    });
+                    loadProducts();
+                }
+            });
+        }
+
+        // ==================== PRODUCT MODAL ====================
+        function openProductModal(mode, data = null) {
+    document.getElementById('modalTitle').innerText = mode === 'add' ? 'Tambah Produk' : 'Edit Produk';
+    
+    // Set value standar
+    document.getElementById('prodCode').value = data ? data.code : '';
+    document.getElementById('prodCode').readOnly = mode === 'edit';
+    document.getElementById('prodName').value = data ? data.name : '';
+    document.getElementById('prodPrice').value = data ? data.price : '';
+    
+    // Set kategori (default ke tab yang sedang aktif, atau kategori produk tsb)
+    // Note: Karena struktur data kamu memisahkan array per kategori, kita pakai currentCategory
+    document.getElementById('modalCategory').value = currentCategory;
+    document.getElementById('modalCategory').disabled = mode === 'edit'; // Gaboleh ganti kategori pas edit
+
+    // Panggil fungsi untuk memunculkan field dinamis
+    updateModalFields(data);
+
+    document.getElementById('productModal').classList.add('show');
+}
+
+// FUNGSI BARU: Mengatur Field Dinamis
+function updateModalFields(data = null) {
+    const cat = document.getElementById('modalCategory').value;
+    const area = document.getElementById('dynamicInputArea');
+    area.style.display = 'block';
+    area.innerHTML = '';
+
+    if (cat === 'script') {
+        const menuValue = data?.features?.join('\n') || data?.menu || '';
+        area.innerHTML = `
+            <div class="form-group">
+                <label>Menu / Fitur Script</label>
+                <textarea id="prodMenu" class="form-input" rows="8" placeholder="Tuliskan menu/fitur, satu baris per item...">${menuValue}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Link Download</label>
+                <input type="text" id="prodLink" class="form-input" value="${data?.link || ''}" placeholder="https://...">
+            </div>
+        `;
+    } 
+    else if (cat === 'murid') {
+        const menuValue = data?.benefits?.join('\n') || '';
+        area.innerHTML = `
+            <div class="form-group">
+                <label>Keuntungan Join Murid</label>
+                <textarea id="prodMenu" class="form-input" rows="8" placeholder="Tuliskan keuntungan, satu baris per item...">${menuValue}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Link Grup / Akses</label>
+                <input type="text" id="prodLink" class="form-input" value="${data?.link || ''}" placeholder="https://...">
+            </div>
+        `;
+    } 
+    else if (cat === 'panel') {
+        const specVal = (typeof data?.spec === 'object') ? 
+            `${data.spec.ram}, ${data.spec.cpu}, ${data.spec.disk}` : '';
+        area.innerHTML = `
+            <div class="form-group">
+                <label>Spesifikasi Panel (RAM MB, CPU %, DISK MB)</label>
+                <textarea id="prodSpec" class="form-input" rows="2" placeholder="Contoh: 1024, 100, 1024">${specVal}</textarea>
+                <small style="color:var(--text-sub); font-size:10px;">*Wajib format: RAM, CPU, DISK (Contoh: 2048, 100, 5000)</small>
+            </div>
+        `;
+    } 
+    else if (cat === 'vps') {
+        area.innerHTML = `
+            <div class="form-group">
+                <label>Spesifikasi VPS</label>
+                <textarea id="prodSpec" class="form-input" rows="4" placeholder="Contoh: RAM 2GB - 2 Core">${data?.spec || ''}</textarea>
+            </div>
+        `;
+    } 
+    else if (cat === 'apps') {
+        area.innerHTML = `
+            <div class="form-group">
+                <label>Email Akun (Opsional)</label>
+                <input type="text" id="prodEmail" class="form-input" value="${data?.email || ''}" placeholder="email@contoh.com">
+            </div>
+            <div class="form-group">
+                <label>Password Akun (Opsional)</label>
+                <input type="text" id="prodPass" class="form-input" value="${data?.password || ''}" placeholder="password123">
+            </div>
+            <div class="form-group">
+                <label>Tambah Stok Akun (pisahkan dengan enter)</label>
+                <textarea id="prodStock" class="form-input" rows="5" placeholder="akun1:pass1&#10;akun2:pass2"></textarea>
+                <small style="color:var(--text-sub); font-size:10px;">*Hanya isi jika ingin menambah stok. Stok lama tidak akan hilang.</small>
+            </div>
+        `;
+    } else {
+        area.style.display = 'none';
+    }
+}
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        async function saveProduct() {
+    const action = document.getElementById('modalTitle').innerText.includes('Tambah') ? 'add' : 'edit';
+    const category = document.getElementById('modalCategory').value; 
+    
+    const code = document.getElementById('prodCode').value;
+    const name = document.getElementById('prodName').value;
+    const price = document.getElementById('prodPrice').value;
+
+    if (!code || !name || !price) {
+        return Swal.fire('Error', 'Lengkapi Kode, Nama, dan Harga!', 'warning');
+    }
+
+    const product = { code, name, price };
+
+    // Proses data berdasarkan kategori
+    if (category === 'panel') {
+        const specRaw = document.getElementById('prodSpec') ? document.getElementById('prodSpec').value : '';
+        const parts = specRaw.split(',');
+        if(parts.length >= 3) {
+            product.spec = {
+                ram: parseInt(parts[0].replace(/\D/g,'')) || 1024,
+                cpu: parseInt(parts[1].replace(/\D/g,'')) || 100,
+                disk: parseInt(parts[2].replace(/\D/g,'')) || 1024
+            };
+        } else {
+            product.spec = { ram: 1024, cpu: 100, disk: 1024 }; 
+        }
+    } 
+    else if (category === 'vps') {
+        product.specString = document.getElementById('prodSpec') ? document.getElementById('prodSpec').value : '';
+    }
+    else if (category === 'script') {
+        product.features_raw = document.getElementById('prodMenu') ? document.getElementById('prodMenu').value : '';
+        product.link = document.getElementById('prodLink') ? document.getElementById('prodLink').value : '';
+    }
+    else if (category === 'murid') {
+        product.benefits_raw = document.getElementById('prodMenu') ? document.getElementById('prodMenu').value : '';
+        product.link = document.getElementById('prodLink') ? document.getElementById('prodLink').value : '';
+    }
+    else if (category === 'apps') {
+        product.email = document.getElementById('prodEmail') ? document.getElementById('prodEmail').value : '';
+        product.password = document.getElementById('prodPass') ? document.getElementById('prodPass').value : '';
+        product.stock = document.getElementById('prodStock') ? document.getElementById('prodStock').value : '';
+    }
+
+    const btn = document.querySelector('#productModal .btn');
+    const oldText = btn.innerText;
+    btn.innerText = 'MEMPROSES...';
+    btn.disabled = true;
+
+    try {
+        const res = await apiCall('/product-action', { action, category, product });
+        if(res.success) {
+            closeModal('productModal');
+            loadProducts(); 
+            Swal.fire('Sukses', res.message, 'success');
+        } else {
+            Swal.fire('Gagal', res.message, 'error');
+        }
+    } catch (e) {
+        Swal.fire('Error', 'Terjadi kesalahan jaringan.', 'error');
+    } finally {
+        btn.innerText = oldText;
+        btn.disabled = false;
+    }
+}
+
+        function editProduct(data) {
+            openProductModal('edit', data);
+        }
+
+        // ==================== USERS ====================
+        async function loadUsers() {
+            try {
+                const data = await apiCall('/get-users');
+                if (data.success) {
+                    usersData = data.data;
+                    renderUsers();
+                }
+            } catch (e) {}
+        }
+
+        function renderUsers() {
+    const tbody = document.getElementById('userTableBody');
+    tbody.innerHTML = '';
+
+    if (usersData.length === 0) {
+        // Colspan diubah dari 4 jadi 5 karena nambah 1 kolom
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:15px; color:var(--text-sub);">Belum ada member</td></tr>';
+        return;
+    }
+
+    usersData.forEach((user, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td style="font-weight: 600; color: var(--text-sub); text-align: center;">${index + 1}</td> <td>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <img src="${user.profile_img || 'images/default-user.png'}" style="width:30px; height:30px; border-radius:50%; object-fit:cover;">
+                    <div>
+                        <strong style="display:block; font-size:13px;">${user.username}</strong>
+                        <small style="font-size:11px; color:var(--text-sub);">${user.fullname || 'User'}</small>
+                    </div>
+                </div>
+            </td>
+            <td>${user.phone || '-'}</td>
+            <td style="color:var(--primary); font-weight:bold;">Rp ${formatNumber(user.balance)}</td>
+            <td>
+                <div class="action-btns">
+                    <div class="action-btn btn-view" onclick="viewUser(${index})" title="Detail Member">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="action-btn delete" onclick="deleteUser('${user.username}')" title="Hapus Member">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+        function viewUser(index) {
+            const user = usersData[index];
+            
+            // Ambil data langsung dari kalkulasi backend yang lebih akurat
+            const totalTrxCount = user.total_trx || 0;
+            const successTrxCount = user.total_trx || 0; // Aggregation backend di atas hanya menghitung yang sukses
+            const totalDeposit = user.total_deposit || 0; 
+            const totalPengeluaran = user.total_expense || 0; 
+
+            const content = document.getElementById('userDetailContent');
+            content.innerHTML = `
+                <div class="user-profile-header">
+                    <img src="${user.profile_img || 'images/default-user.png'}" class="user-avatar-lg">
+                    <div class="user-name">${user.fullname || 'Nama Tidak Diisi'}</div>
+                    <div class="user-username">@${user.username}</div>
+                </div>
+
+                <div class="user-stats-container">
+                    <div class="user-stat-box">
+                        <div class="us-label">Sisa Saldo</div>
+                        <div class="us-value money">Rp ${formatNumber(user.balance)}</div>
+                    </div>
+                    <div class="user-stat-box">
+                        <div class="us-label">Total Trx</div>
+                        <div class="us-value">${totalTrxCount}x</div>
+                    </div>
+                    <div class="user-stat-box">
+                        <div class="us-label">Total Deposit</div>
+                        <div class="us-value money">Rp ${formatNumber(totalDeposit)}</div>
+                    </div>
+                    <div class="user-stat-box">
+                        <div class="us-label">Pengeluaran</div>
+                        <div class="us-value expense">Rp ${formatNumber(totalPengeluaran)}</div>
+                    </div>
+                </div>
+
+                <div class="info-list">
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-phone"></i> WhatsApp</div>
+                        <div class="info-val">${user.phone || '-'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-calendar-alt"></i> Bergabung</div>
+                        <div class="info-val">${new Date(user.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label"><i class="fas fa-check-circle"></i> Trx Sukses</div>
+                        <div class="info-val" style="color:#10b981;">${successTrxCount} Transaksi</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top:20px; display:flex; gap:10px;">
+                    <button class="btn" style="background:#f39c12;" onclick="closeModal('userModal')">TUTUP</button>
+                </div>
+            `;
+            document.getElementById('userModal').classList.add('show');
+        }
+
+        async function deleteUser(username) {
+            Swal.fire({
+                title: 'Hapus user?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya'
+            }).then(async result => {
+                if (result.isConfirmed) {
+                    await apiCall('/delete-user', { username });
+                    loadUsers();
+                }
+            });
+        }
+
+        // ==================== TRANSACTIONS ====================
+        async function loadTransactions() {
+            try {
+                const data = await apiCall('/transactions');
+                if (data.success) {
+                    transactionsData = data.data; // Simpan ke global
+                    renderTransactions();
+                }
+            } catch (e) {}
+        }
+
+        function renderTransactions() {
+            const tbody = document.getElementById('trxTableBody');
+            tbody.innerHTML = '';
+
+            transactionsData.slice(0, 50).forEach(trx => {
+                let statusClass = 'status-pending';
+                if (trx.status === 'success') statusClass = 'status-success';
+                if (trx.status === 'canceled' || trx.status === 'expired') statusClass = 'status-failed';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="font-family:monospace;">${trx.order_id.substring(0, 8)}...</td>
+                    <td>${trx.username}</td>
+                    <td>${trx.product_data?.product_name || trx.type || '-'}</td>
+                    <td><span class="status-badge ${statusClass}">${trx.status.toUpperCase()}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // ==================== PANELS ====================
+        async function loadPanels() {
+    try {
+        const data = await apiCall('/panels');
+        if (data.success) {
+            document.getElementById('tot-panels').innerText = data.total_panels;
+            document.getElementById('tot-ptero-users').innerText = data.total_users;
+            renderPanels(data.data);
+        }
+    } catch (e) {}
+}
+
+function renderPanels(panels) {
+    const tbody = document.getElementById('panelTableBody');
+    tbody.innerHTML = '';
+
+    if (panels.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-sub);">Tidak ada panel aktif</td></tr>';
+        return;
+    }
+
+    panels.forEach(p => {
+        // Format Spek RAM/CPU/Disk
+        let spekText = "-";
+        if(p.spec && typeof p.spec === 'object') {
+            spekText = `<span style="font-size:11px;">RAM: ${p.spec.ram}MB<br>CPU: ${p.spec.cpu}%<br>Disk: ${p.spec.disk}MB</span>`;
+        }
+
+        // Format Tanggal Dibuat dan Expired
+        const createDate = new Date(p.created_at).toLocaleDateString('id-ID');
+        const expDate = new Date(p.expired_at).toLocaleDateString('id-ID');
+        const isExpired = new Date(p.expired_at) < new Date();
+        const expColor = isExpired ? '#ef4444' : '#10b981'; // Merah kalau expired, Hijau kalau masih aktif
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>#${p.id}</td>
+            <td>
+                <strong>${p.username_panel}</strong><br>
+                <small style="color:var(--text-sub);">Owner: ${p.username_owner}</small>
+            </td>
+            <td>${spekText}</td>
+            <td>
+                <span style="font-size:10px; color:var(--text-sub);">Dibuat: ${createDate}</span><br>
+                <span style="font-size:11px; font-weight:bold; color:${expColor};">Exp: ${expDate}</span>
+            </td>
+            <td id="status-${p.uuid}">
+                <button class="btn" style="padding:4px 8px; font-size:10px; width:auto; background:var(--primary);" onclick="checkPanelStatus('${p.uuid}')">
+                    <i class="fas fa-wifi"></i> Cek Status
+                </button>
+            </td>
+            <td>
+                <div class="action-btns" style="flex-wrap: wrap;">
+                    <div class="action-btn" onclick="sendPowerSignal('${p.uuid}', 'start')" title="Start Server" style="color: #10b981; border-color: #10b981;">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="action-btn" onclick="sendPowerSignal('${p.uuid}', 'restart')" title="Restart Server" style="color: #f59e0b; border-color: #f59e0b;">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <div class="action-btn" onclick="sendPowerSignal('${p.uuid}', 'kill')" title="Force Stop Server" style="color: #ef4444; border-color: #ef4444;">
+                        <i class="fas fa-stop"></i>
+                    </div>
+                    <div class="action-btn delete" onclick="deletePanel('${p.id}', '${p.username_panel}')" title="Hapus Permanen (User & Server)">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+        async function checkPanelStatus(uuid) {
+    const td = document.getElementById(`status-${uuid}`);
+    td.innerHTML = '<span style="font-size:11px; color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> Mengecek...</span>';
+    
+    try {
+        const res = await apiCall('/panel-status', { uuid });
+        if (res.success) {
+            const state = res.data.current_state; // running, offline, starting
+            let color = state === 'running' ? '#10b981' : (state === 'offline' ? '#ef4444' : '#f59e0b');
+            
+            // Format RAM yang sedang berjalan dari bytes ke MB
+            const ramUsage = (res.data.resources.memory_bytes / (1024 * 1024)).toFixed(1);
+            
+            td.innerHTML = `
+                <span class="status-badge" style="background:${color}; color:white; margin-bottom:4px;">${state.toUpperCase()}</span><br>
+                <span style="font-size:10px; color:var(--text-sub);">Used: ${ramUsage} MB</span>
+            `;
+        } else {
+            td.innerHTML = `<span class="status-badge status-failed">OFFLINE / SUSPEND</span>`;
+        }
+    } catch (e) {
+        td.innerHTML = `<span class="status-badge status-failed">ERROR</span>`;
+    }
+}
+
+async function sendPowerSignal(uuid, signal) {
+    Swal.fire({
+        title: `Kirim perintah ${signal.toUpperCase()}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Lakukan'
+    }).then(async result => {
+        if (result.isConfirmed) {
+            Swal.fire({ title: 'Memproses...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+            try {
+                const res = await apiCall('/panel-power', { uuid, signal });
+                if (res.success) {
+                    Swal.fire('Sukses!', res.message, 'success');
+                    setTimeout(() => checkPanelStatus(uuid), 2000); // Otomatis cek status 2 detik setelah diklik
+                } else {
+                    Swal.fire('Gagal', res.message, 'error');
+                }
+            } catch (e) {
+                Swal.fire('Error', 'Kesalahan jaringan', 'error');
+            }
+        }
+    });
+}
+
+async function deletePanel(panelId, username) {
+    Swal.fire({
+        title: 'Hapus Permanen?',
+        text: 'Ini akan menghapus Server dan User Pterodactyl sekaligus!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Hapus Semua'
+    }).then(async result => {
+        if (result.isConfirmed) {
+            Swal.fire({ title: 'Menghapus Server & User...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+            await apiCall('/delete-panel-force', { panel_id: panelId, username_panel: username });
+            Swal.fire('Terhapus!', 'Server dan User berhasil dihapus.', 'success');
+            loadPanels();
+        }
+    });
+}
+
+        // ==================== REVIEWS ====================
+        async function loadReviews() {
+            try {
+                const res = await fetch('/api/reviews');
+                const data = await res.json();
+                renderReviews(data.data);
+            } catch (e) {}
+        }
+
+        function renderReviews(reviews) {
+    const container = document.getElementById('reviewsContainer');
+    container.innerHTML = '';
+
+    if (reviews.length === 0) {
+        container.innerHTML = '<div class="card" style="text-align:center; color:var(--text-sub);">Belum ada ulasan</div>';
+        return;
+    }
+
+    reviews.forEach(r => {
+        // Hitung Jumlah Reaction
+        const reactions = r.reactions || [];
+        const loves = reactions.filter(x => x.type === 'love').length;
+        const likes = reactions.filter(x => x.type === 'like').length;
+        const dislikes = reactions.filter(x => x.type === 'dislike').length;
+
+        // Cek apakah admin sudah react
+        const adminReact = reactions.find(x => x.isAdmin === true);
+        const adminReactType = adminReact ? adminReact.type : null;
+
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <img src="${r.profile_img || 'images/default-user.png'}" style="width:30px; height:30px; border-radius:50%; object-fit:cover;">
+                    <div>
+                        <strong style="display:block; font-size:13px; line-height:1.2;">${r.fullname}</strong>
+                        <span style="font-size:11px; color:var(--text-sub);">@${r.username} • ${r.category}</span>
+                    </div>
+                </div>
+                <span style="color:#f59e0b; font-size:12px;">${'⭐'.repeat(r.rating)}</span>
+            </div>
+            
+            <p style="font-size:13px; color:var(--text-main); margin-bottom:10px; background:var(--bg-body); padding:10px; border-radius:8px;">"${r.message}"</p>
+            
+            <div class="reaction-stats">
+                <div class="react-badge rb-love" title="Love">
+                    <i class="fas fa-heart"></i> ${loves}
+                </div>
+                <div class="react-badge rb-like" title="Like">
+                    <i class="fas fa-thumbs-up"></i> ${likes}
+                </div>
+                <div class="react-badge rb-dislike" title="Dislike">
+                    <i class="fas fa-thumbs-down"></i> ${dislikes}
+                </div>
+            </div>
+
+            <!-- Tombol Reaksi untuk Admin -->
+            <div style="display:flex; gap:10px; margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+                <button class="action-btn ${adminReactType === 'love' ? 'active-love' : ''}" 
+                        onclick="adminReact('${r.id}', 'love')" 
+                        style="flex:1; background:${adminReactType === 'love' ? '#e74c3c' : 'var(--bg-body)'}; color:${adminReactType === 'love' ? 'white' : 'var(--text-sub)'};">
+                    <i class="fas fa-heart"></i> Love
+                </button>
+                <button class="action-btn ${adminReactType === 'like' ? 'active-like' : ''}" 
+                        onclick="adminReact('${r.id}', 'like')" 
+                        style="flex:1; background:${adminReactType === 'like' ? '#2980b9' : 'var(--bg-body)'}; color:${adminReactType === 'like' ? 'white' : 'var(--text-sub)'};">
+                    <i class="fas fa-thumbs-up"></i> Like
+                </button>
+                <button class="action-btn ${adminReactType === 'dislike' ? 'active-dislike' : ''}" 
+                        onclick="adminReact('${r.id}', 'dislike')" 
+                        style="flex:1; background:${adminReactType === 'dislike' ? '#555' : 'var(--bg-body)'}; color:${adminReactType === 'dislike' ? 'white' : 'var(--text-sub)'};">
+                    <i class="fas fa-thumbs-down"></i> Dislike
+                </button>
+            </div>
+
+            ${r.admin_reply ? 
+                `<div style="background:#e0f2f1; padding:10px; border-radius:6px; margin-top:10px; border-left:3px solid #00897b;">
+                    <div style="font-size:11px; font-weight:bold; color:#00695c; margin-bottom:3px;"><i class="fas fa-reply"></i> Balasan Anda:</div>
+                    <small style="color:#004d40;">${r.admin_reply}</small>
+                </div>` : 
+                `<div style="display:flex; gap:5px; margin-top:12px;">
+                    <input type="text" id="reply-${r.id}" class="form-input" style="flex:1; font-size:12px;" placeholder="Tulis balasan...">
+                    <button class="action-btn" style="width:auto; padding:0 15px; background:var(--primary); color:white; border:none;" onclick="sendReply('${r.id}')">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>`
+            }
+        `;
+        container.appendChild(div);
+    });
+}
+
+        async function sendReply(reviewId) {
+            const msg = document.getElementById('reply-' + reviewId).value;
+            if (!msg) return;
+            await apiCall('/reply-review', { review_id: reviewId, reply_message: msg });
+            loadReviews();
+        }
+
+        // ==================== UTILITIES ====================
+        function formatNumber(num) {
+            return parseInt(num).toLocaleString('id-ID');
+        }
+
+        function searchTable(tableId, value) {
+            const filter = value.toUpperCase();
+            const table = document.getElementById(tableId);
+            const rows = table.getElementsByTagName('tr');
+            
+            for (let i = 1; i < rows.length; i++) {
+                const text = rows[i].textContent || rows[i].innerText;
+                rows[i].style.display = text.toUpperCase().indexOf(filter) > -1 ? '' : 'none';
+            }
+        }
+
+        async function refreshData() {
+            const icon = document.getElementById('refreshIcon');
+            icon.classList.add('fa-spin');
+            
+            const currentView = document.querySelector('.view.active').id.replace('view-', '');
+            
+            if (currentView === 'dashboard') await loadDashboard();
+            if (currentView === 'products') await loadProducts();
+            if (currentView === 'users') await loadUsers();
+            if (currentView === 'transactions') await loadTransactions();
+            if (currentView === 'panels') await loadPanels();
+            if (currentView === 'reviews') await loadReviews();
+            if (currentView === 'info') await loadInfo(); 
+            if (currentView === 'promos') loadPromos(); // <--- TAMBAHKAN BARIS INI JUGA
+
+            setTimeout(() => {
+                icon.classList.remove('fa-spin');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data diperbarui',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            }, 500);
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('themeIcon');
+            icon.className = document.body.classList.contains('dark-mode') ? 'fas fa-sun' : 'fas fa-moon';
+            
+            if (revenueChart) {
+                revenueChart.options.scales.y.grid.color = document.body.classList.contains('dark-mode') ? '#334155' : '#e2e8f0';
+                revenueChart.update();
+            }
+        }
+        
+        // Tambahkan fungsi ini di halaman admin
+async function adminReact(reviewId, type) {
+    const adminPass = localStorage.getItem('adminKey');
+    
+    try {
+        const res = await fetch('/api/react-review', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ 
+                review_id: reviewId, 
+                type: type, 
+                admin_pass: adminPass 
+            })
+        });
+        
+        const json = await res.json();
+        if(json.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Reaksi Admin Dikirim!',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            loadReviews(); // Reload reviews
+        }
+    } catch(e) {
+        console.log(e);
+    }
+}
+
+// ==================== INFO / BROADCAST ====================
+let infoData = [];
+
+async function loadInfo() {
+    try {
+        const res = await fetch('/api/get-broadcasts');
+        const data = await res.json();
+        if (data.success) {
+            infoData = data.data;
+            renderInfo();
+        }
+    } catch (e) {}
+}
+
+function renderInfo() {
+    const tbody = document.getElementById('infoTableBody');
+    tbody.innerHTML = '';
+    
+    if (infoData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:15px; color:var(--text-sub);">Belum ada informasi</td></tr>';
+        return;
+    }
+
+    infoData.forEach(info => {
+        const dateStr = new Date(info.date).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'});
+        let typeColor = info.type === 'promo' ? '#10b981' : (info.type === 'warning' ? '#ef4444' : 'var(--primary)');
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${dateStr}</td>
+            <td><span style="background:${typeColor}; color:white; padding:4px 8px; border-radius:12px; font-size:10px; font-weight:bold; text-transform:uppercase;">${info.type}</span></td>
+            <td>${info.message.substring(0, 60)}${info.message.length > 60 ? '...' : ''}</td>
+            <td>
+                <div class="action-btn delete" onclick="deleteInfo('${info.id}')" title="Hapus">
+                    <i class="fas fa-trash"></i>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+async function sendInfo() {
+    const type = document.getElementById('infoType').value;
+    const message = document.getElementById('infoMessage').value;
+    
+    if (!message) return Swal.fire('Error', 'Pesan tidak boleh kosong!', 'warning');
+    
+    const btn = document.querySelector('#view-info .btn');
+    btn.innerHTML = 'MENGIRIM...';
+    btn.disabled = true;
+    
+    try {
+        const res = await apiCall('/send-broadcast', { type, message });
+        if (res.success) {
+            Swal.fire('Sukses', 'Informasi berhasil disebar!', 'success');
+            document.getElementById('infoMessage').value = '';
+            loadInfo();
+        } else {
+            Swal.fire('Gagal', res.message, 'error');
+        }
+    } catch (e) {
+        Swal.fire('Error', 'Terjadi kesalahan jaringan', 'error');
+    }
+    
+    btn.innerHTML = 'KIRIM PENGUMUMAN';
+    btn.disabled = false;
+}
+
+async function deleteInfo(id) {
+    Swal.fire({
+        title: 'Hapus Informasi?',
+        icon: 'warning',
+        text: 'Informasi akan hilang dari riwayat member.',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Hapus'
+    }).then(async result => {
+        if (result.isConfirmed) {
+            await apiCall('/delete-broadcast', { id });
+            loadInfo();
+        }
+    });
+}
+
+// ============ ADMIN PROMO FUNCTIONS ============
+let promosData = [];
+
+function loadPromos() {
+    apiCall('/promos').then(data => {
+        if(data.success) {
+            promosData = data.data;
+            renderPromos();
+        }
+    });
+}
+
+function renderPromos() {
+    const tbody = document.getElementById('promoTableBody');
+    tbody.innerHTML = '';
+    
+    promosData.forEach(p => {
+        const row = document.createElement('tr');
+        
+        // Pelindung agar tidak Undefined saat format diskon
+        const discountType = p.discount_type || 'fixed';
+        const discountValue = p.discount_value || 0;
+        let discountText = discountType === 'percentage' ? 
+            `${discountValue}%` : 
+            `Rp ${formatNumber(discountValue)}`;
+            
+        if(p.max_discount && discountType === 'percentage') {
+            discountText += ` (max Rp ${formatNumber(p.max_discount)})`;
+        }
+        
+        // Pelindung agar tidak Undefined/Error saat format kategori
+        let categories = 'SEMUA';
+        if (p.applicable_categories && Array.isArray(p.applicable_categories) && p.applicable_categories.length > 0) {
+            categories = p.applicable_categories.join(', ').toUpperCase();
+        }
+        
+        // Pelindung agar tidak Undefined saat format tanggal
+        const start = p.start_date ? new Date(p.start_date).toLocaleDateString() : '-';
+        const end = p.end_date ? new Date(p.end_date).toLocaleDateString() : '∞';
+        
+        row.innerHTML = `
+            <td><strong>${p.code || '-'}</strong></td>
+            <td>${p.name || '-'}</td>
+            <td style="color: #27ae60;">${discountText}</td>
+            <td><small>${categories}</small></td>
+            <td><small>${start} - ${end}</small></td>
+            <td><span class="status-badge ${p.status ? 'status-success' : 'status-failed'}">${p.status ? 'Aktif' : 'Nonaktif'}</span></td>
+            <td>
+                <div class="action-btns">
+                    <div class="action-btn edit" onclick="editPromo('${p._id}')"><i class="fas fa-edit"></i></div>
+                    <div class="action-btn delete" onclick="deletePromo('${p._id}')"><i class="fas fa-trash"></i></div>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+function openPromoModal(mode, id = null) {
+    document.getElementById('promoModalTitle').innerText = mode === 'add' ? 'Tambah Promo' : 'Edit Promo';
+    
+    if(mode === 'add') {
+        document.getElementById('promoId').value = '';
+        document.getElementById('promoCode').value = '';
+        document.getElementById('promoName').value = '';
+        document.getElementById('promoDesc').value = '';
+        document.getElementById('promoType').value = 'percentage';
+        document.getElementById('promoValue').value = '';
+        document.getElementById('promoMax').value = '';
+        document.getElementById('promoMin').value = '0';
+        document.getElementById('promoLimit').value = '0';
+        document.getElementById('promoPerUser').value = '1';
+        document.getElementById('promoStatus').checked = true;
+        
+        // Set default start date = now
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('promoStart').value = now.toISOString().slice(0, 16);
+        document.getElementById('promoEnd').value = '';
+        
+        // Uncheck semua kategori
+        document.querySelectorAll('#promoModal input[type="checkbox"]').forEach(cb => cb.checked = false);
+    }
+    
+    toggleDiscountFields();
+    document.getElementById('promoModal').classList.add('show');
+}
+
+function toggleDiscountFields() {
+    const type = document.getElementById('promoType').value;
+    document.getElementById('maxDiscountField').style.display = type === 'percentage' ? 'block' : 'none';
+}
+
+function editPromo(id) {
+    const promo = promosData.find(p => p._id === id);
+    if(!promo) return;
+    
+    document.getElementById('promoId').value = promo._id;
+    document.getElementById('promoCode').value = promo.code;
+    document.getElementById('promoName').value = promo.name || '';
+    document.getElementById('promoDesc').value = promo.description || '';
+    document.getElementById('promoType').value = promo.discount_type;
+    document.getElementById('promoValue').value = promo.discount_value;
+    document.getElementById('promoMax').value = promo.max_discount || '';
+    document.getElementById('promoMin').value = promo.min_purchase || 0;
+    document.getElementById('promoLimit').value = promo.usage_limit || 0;
+    document.getElementById('promoPerUser').value = promo.per_user_limit || 1;
+    document.getElementById('promoStatus').checked = promo.status;
+    
+    // Set dates
+    const start = new Date(promo.start_date);
+    start.setMinutes(start.getMinutes() - start.getTimezoneOffset());
+    document.getElementById('promoStart').value = start.toISOString().slice(0, 16);
+    
+    if(promo.end_date) {
+        const end = new Date(promo.end_date);
+        end.setMinutes(end.getMinutes() - end.getTimezoneOffset());
+        document.getElementById('promoEnd').value = end.toISOString().slice(0, 16);
+    } else {
+        document.getElementById('promoEnd').value = '';
+    }
+    
+    // Check categories
+    document.querySelectorAll('#promoModal input[type="checkbox"]').forEach(cb => {
+        cb.checked = promo.applicable_categories.includes(cb.value);
+    });
+    
+    toggleDiscountFields();
+    document.getElementById('promoModal').classList.add('show');
+}
+
+async function savePromo() {
+    const id = document.getElementById('promoId').value;
+    const code = document.getElementById('promoCode').value;
+    const name = document.getElementById('promoName').value;
+    const desc = document.getElementById('promoDesc').value;
+    const type = document.getElementById('promoType').value;
+    const value = parseInt(document.getElementById('promoValue').value);
+    const max = document.getElementById('promoMax').value ? parseInt(document.getElementById('promoMax').value) : null;
+    const min = parseInt(document.getElementById('promoMin').value) || 0;
+    const limit = parseInt(document.getElementById('promoLimit').value) || 0;
+    const perUser = parseInt(document.getElementById('promoPerUser').value) || 1;
+    const status = document.getElementById('promoStatus').checked;
+    
+    // Ambil kategori yang dicentang
+    const categories = [];
+    document.querySelectorAll('#promoModal input[type="checkbox"]:checked').forEach(cb => {
+        if(cb.id !== 'promoStatus' && cb.value && cb.value !== 'on') {
+            categories.push(cb.value);
+        }
+    });
+    if(categories.length === 0) categories.push('all');
+    
+    const start = document.getElementById('promoStart').value;
+    const end = document.getElementById('promoEnd').value;
+    
+    if(!code || !value) {
+        return Swal.fire('Error', 'Kode dan nilai diskon wajib diisi', 'warning');
+    }
+    
+    const btn = document.querySelector('#promoModal .btn');
+    btn.innerHTML = 'MENYIMPAN...'; btn.disabled = true;
+    
+    try {
+        const res = await apiCall('/save-promo', {
+            id: id || null,
+            code, name, description: desc,
+            discount_type: type, discount_value: value,
+            max_discount: max, min_purchase: min,
+            applicable_categories: categories,
+            applicable_products: [],
+            start_date: start,
+            end_date: end || null,
+            usage_limit: limit, per_user_limit: perUser,
+            status
+        });
+        
+        if(res.success) {
+            closeModal('promoModal');
+            loadPromos();
+            Swal.fire('Sukses', res.message || 'Promo berhasil disimpan!', 'success');
+        } else {
+            Swal.fire('Gagal', res.message || 'Gagal menyimpan promo. Coba lagi.', 'error');
+        }
+    } catch(e) {
+        Swal.fire('Error', 'Gagal menyimpan', 'error');
+    }
+    
+    btn.innerHTML = 'SIMPAN PROMO'; btn.disabled = false;
+}
+
+async function deletePromo(id) {
+    Swal.fire({
+        title: 'Hapus promo?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya'
+    }).then(async result => {
+        if(result.isConfirmed) {
+            await apiCall('/delete-promo', { id });
+            loadPromos();
+        }
+    });
+}
+
+function searchPromo() {
+    const search = document.getElementById('promoSearch').value.toUpperCase();
+    const rows = document.querySelectorAll('#promoTable tbody tr');
+    rows.forEach(row => {
+        const text = row.innerText.toUpperCase();
+        row.style.display = text.includes(search) ? '' : 'none';
+    });
+}
+
+// ==================== SYSTEM & MONGODB KONTROL ====================
+
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+async function loadSystemStats() {
+    try {
+        const data = await apiCall('/system-stats');
+        if (data.success) {
+            document.getElementById('sys-ram-total').innerText = formatBytes(data.data.ram_total);
+            document.getElementById('sys-ram-used').innerText = formatBytes(data.data.ram_used);
+            document.getElementById('sys-ram-free').innerText = formatBytes(data.data.ram_free);
+            
+            // Info DB
+            const dbSize = formatBytes(data.data.db_size);
+            document.getElementById('sys-db-size').innerText = `${dbSize} (${formatNumber(data.data.db_objects)} Dokumen)`;
+        }
+    } catch (e) {
+        console.error("Gagal load system stats", e);
+    }
+}
+
+function cleanupSystem() {
+    Swal.fire({
+        title: 'Mulai Pembersihan?',
+        text: "Tindakan ini aman dan akan melegakan resource server kamu.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Bersihkan!',
+        cancelButtonText: 'Batal'
+    }).then(async result => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Membersihkan...',
+                html: 'Mohon tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+
+            try {
+                const data = await apiCall('/system-cleanup');
+                if (data.success) {
+                    Swal.fire('Selesai!', data.message, 'success');
+                    loadSystemStats(); // Refresh data RAM setelah dibersihkan
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch (e) {
+                Swal.fire('Error', 'Terjadi kesalahan jaringan.', 'error');
+            }
+        }
+    });
+}
+
+async function syncPanels() {
+    Swal.fire({
+        title: 'Sinkronisasi Panel?',
+        text: 'Ini akan menarik semua data server yang ada di Pterodactyl namun belum tercatat di database website.',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Tarik Data!',
+        cancelButtonText: 'Batal'
+    }).then(async result => {
+        if (result.isConfirmed) {
+            Swal.fire({ title: 'Menarik Data...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+            try {
+                const res = await apiCall('/sync-panels');
+                if (res.success) {
+                    Swal.fire('Berhasil!', res.message, 'success');
+                    loadPanels(); // Memuat ulang tabel panel
+                } else {
+                    Swal.fire('Gagal', res.message, 'error');
+                }
+            } catch (e) {
+                Swal.fire('Error', 'Kesalahan jaringan saat menyinkronkan data.', 'error');
+            }
+        }
+    });
+}
+
+// ==================== ALL PTERODACTYL SERVERS (LIVE) ====================
+async function loadAllPteroServers() {
+    const tbody = document.getElementById('allServerTableBody');
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Menarik data dari Pterodactyl...</td></tr>';
+    
+    try {
+        const res = await apiCall('/ptero-servers-all');
+        if (res.success) {
+            allPteroServersData = res.data; // Simpan data ke variabel global
+            renderAllPteroServers(res.data);
+        } else {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#ef4444;">${res.message}</td></tr>`;
+        }
+    } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#ef4444;">Gagal koneksi ke server.</td></tr>';
+    }
+}
+
+async function checkAllStatusPtero() {
+    if (!allPteroServersData || allPteroServersData.length === 0) {
+        return Swal.fire('Kosong', 'Tidak ada server untuk dicek.', 'info');
+    }
+
+    // Munculkan notifikasi pop-up kecil di pojok
+    Swal.fire({
+        title: 'Mengecek Semua Status...',
+        text: 'Mohon tunggu sebentar, sedang memindai server.',
+        icon: 'info',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+
+    // Lakukan perulangan untuk mengecek setiap server
+    for (const server of allPteroServersData) {
+        // Panggil fungsi cek status per server yang sudah ada
+        checkPanelStatusAll(server.uuid);
+        
+        // Jeda 150 milidetik per request agar Pterodactyl tidak down/rate limit
+        await new Promise(resolve => setTimeout(resolve, 150)); 
+    }
+}
+
+function renderAllPteroServers(servers) {
+    const tbody = document.getElementById('allServerTableBody');
+    tbody.innerHTML = '';
+
+    if (servers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Tidak ada server di Pterodactyl</td></tr>';
+        return;
+    }
+
+    servers.forEach(s => {
+        const spekText = `<span style="font-size:11px;">RAM: ${s.limits.memory}MB<br>CPU: ${s.limits.cpu}%<br>Disk: ${s.limits.disk}MB</span>`;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>#${s.id}<br><small style="color:var(--text-sub);">${s.identifier}</small></td>
+            <td><strong>${s.name}</strong></td>
+            <td>
+                <span style="font-size:13px;">${s.username}</span><br>
+                <span style="font-size:11px; color:var(--text-sub);">${s.email}</span>
+            </td>
+            <td>${spekText}</td>
+            <td id="status-all-${s.uuid}">
+                <button class="btn" style="padding:4px 8px; font-size:10px; width:auto; background:var(--primary);" onclick="checkPanelStatusAll('${s.uuid}')">
+                    <i class="fas fa-wifi"></i> Cek Status
+                </button>
+            </td>
+            <td>
+                <div class="action-btns" style="flex-wrap: wrap;">
+                    <div class="action-btn" onclick="sendPowerSignal('${s.uuid}', 'start')" title="Start Server" style="color: #10b981; border-color: #10b981;">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="action-btn" onclick="sendPowerSignal('${s.uuid}', 'restart')" title="Restart Server" style="color: #f59e0b; border-color: #f59e0b;">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <div class="action-btn" onclick="sendPowerSignal('${s.uuid}', 'kill')" title="Force Stop Server" style="color: #ef4444; border-color: #ef4444;">
+                        <i class="fas fa-stop"></i>
+                    </div>
+                    <div class="action-btn delete" onclick="deletePteroServerAll(${s.id}, ${s.user_id}, '${s.name}')" title="Hapus Server & User Permanen">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// Fungsi untuk cek status khusus untuk menu Semua Server
+async function checkPanelStatusAll(uuid) {
+    const td = document.getElementById(`status-all-${uuid}`);
+    td.innerHTML = '<span style="font-size:11px; color:var(--text-sub);"><i class="fas fa-spinner fa-spin"></i> Mengecek...</span>';
+    
+    try {
+        const res = await apiCall('/panel-status', { uuid }); // Kita pakai endpoint yang sama dengan panel web
+        if (res.success) {
+            const state = res.data.current_state; 
+            let color = state === 'running' ? '#10b981' : (state === 'offline' ? '#ef4444' : '#f59e0b');
+            const ramUsage = (res.data.resources.memory_bytes / (1024 * 1024)).toFixed(1);
+            
+            td.innerHTML = `
+                <span class="status-badge" style="background:${color}; color:white; margin-bottom:4px;">${state.toUpperCase()}</span><br>
+                <span style="font-size:10px; color:var(--text-sub);">Used: ${ramUsage} MB</span>
+            `;
+        } else {
+            td.innerHTML = `<span class="status-badge status-failed">OFFLINE</span>`;
+        }
+    } catch (e) {
+        td.innerHTML = `<span class="status-badge status-failed">ERROR</span>`;
+    }
+}
+
+async function deletePteroServerAll(serverId, userId, serverName) {
+    Swal.fire({
+        title: `Hapus ${serverName}?`,
+        text: 'Tindakan ini akan menghapus Server beserta User Pterodactyl-nya secara PERMANEN!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Musnahkan',
+        cancelButtonText: 'Batal'
+    }).then(async result => {
+        if (result.isConfirmed) {
+            Swal.fire({ title: 'Menghapus...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+            try {
+                const res = await apiCall('/delete-ptero-server', { server_id: serverId, user_id: userId });
+                if (res.success) {
+                    Swal.fire('Terhapus!', res.message, 'success');
+                    loadAllPteroServers(); // Muat ulang tabelnya
+                } else {
+                    Swal.fire('Gagal', res.message, 'error');
+                }
+            } catch (e) {
+                Swal.fire('Error', 'Kesalahan jaringan', 'error');
+            }
+        }
+    });
+}
+
+// ==========================================
+// DATABASE MANAGER FUNCTIONS
+// ==========================================
+let currentDbDocs = []; // Menyimpan data sementara untuk modal
+
+async function loadDbDocs() {
+    const collection = document.getElementById('dbCollectionSelect').value;
+    const tbody = document.getElementById('dbTableBody');
+    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Menarik data dari MongoDB...</td></tr>';
+
+    try {
+        const res = await apiCall('/db/docs', { collection });
+        if (res.success) {
+            currentDbDocs = res.data;
+            renderDbTable();
+        } else {
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:red;">${res.message}</td></tr>`;
+        }
+    } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:red;">Gagal koneksi ke server.</td></tr>`;
+    }
+}
+
+function renderDbTable() {
+    const tbody = document.getElementById('dbTableBody');
+    tbody.innerHTML = '';
+
+    if (currentDbDocs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-sub);">Koleksi ini kosong.</td></tr>';
+        return;
+    }
+
+    currentDbDocs.forEach((doc, index) => {
+        // Ambil identifier utama dari dokumen agar mudah dibaca
+        let snippet = doc.username || doc.order_id || doc.code || doc.id || doc.fullname || "Tanpa Identifier";
+        if (doc.type && doc.amount) snippet += ` (${doc.type})`; // Khusus transaksi
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td style="font-family: monospace; font-size: 11px; color: var(--text-sub);">${doc._id}</td>
+            <td style="font-weight: 600;">${snippet}</td>
+            <td>
+                <div class="action-btns">
+                    <div class="action-btn btn-view" onclick="viewRawJson(${index})" title="Lihat Isi Lengkap">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="action-btn delete" onclick="deleteDbDoc('${doc._id}')" title="Hapus Permanen">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+function viewRawJson(index) {
+    const doc = currentDbDocs[index];
+    const viewer = document.getElementById('jsonViewer');
+    // Format JSON agar cantik dan mudah dibaca
+    viewer.textContent = JSON.stringify(doc, null, 4);
+    document.getElementById('jsonModal').classList.add('show');
+}
+
+async function deleteDbDoc(id) {
+    const collection = document.getElementById('dbCollectionSelect').value;
+
+    Swal.fire({
+        title: 'Yakin Hapus Data Ini?',
+        text: `Tindakan ini tidak bisa dibatalkan! Data akan hilang dari MongoDB.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        confirmButtonText: 'Ya, Hapus Mentah Mentah'
+    }).then(async result => {
+        if (result.isConfirmed) {
+            Swal.fire({ title: 'Menghapus...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+            try {
+                const res = await apiCall('/db/delete', { collection, id });
+                if (res.success) {
+                    Swal.fire('Terhapus!', res.message, 'success');
+                    loadDbDocs(); // Refresh tabel
+                    
+                    // Update juga angka statistik global jika perlu
+                    loadSystemStats(); 
+                } else {
+                    Swal.fire('Gagal', res.message, 'error');
+                }
+            } catch (e) {
+                Swal.fire('Error', 'Kesalahan jaringan', 'error');
+            }
+        }
+    });
+}
+
+// ==========================================
+// LOGIKA PENGATURAN GACHA ADMIN
+// ==========================================
+let gachaItems = [];
+
+async function loadGachaSettings() {
+    const container = document.getElementById('gachaSettingsContainer');
+    container.innerHTML = '<div style="text-align:center; padding:20px; color:#555;"><i class="fas fa-spinner fa-spin"></i> Memuat Data...</div>';
+    try {
+        // Menggunakan sistem apiCall bawaan admin yang lebih aman
+        const data = await apiCall('/gacha/get');
+        
+        if(data.success) {
+            gachaItems = data.data;
+            renderGachaSettings();
+        } else {
+            container.innerHTML = `<div style="text-align:center; padding:20px; color:#e74c3c;"><b>Gagal memuat:</b> ${data.message}</div>`;
+        }
+    } catch(e) { 
+        console.error("Error Load Gacha:", e); 
+        container.innerHTML = '<div style="text-align:center; padding:20px; color:#e74c3c;"><i class="fas fa-exclamation-triangle"></i> <b>Koneksi ke server gagal!</b></div>';
+    }
+}
+
+function renderGachaSettings() {
+    const container = document.getElementById('gachaSettingsContainer');
+    container.innerHTML = '';
+    
+    gachaItems.forEach((item, index) => {
+        container.innerHTML += `
+        <div style="background:#f8f9fa; border:1px solid #ddd; padding:15px; border-radius:8px; position:relative;">
+            <button onclick="removeGachaItem(${index})" style="position:absolute; right:15px; top:15px; background:#e74c3c; color:white; border:none; border-radius:5px; padding:6px 12px; cursor:pointer;"><i class="fas fa-trash"></i> Hapus</button>
+            
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px; margin-top: 10px;">
+                <div>
+                    <label style="font-size:12px; color:#555; font-weight:bold;">Nama Hadiah</label>
+                    <input type="text" value="${item.name}" onchange="updateGachaItem(${index}, 'name', this.value)" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;">
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#555; font-weight:bold;">Tipe Hadiah</label>
+                    <select onchange="updateGachaItem(${index}, 'type', this.value)" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;">
+                        <option value="saldo" ${item.type === 'saldo' ? 'selected' : ''}>Saldo Random</option>
+                        <option value="item" ${item.type === 'item' ? 'selected' : ''}>Barang / Akses</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#555; font-weight:bold;">Saldo Min - Max</label>
+                    <div style="display:flex; gap:5px;">
+                        <input type="number" value="${item.min}" onchange="updateGachaItem(${index}, 'min', this.value)" placeholder="Min" style="width:50%; padding:10px; border:1px solid #ccc; border-radius:5px;">
+                        <input type="number" value="${item.max}" onchange="updateGachaItem(${index}, 'max', this.value)" placeholder="Max" style="width:50%; padding:10px; border:1px solid #ccc; border-radius:5px;">
+                    </div>
+                </div>
+                <div>
+                    <label style="font-size:12px; color:#555; font-weight:bold;">Peluang Menang (%)</label>
+                    <input type="number" value="${item.chance}" onchange="updateGachaItem(${index}, 'chance', this.value)" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;">
+                </div>
+            </div>
+        </div>
+        `;
+    });
+}
+
+function updateGachaItem(index, key, value) {
+    gachaItems[index][key] = (key === 'name' || key === 'type') ? value : Number(value);
+}
+
+function addGachaItem() {
+    gachaItems.push({ 
+        name: "Hadiah Baru", 
+        type: "item", 
+        min: 0, 
+        max: 0, 
+        chance: 1 
+    });
+    renderGachaSettings();
+}
+
+function removeGachaItem(index) {
+    gachaItems.splice(index, 1);
+    renderGachaSettings();
+}
+
+async function saveGachaSettings() {
+    // Validasi Total Peluang Wajib 100%
+    const totalChance = gachaItems.reduce((sum, item) => sum + item.chance, 0);
+    if (totalChance !== 100) {
+        return Swal.fire('Gagal Menyimpan', `Total peluang harus tepat 100%. Saat ini totalnya: <b>${totalChance}%</b>`, 'warning');
+    }
+
+    try {
+        Swal.fire({title:'Menyimpan...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
+        
+        // KIRIM SEBAGAI ARRAY, BUKAN STRING
+        const data = await apiCall('/gacha/save', { items: gachaItems });
+        
+        if(data.success) {
+            Swal.fire('Sukses', data.message, 'success');
+        } else {
+            Swal.fire('Gagal', data.message, 'error');
+        }
+    } catch(e) {
+        Swal.fire('Error', 'Kesalahan koneksi ke server', 'error');
+    }
+}
+
+// Panggil otomatis saat dashboard admin dibuka
+setTimeout(() => { loadGachaSettings(); }, 1500);
+
+    </script>
+</body>
+</html>

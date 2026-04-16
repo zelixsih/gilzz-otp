@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Daftar - Akun</title>
+    <link rel="icon" type="image/jpeg" href="images/Riki.jpg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <div class="auth-page">
+        <div class="auth-card" id="sectionRegister">
+            <div class="auth-header">
+                <h1>Daftar Akun</h1>
+                <p>Lengkapi data diri Anda untuk memulai.</p>
+            </div>
+
+            <form id="formRegister">
+                <div class="input-box">
+                    <i class="fas fa-id-card icon-start"></i>
+                    <input type="text" id="regName" placeholder="Nama Lengkap" required>
+                </div>
+                
+                <div class="input-box">
+                    <i class="fas fa-user icon-start"></i>
+                    <input type="text" id="regUser" placeholder="Username" required autocomplete="off" 
+                           oninput="this.value = this.value.toLowerCase().replace(/[^a-z0-9_-]/g, '')">
+                </div>
+
+                <div class="input-box">
+                    <i class="fab fa-whatsapp icon-start"></i>
+                    <input type="number" id="regPhone" placeholder="Nomor WhatsApp" required>
+                </div>
+
+                <div class="input-box">
+                    <i class="fas fa-lock icon-start"></i>
+                    <input type="password" id="regPass" placeholder="Kata Sandi" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePass('regPass', this)"></i>
+                </div>
+                
+                <div class="strength-container" id="boxStrength">
+    <div class="strength-bar-bg">
+        <div class="strength-bar-fill" id="barFill"></div>
+    </div>
+    <div class="strength-text" id="txtStrength">Lemah</div>
+</div>
+
+                <div class="input-box">
+                    <i class="fas fa-check-circle icon-start"></i>
+                    <input type="password" id="regConfirm" placeholder="Konfirmasi Kata Sandi" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePass('regConfirm', this)"></i>
+                </div>
+
+                <button type="submit" class="btn-auth" id="btnReg">DAFTAR SEKARANG</button>
+            </form>
+
+            <div class="auth-footer">
+                Sudah punya akun? <a href="/login">Masuk Disini</a>
+            </div>
+        </div>
+
+        <div class="auth-card" id="sectionOtp" style="display: none;">
+            <div class="auth-header">
+                <h1>Verifikasi OTP</h1>
+                <p>Kode OTP telah digenerate sistem.</p>
+            </div>
+
+            <div id="otpDisplay" class="otp-wrapper"></div>
+            
+            <div style="margin: 20px 0; color: #fff;">
+                Sisa Waktu: <span id="timeCount" style="font-weight:bold; color:#f1c40f;">60</span>s
+            </div>
+
+            <div class="input-box">
+                <i class="fas fa-key icon-start"></i>
+                <input type="number" id="otpValue" placeholder="Masukan Kode Diatas" style="text-align:center; letter-spacing:2px;">
+            </div>
+            
+            <button id="btnVerify" class="btn-auth">VERIFIKASI AKUN</button>
+            <button id="btnResend" class="btn-auth" style="background:#e67e22; display:none;">KIRIM ULANG KODE</button>
+        </div>
+    </div>
+
+    <script>
+        let tempUsername = "";
+        let countdownInterval;
+        let isPasswordStrong = false; // Penanda apakah password sudah aman
+
+        function togglePass(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // --- FITUR CEK KEKUATAN PASSWORD ---
+        const passInput = document.getElementById('regPass');
+        const boxStrength = document.getElementById('boxStrength');
+        const barFill = document.getElementById('barFill');
+        const txtStrength = document.getElementById('txtStrength');
+
+        passInput.addEventListener('input', function() {
+            const val = this.value;
+            boxStrength.style.display = val.length > 0 ? 'block' : 'none';
+
+            let score = 0;
+            
+            // 1. Cek Panjang
+            if(val.length >= 8) score++;
+            // 2. Cek Angka
+            if(/\d/.test(val)) score++;
+            // 3. Cek Simbol Unik (#&@...)
+            if(/[!@#$%^&*(),.?":{}|<>]/.test(val)) score++;
+
+            // Reset Class
+            barFill.className = 'strength-bar-fill';
+            txtStrength.className = 'strength-text';
+            isPasswordStrong = false;
+
+            if(val.length < 6) {
+                // Sangat Lemah (Belum cukup panjang)
+                barFill.style.width = '20%';
+                barFill.classList.add('st-weak');
+                txtStrength.innerText = 'Terlalu Pendek';
+                txtStrength.classList.add('txt-weak');
+            } 
+            else if (score === 3) {
+                // KUAT (Ada huruf, angka, simbol, panjang > 8)
+                barFill.style.width = '100%';
+                barFill.classList.add('st-strong');
+                txtStrength.innerText = 'Sangat Kuat (Aman)';
+                txtStrength.classList.add('txt-strong');
+                isPasswordStrong = true;
+            } 
+            else if (score === 2) {
+                // SEDANG
+                barFill.style.width = '60%';
+                barFill.classList.add('st-medium');
+                txtStrength.innerText = 'Sedang (Tambah Simbol)';
+                txtStrength.classList.add('txt-medium');
+            } 
+            else {
+                // LEMAH
+                barFill.style.width = '30%';
+                barFill.classList.add('st-weak');
+                txtStrength.innerText = 'Lemah';
+                txtStrength.classList.add('txt-weak');
+            }
+        });
+
+        // --- VALIDASI SAAT KLIK DAFTAR ---
+        document.getElementById('formRegister').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullname = document.getElementById('regName').value;
+            const username = document.getElementById('regUser').value;
+            const phone = document.getElementById('regPhone').value;
+            const password = document.getElementById('regPass').value;
+            const confirm = document.getElementById('regConfirm').value;
+
+            // Validasi Dasar
+            if (username.length < 4) return Swal.fire('Gagal', 'Username minimal 4 karakter', 'warning');
+            if (password !== confirm) return Swal.fire('Gagal', 'Konfirmasi password tidak cocok!', 'warning');
+
+            // Validasi Simbol (Harus Kuat)
+            // KITA PAKSA HARUS ADA SIMBOL BIAR SULIT
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                return Swal.fire('Password Lemah', 'Password wajib menggunakan minimal satu simbol unik! Contoh: Gilz@123#', 'warning');
+            }
+
+            if (password.length < 8) {
+                return Swal.fire('Password Pendek', 'Password minimal 8 karakter.', 'warning');
+            }
+
+            // 1. Loading
+            Swal.fire({
+                title: 'Mendaftarkan...',
+                text: 'Mohon tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullname, username, phone, password })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    await Swal.fire({
+                        icon: 'success', title: 'Data Diterima!', text: 'Kode OTP telah dikirim.',
+                        timer: 1500, showConfirmButton: false
+                    });
+                    tempUsername = username;
+                    document.getElementById('sectionRegister').style.display = 'none';
+                    document.getElementById('sectionOtp').style.display = 'block';
+                    
+                    const rawOtp = data.show_otp_in_web.toString();
+                    const otpContainer = document.getElementById('otpDisplay');
+                    otpContainer.innerHTML = ''; 
+                    for (let char of rawOtp) {
+                        const box = document.createElement('div');
+                        box.className = 'otp-box';
+                        box.innerText = char;
+                        otpContainer.appendChild(box);
+                    }
+                    startTimer();
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch (err) {
+                Swal.fire('Error', 'Gagal menghubungi server', 'error');
+            }
+        });
+
+        // ... (Sisa fungsi startTimer, verify OTP, dll biarkan sama seperti sebelumnya) ...
+        function startTimer() {
+            let timeLeft = 60;
+            document.getElementById('timeCount').innerText = timeLeft;
+            document.getElementById('btnVerify').disabled = false;
+            document.getElementById('btnResend').style.display = 'none';
+
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timeCount').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('btnVerify').disabled = true;
+                    document.getElementById('btnResend').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        document.getElementById('btnResend').addEventListener('click', async () => {
+            Swal.fire({ title: 'Mengirim Ulang...', didOpen: () => Swal.showLoading() });
+            try {
+                const res = await fetch('/api/resend-otp', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: tempUsername })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    Swal.close();
+                    const rawOtp = data.new_otp.toString();
+                    const otpContainer = document.getElementById('otpDisplay');
+                    otpContainer.innerHTML = ''; 
+                    for (let char of rawOtp) {
+                        const box = document.createElement('div');
+                        box.className = 'otp-box';
+                        box.innerText = char;
+                        otpContainer.appendChild(box);
+                    }
+                    startTimer();
+                }
+            } catch(e) { Swal.close(); }
+        });
+
+        document.getElementById('btnVerify').addEventListener('click', async () => {
+            const otp = document.getElementById('otpValue').value;
+            if (!otp) return Swal.fire('Peringatan', 'Masukkan kode OTP', 'warning');
+            Swal.fire({ title: 'Memverifikasi...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+            try {
+                const res = await fetch('/api/verify-otp', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: tempUsername, otp: otp })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    await Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Silakan login.', timer: 2000, showConfirmButton: false });
+                    window.location.href = '/login'; 
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch (err) { Swal.fire('Error', 'Gagal verifikasi', 'error'); }
+        });
+    </script>
+</body>
+</html>

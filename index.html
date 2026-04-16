@@ -1,0 +1,3552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GILZZ OTP</title>
+    <link rel="icon" type="image/jpeg" href="images/Riki.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>  
+<div id="loadingOverlay" class="premium-loader">
+    <div class="loader-content">
+        <div class="loader-logo-box">
+            <img src="https://ar-hosting.pages.dev/1775813307746.jpg" alt="GILZOTP Logo" class="floating-logo">
+            <div class="logo-glow"></div>
+        </div>
+        <div class="text-animate-up">
+            <h1 class="loader-brand">GILZ OTP</h1>
+            <p class="loader-welcome">Selamat Datang, Sultan!</p>
+        </div>
+        <div class="typing-wrapper">
+            <span class="static-text">Kami menyediakan</span>
+            <span class="dynamic-text" id="typingText"></span>
+            <span class="cursor-blink">|</span>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="shape-blob one"></div>
+        <div class="shape-blob two"></div>
+        <div class="profile-pic-container">
+            <img src="images/default-user.png" id="sideProfileImg" alt="Profile">
+        </div>
+        <div style="position:relative; z-index:2; margin-top:10px;">
+            <div class="side-fullname" id="sideName">Tamu</div>
+            <div class="side-username" id="sideUsername">Silakan Login</div>
+            <div class="side-phone" id="sidePhone"></div>
+        </div>
+    </div>
+<ul class="sidebar-menu">
+    <li class="menu-header">AKUN</li>
+    <li id="menuAkun"><i class="fas fa-user"></i> Akun Saya</li>
+    
+    <!-- DATA LAYANAN - Accordion -->
+<li class="menu-header accordion-header" id="accordionDataLayanan">
+    <span><i class="fas fa-chevron-right accordion-icon"></i> DATA LAYANAN</span>
+</li>
+    <div class="accordion-content" id="accordionContentLayanan">
+        <li id="menuPanelPopup"><i class="fas fa-server"></i> Data Panel</li>
+        <li id="menuDownloadScript"><i class="fas fa-file-code"></i> Download Script</li>
+        <li id="menuKelasSaya"><i class="fas fa-graduation-cap"></i> Kelas Saya</li>
+        <li id="menuAppSaya"><i class="fas fa-mobile-alt"></i> Aplikasi Saya</li>
+        <li id="menuSubdomainSaya"><i class="fas fa-globe"></i> Subdomain Saya</li>
+        <li id="menuNokosSaya"><i class="fas fa-sim-card"></i> Nokos Saya</li>
+    </div>
+
+    <!-- RIWAYAT AKTIVITAS -->
+    <li class="menu-header accordion-header" id="accordionRiwayat">
+        <span><i class="fas fa-chevron-right accordion-icon"></i> RIWAYAT AKTIVITAS</span>
+    </li>
+    <div class="accordion-content" id="accordionContentRiwayat">
+        <li id="menuRiwayatSMM"><i class="fas fa-chart-line"></i> Riwayat SMM</li>
+        <li id="menuRiwayatNokos"><i class="fas fa-history"></i> Riwayat Nokos</li>
+    </div>
+    
+    <li class="menu-header">EVENT</li>
+    <li id="menuThr"><i class="fas fa-envelope-open-text" style="color: #e74c3c;"></i> Berbagi THR</li>
+    <li id="menuGacha"><i class="fas fa-gift" style="color: #f1c40f;"></i> Gacha Harian</li>
+
+    <!-- PENGATURAN -->
+    <li class="menu-header">PENGATURAN</li>
+    <li id="menuAuth"><i class="fas fa-sign-in-alt"></i> Login</li>
+</ul>
+</div>
+
+<!-- MAIN CONTENT CONTAINER -->
+<div class="main-content">
+    <div id="page-home" class="page-section active">
+        <div class="header-home">
+            <i class="fas fa-bars" id="btnOpenSidebar" style="cursor:pointer;"></i>
+            <h1 id="headerName">Hai, Tamu</h1>
+            <div style="display:flex; gap:20px; align-items:center;">
+                <i class="fas fa-headset" id="btnHelpHome" style="font-size:20px; cursor:pointer;"></i>
+                <i class="fas fa-moon" id="themeToggle" style="font-size:20px; cursor:pointer;"></i>
+            </div>
+        </div>
+        
+        <div class="saldo-wrapper">
+            <div class="saldo-card">
+                <div class="saldo-top">
+                    <div class="saldo-info">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
+                            <h3>Saldo Saya</h3>
+                            <i class="fas fa-eye" id="eyeIcon" onclick="toggleBalance()" style="cursor:pointer; color:#7f8c8d; font-size:14px;"></i>
+                        </div>
+                        <div class="amount" id="saldoText">Rp 0</div>
+                    </div>
+                    <div class="qr-icon" id="btnBukaDompet" style="cursor:pointer; background:var(--primary-color);">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div> 
+                <div class="card-divider"></div>
+                <div class="saldo-stats">
+                    <div class="fin-box">
+                        <div class="fin-icon green"><i class="fas fa-arrow-up"></i></div>
+                        <div>
+                            <div class="fin-label">Transaksi Sukses</div>
+                            <div class="fin-value green" id="statTrxCount">0x</div>
+                        </div>
+                    </div>
+                    <div class="fin-separator"></div>
+                    <div class="fin-box">
+                        <div class="fin-icon orange"><i class="fas fa-arrow-down"></i></div>
+                        <div>
+                            <div class="fin-label">Uang Keluar</div>
+                            <div class="fin-value" id="statTotalSpent">Rp 0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card" onclick="window.location.href='/top-sultan'" style="cursor:pointer;">
+                <div class="stat-icon-bg" style="background:#fff3e0; color:#f39c12;">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="stat-num" style="font-size:14px;">Cek</div>
+                <div class="stat-label">Top Sultan</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-bg" style="background:#e8f5e9; color:#27ae60;">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="stat-num" id="stSukses">0</div>
+                <div class="stat-label">Terjual</div>
+            </div>     
+            <div class="stat-card">
+                <div class="stat-icon-bg" style="background:#f3e5f5; color:#8e44ad;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-num" id="stMember">0</div>
+                <div class="stat-label">Member</div>
+            </div>
+            <div class="stat-card" onclick="window.location.href='/ulasan'" style="cursor:pointer;">
+                <div class="stat-icon-bg" style="background:#e3f2fd; color:#2980b9;">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-num" style="font-size:14px;">Cek</div>
+                <div class="stat-label">Ulasan</div>
+            </div>
+        </div>
+        
+        <div class="banner-section">
+            <div class="carousel">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide"><img src="https://ar-hosting.pages.dev/1775662030162.jpg" alt="Promo 1"></div>
+                    <div class="carousel-slide"><img src="https://ar-hosting.pages.dev/1775662029359.jpg" alt="Promo 2"></div>
+                    <div class="carousel-slide"><img src="https://ar-hosting.pages.dev/1775662030967.jpg" alt="Promo 3"></div>
+                </div>
+                <div class="carousel-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+            </div>
+        </div>
+
+        <div class="codex-category-container">
+            <div class="category-scroll">
+                <button class="cat-btn active" onclick="filterCategory('all', this)">ALL LAYANAN</button>
+                <button class="cat-btn" onclick="filterCategory('bestseller', this)">BEST SELLER</button>
+                <button class="cat-btn" onclick="filterCategory('topup', this)">TOPUP GAME</button>
+                <button class="cat-btn" onclick="filterCategory('ewallet', this)">E-WALLET</button>
+            </div>
+        </div>
+
+        <div class="product-container item-kategori bestseller">
+            <div class="prod-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">Best Seller</h3>
+                <div class="codex-dots">
+                    <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+                </div>
+            </div>
+            <div class="menu-grid-clean">
+                <div class="menu-item-clean" id="btnGoPanel">
+                    <img src="images/panel.jpg" class="prod-img" alt="Panel">
+                    <span>Panel</span>
+                </div>
+                <div class="menu-item-clean" id="btnGoScript">
+                    <img src="images/banner_script.jpg" class="prod-img" alt="Script">
+                    <span>Script</span>
+                </div>
+                <div class="menu-item-clean" id="btnGoMurid">
+                    <img src="images/banner_murid.jpg" class="prod-img" alt="Join Murid">
+                    <span>Join Murid</span>
+                </div>
+                <div class="menu-item-clean" id="btnGoVPS">
+                    <img src="images/banner_vps.jpg" class="prod-img" alt="VPS">
+                    <span>VPS</span>
+                </div>
+                <div class="menu-item-clean" id="btnGoApps">
+                    <img src="images/banner_apps.jpg" class="prod-img" alt="Apps">
+                    <span>App Premium</span>
+                </div>
+                <div class="menu-item-clean" id="btnGoSosmed">
+                    <img src="images/banner_sosmed.jpg" class="prod-img" alt="Sosmed">
+                    <span>Suntuik Sosmed</span>
+                </div>
+                <div class="menu-item-clean" id="btnGoSubdomain">
+                    <img src="https://img.icons8.com/color/96/domain--v1.png" class="prod-img" alt="Subdomain">
+                    <span>Subdomain</span>
+                </div>
+                <div class="menu-item-clean" id="btnGoNokos">
+                    <img src="https://img.icons8.com/color/96/sim-card.png" class="prod-img" alt="Nokos">
+                    <span>Nokos OTP</span>
+                </div>
+            </div> 
+        </div> 
+
+        <div class="product-container item-kategori topup" style="margin-top: 15px;">
+            <div class="prod-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">Topup All Game</h3>
+                <div class="codex-dots">
+                    <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+                </div>
+            </div>
+            <div class="menu-grid-clean">
+                <div class="menu-item-clean" id="btnGoGame">
+                    <img src="https://api.deline.web.id/lIDszrqUNO.jpg" class="prod-img" alt="Free Fire">
+                    <span>Free Fire</span>
+                </div>
+            </div> 
+        </div>
+        
+<!-- Di dalam bagian Topup E-Wallet, tambahkan 3 item baru -->
+<div class="product-container item-kategori ewallet" style="margin-top: 15px;">
+    <div class="prod-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0;">Topup E-Wallet</h3>
+        <div class="codex-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+        </div>
+    </div>
+    <div class="menu-grid-clean">
+        <!-- DANA (existing) -->
+        <div class="menu-item-clean" id="btnGoEwallet">
+            <img src="https://api.deline.web.id/RzSYWF9Wxz.jpeg" class="prod-img" alt="DANA">
+            <span>DANA</span>
+        </div>
+        <!-- GoPay Driver (existing) -->
+        <div class="menu-item-clean" id="btnGoEwalletGD">
+            <img src="https://api.deline.web.id/seNZ6Uj3C2.png" class="prod-img" alt="GoPay Driver">
+            <span>GoPay Driver</span>
+        </div>
+        <!-- GoPay Customer (existing) -->
+        <div class="menu-item-clean" id="btnGoEwalletGopay">
+            <img src="https://api.deline.web.id/2nnwaEpb4o.jpeg" class="prod-img" alt="GoPay">
+            <span>GoPay Customer</span>
+        </div>
+        <!-- OVO (new) -->
+         <div class="menu-item-clean" id="btnGoOvo">
+    <img src="https://api.deline.web.id/UQWvMAojpT.jpeg" class="prod-img" alt="OVO">
+    <span>OVO</span>
+</div>
+<!-- ShopeePay (baru) -->
+<div class="menu-item-clean" id="btnGoShopee">
+    <img src="https://img.icons8.com/color/96/shopee.png" class="prod-img" alt="ShopeePay">
+    <span>ShopeePay</span>
+</div>
+<!-- LinkAja (baru) -->
+<div class="menu-item-clean" id="btnGoLinkaja">
+    <img src="https://api.deline.web.id/wCXLHdBsPw.png" class="prod-img" alt="LinkAja">
+    <span>LinkAja</span>
+</div>
+<!-- Astrapay (baru) -->
+<div class="menu-item-clean" id="btnGoAstrapay">
+    <img src="https://api.deline.web.id/R87kIeNath.jpeg" class="prod-img" alt="Astrapay">
+    <span>Astrapay</span>
+</div>
+<!-- iSaku (baru) -->
+<div class="menu-item-clean" id="btnGoIsaku">
+    <img src="https://api.deline.web.id/wlBGiEQtuX.png" class="prod-img" alt="iSaku">
+    <span>iSaku</span>
+</div>
+<!-- Kaspro (baru) -->
+<div class="menu-item-clean" id="btnGoKaspro">
+    <img src="https://api.deline.web.id/il3T6M0giR.png" class="prod-img" alt="Kaspro">
+    <span>Kaspro</span>
+</div>
+    </div>
+</div>
+    </div>
+        
+    <div id="page-panel" class="page-section">
+        <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+            <i class="fas fa-arrow-left" id="btnBackPanel" style="font-size:20px; cursor:pointer;"></i>
+            <h1 style="font-size:18px;">Panel Data Sultan</h1>
+        </div>
+
+        <div class="panel-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <img src="images/panel.jpg" class="hero-thumb-img" alt="Panel Icon">
+                <div class="hero-details">
+                    <h2>Paket Data Sultan</h2>
+                    <div class="cara-beli-btn" id="btnCaraBeli">
+                        <i class="fas fa-info-circle"></i> Cara Beli
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel-content">
+            <div class="step-box">
+                <div class="step-header">
+                    <div class="step-badge">1</div>
+                    <div class="step-title">Detail Akun Panel</div>
+                </div>
+                
+                <div style="margin-bottom: 12px;">
+                    <select id="panelOrderType" class="panel-input" onchange="togglePanelType()" style="background-color: #f8f9fa; font-weight: bold;">
+                        <option value="new">Buat Akun Panel Baru</option>
+                        <option value="add">Tambah Server ke Akun Lama</option>
+                    </select>
+                </div>
+
+                <div id="wrapNewPanel">
+                    <input type="text" id="panelUser" class="panel-input" placeholder="Contoh: Gilz (Min 3 huruf)">
+                </div>
+
+                <div id="wrapAddPanel" style="display: none;">
+                    <select id="existingPanelUser" class="panel-input">
+                        <option value="">-- Pilih Akun Panel Kamu --</option>
+                        </select>
+                </div>
+                
+                <div style="margin-top: 10px; display:flex; justify-content: flex-end;">
+                    <div id="btnKeuntungan" style="font-size: 12px; color: var(--primary-color); cursor: pointer; font-weight: bold; background: var(--primary-light); padding: 5px 10px; border-radius: 15px;">
+                        <i class="fas fa-star" style="color: #f1c40f;"></i> Keuntungan Buy Panel
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-header">
+                    <div class="step-badge">2</div>
+                    <div class="step-title">Pilih Paket Data</div>
+                </div>
+                <div class="prod-grid" id="productGrid"></div>
+            </div>
+            
+            <!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodePanel" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromoPanel" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    <div id="promoResultPanel" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    <div id="discountInfoPanel" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmountPanel" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPricePanel" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+            <div class="step-box">
+                <div class="step-header">
+                    <div class="step-badge">3</div>
+                    <div class="step-title">Pilih Metode Pembayaran</div>
+                </div>
+                
+                <div class="pay-method-item" id="paySaldo" onclick="selectPayMethod('saldo')">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                        <div>
+                            <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                            <div style="font-size:11px; color:#888;">Proses Otomatis</div>
+                        </div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+                </div>
+
+                <div class="pay-method-item" id="payQris" onclick="selectPayMethod('qris')" style="margin-top:10px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                        <div>
+                            <div style="font-weight:bold; font-size:14px;">QRIS (All Payment)</div>
+                            <div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div>
+                        </div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sticky-footer">
+            <div id="footerAlert" class="footer-alert">
+                <i class="fas fa-info-circle"></i> Lengkapi username & pilih paket.
+            </div>
+            <div class="footer-action">
+                <div>
+                    <div style="font-size:12px; color:var(--text-sub);">Total Pembayaran</div>
+                    <div id="footerPrice" class="f-price">Rp 0</div>
+                </div>
+                <div style="display: flex; gap: 8px; width: 100%;">
+                    <button id="btnExtend" class="btn-buy" style="background:#f39c12; flex: 1;">
+                        Perpanjang <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button id="btnBuy" class="btn-buy" style="flex: 1;">
+                        Beli Baru <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-script" class="page-section">
+        <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+            <i class="fas fa-arrow-left" id="btnBackScript" style="font-size:20px; cursor:pointer;"></i>
+            <h1 style="font-size:18px;">Store Script Bot</h1>
+        </div>
+
+        <div class="panel-hero" style="background: url('images/banner_script.jpg') center/cover;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <img src="images/banner_script.jpg" class="hero-thumb-img" alt="Script Icon">
+        <div class="hero-details">
+            <h2>Source Code Bot</h2>
+            <div class="cara-beli-btn" id="btnCaraBeliScript">
+                <i class="fas fa-info-circle"></i> Cara Beli
+            </div>
+        </div>
+    </div>
+</div>
+        
+        <div class="panel-content">
+            <div class="step-box">
+                <div class="step-header">
+                    <div class="step-badge">1</div>
+                    <div class="step-title">Cek Fitur Script</div>
+                </div>
+                <p style="font-size:12px; color:#666; margin-bottom:10px;">Pilih paket di bawah dulu, lalu klik tombol ini untuk melihat fiturnya.</p>
+                <button id="btnCheckScriptFeatures" class="btn-pay-pro" style="background:#34495e; margin:0; width:100%;">
+                    <i class="fas fa-search"></i> LIHAT FITUR SCRIPT
+                </button>
+                
+                <div style="margin-top: 15px; display:flex; justify-content: flex-end;">
+                    <div id="btnKeuntunganScript" style="font-size: 12px; color: var(--primary-color); cursor: pointer; font-weight: bold; background: var(--primary-light); padding: 5px 10px; border-radius: 15px;">
+                        <i class="fas fa-star" style="color: #f1c40f;"></i> Keuntungan Beli Script
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-header">
+                    <div class="step-badge">2</div>
+                    <div class="step-title">Pilih Source Code</div>
+                </div>
+                <div class="prod-grid" id="scriptGrid"></div>
+            </div>
+            
+            <!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodeScript" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromoScript" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    <div id="promoResultScript" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    <div id="discountInfoScript" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmountScript" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPriceScript" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+            <div class="step-box">
+                <div class="step-header">
+                    <div class="step-badge">3</div>
+                    <div class="step-title">Pilih Metode Pembayaran</div>
+                </div>
+                
+                <div class="pay-method-item" id="paySaldoScript" onclick="selectPayMethodScript('saldo')">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                        <div>
+                            <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                            <div style="font-size:11px; color:#888;">Proses Otomatis</div>
+                        </div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+                </div>
+
+                <div class="pay-method-item" id="payQrisScript" onclick="selectPayMethodScript('qris')" style="margin-top:10px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                        <div>
+                            <div style="font-weight:bold; font-size:14px;">QRIS (All Payment)</div>
+                            <div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div>
+                        </div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sticky-footer">
+            <div id="footerAlertScript" class="footer-alert">
+                <i class="fas fa-info-circle"></i> Silakan pilih script.
+            </div>
+            <div class="footer-action">
+                <div>
+                    <div style="font-size:12px; color:var(--text-sub);">Total Pembayaran</div>
+                    <div id="footerPriceScript" class="f-price">Rp 0</div>
+                </div>
+                <button id="btnBuyScript" class="btn-buy">
+                    Beli Sekarang <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="page-murid" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackMurid" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Program Join Murid</h1>
+    </div>
+
+    <div class="panel-hero" style="background: url('images/banner_murid.jpg') center/cover;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <img src="images/banner_murid.jpg" class="hero-thumb-img" alt="Murid Icon">
+        <div class="hero-details">
+            <h2>Kelas Mentoring</h2>
+            <div class="cara-beli-btn" id="btnCaraJoinMurid">
+                <i class="fas fa-info-circle"></i> Cara Join
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Cek Keuntungan Join</div>
+            </div>
+            <p style="font-size:12px; color:#666; margin-bottom:10px;">Pilih paket di bawah, lalu klik tombol ini untuk melihat apa saja yang Anda dapatkan.</p>
+            <button id="btnCheckMuridBenefits" class="btn-pay-pro" style="background:#2c3e50; margin:0; width:100%;">
+                <i class="fas fa-gem"></i> CEK KEUNTUNGAN
+            </button>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Paket Kelas</div>
+            </div>
+            <div class="prod-grid" id="muridGrid"></div>
+        </div>
+        
+        <!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodeMurid" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromoMurid" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    <div id="promoResultMurid" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    <div id="discountInfoMurid" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmountMurid" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPriceMurid" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoMurid" onclick="selectPayMethodMurid('saldo')" style="margin-bottom: 15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Masuk</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisMurid" onclick="selectPayMethodMurid('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS (All Payment)</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertMurid" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Silakan pilih paket kelas.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Join</div>
+                <div id="footerPriceMurid" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyMurid" class="btn-buy">
+                GABUNG SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="page-apps" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackApps" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Aplikasi Premium</h1>
+    </div>
+
+    <div class="panel-hero" style="background: url('images/banner_apps.jpg') center/cover;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <img src="images/banner_apps.jpg" class="hero-thumb-img" alt="App Icon">
+        <div class="hero-details">
+            <h2>Akun Premium</h2>
+            <div style="font-size:12px; color:white; opacity:0.9;">
+                <i class="fas fa-check-circle"></i> Garansi Aktif
+            </div>
+            
+            <div class="cara-beli-btn" id="btnCaraBeliApps" style="margin-top:5px;">
+                <i class="fas fa-info-circle"></i> Cara Beli
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">1</div><div class="step-title">Pilih Aplikasi</div></div>
+            <div class="prod-grid" id="appsGrid"></div>
+        </div>
+
+<!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodeApps" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromoApps" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    <div id="promoResultApps" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    <div id="discountInfoApps" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmountApps" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPriceApps" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">2</div><div class="step-title">Pilih Pembayaran</div></div>
+            <div class="pay-method-item" id="paySaldoApps" onclick="selectPayMethodApps('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div><div style="font-weight:bold; font-size:14px;">Saldo Akun</div><div style="font-size:11px; color:#888;">Otomatis (Stok Langsung Masuk)</div></div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+            <div class="pay-method-item" id="payQrisApps" onclick="selectPayMethodApps('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div><div style="font-weight:bold; font-size:14px;">QRIS</div><div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div></div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertApps" class="footer-alert"><i class="fas fa-info-circle"></i> Pilih aplikasi dulu.</div>
+        <div class="footer-action">
+            <div><div style="font-size:12px; color:var(--text-sub);">Total Bayar</div><div id="footerPriceApps" class="f-price">Rp 0</div></div>
+            <button id="btnBuyApps" class="btn-buy">BELI SEKARANG <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmAppsModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header"><h3>Konfirmasi Beli</h3><i class="fas fa-times" id="btnCloseConfirmApps"></i></div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Produk</span><span id="ca-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ca-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section"><span class="total-label">Total</span><span id="ca-total" class="total-val">-</span></div>
+        <button id="btnFinalPayApps" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div class="modal" id="appSayaModal">
+    <div class="modal-content" style="max-width: 400px; text-align: left; max-height: 80vh; overflow-y: auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+            <h3 style="margin:0; font-size:16px; color:var(--primary-color);">📱 Aplikasi Saya</h3>
+            <i class="fas fa-times" id="btnCloseAppSaya" style="cursor:pointer; color:#888;"></i>
+        </div>
+        <div id="popupAppSayaContent"></div>
+    </div>
+</div>
+
+<div id="page-sosmed" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackSosmed" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Suntuik Sosmed</h1>
+    </div>
+
+    <div class="panel-hero" style="background: url('images/banner_sosmed.jpg') center/cover;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <img src="images/banner_sosmed.jpg" class="hero-thumb-img" alt="Sosmed Icon">
+        
+        <div class="hero-details">
+            <h2>Layanan Sosial Media</h2>
+            <div style="font-size:12px; color:white; opacity:0.9;">Followers, Likes, Views Murah</div>
+            
+            <div class="cara-beli-btn" id="btnCaraBeliSosmed" style="margin-top:5px;">
+                <i class="fas fa-info-circle"></i> Cara Beli
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">1</div><div class="step-title">Pilih Kategori</div></div>
+            <select id="sosmedCategory" class="panel-input" style="background:#fff;">
+                <option value="">-- Loading Kategori --</option>
+            </select>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">2</div><div class="step-title">Pilih Layanan</div></div>
+            <select id="sosmedService" class="panel-input" style="background:#fff;">
+                <option value="">-- Pilih Kategori Dulu --</option>
+            </select>
+            <div id="sosmedDesc" style="font-size:11px; color:#666; margin-top:10px; background:#f9f9f9; padding:8px; border-radius:6px; display:none;"></div>
+            <div id="sosmedLimit" style="font-size:11px; color:var(--primary-color); margin-top:5px; font-weight:bold; display:none;"></div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">3</div><div class="step-title">Data Target</div></div>
+            <div class="form-group-pro">
+                <label>Target (Username/Link)</label>
+                <input type="text" id="sosmedTarget" class="panel-input" placeholder="Contoh: @username atau Link Post">
+            </div>
+            <div class="form-group-pro">
+                <label>Jumlah Order</label>
+                <input type="number" id="sosmedQty" class="panel-input" placeholder="0">
+            </div>
+            <div style="text-align:right; margin-top:10px;">
+                <span style="font-size:12px; color:#888;">Total Harga:</span>
+                <div id="sosmedTotalPrice" style="font-size:18px; font-weight:bold; color:var(--primary-color);">Rp 0</div>
+            </div>
+        </div>
+        
+        <!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodeSosmed" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromoSosmed" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    <div id="promoResultSosmed" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    <div id="discountInfoSosmed" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmountSosmed" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPriceSosmed" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">4</div><div class="step-title">Pilih Pembayaran</div></div>
+            <div class="pay-method-item" id="paySaldoSosmed" onclick="selectPayMethodSosmed('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div><div style="font-weight:bold; font-size:14px;">Saldo Akun</div><div style="font-size:11px; color:#888;">Otomatis Proses</div></div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+            <div class="pay-method-item" id="payQrisSosmed" onclick="selectPayMethodSosmed('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div><div style="font-weight:bold; font-size:14px;">QRIS</div><div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div></div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertSosmed" class="footer-alert"><i class="fas fa-info-circle"></i> Lengkapi data pesanan.</div>
+        <div class="footer-action">
+            <div><div style="font-size:12px; color:var(--text-sub);">Total Bayar</div><div id="footerPriceSosmed" class="f-price">Rp 0</div></div>
+            <button id="btnBuySosmed" class="btn-buy">SUNTUIK SEKARANG <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmSosmedModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header"><h3>Konfirmasi Suntuik</h3><i class="fas fa-times" id="btnCloseConfirmSosmed"></i></div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Layanan</span><span id="csm-service" class="inv-val" style="max-width:150px; text-align:right;">-</span></div>
+            <div class="inv-row"><span class="inv-label">Target</span><span id="csm-target" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Jumlah</span><span id="csm-qty" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="csm-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section"><span class="total-label">Total</span><span id="csm-total" class="total-val">-</span></div>
+        <button id="btnFinalPaySosmed" class="btn-pay-pro">BAYAR & PROSES</button>
+    </div>
+</div>
+
+<div id="page-game-ff" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackGame" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup Free Fire</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/lIDszrqUNO.jpg" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>Free Fire Diamonds</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Murah
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliGame" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan ID Pemain</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="number" id="gameUserId" class="panel-input" placeholder="Contoh: 12345678" style="flex: 1;" oninput="checkGameInput()">
+                <button id="btnCheckGameId" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkGameNickname()">CEK ID</button>
+            </div>
+            <div id="gameUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img id="gameAvatar" src="" style="width: 40px; height: 40px; border-radius: 8px; display: none;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nickname</div>
+                    <div id="gameNickname" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #888;" id="gameRegion"></div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal Diamond</div>
+            </div>
+            <div id="gameProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="gameProductGrid"></div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeGame" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoGame" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultGame" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoGame" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountGame" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceGame" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoGame" onclick="selectPayMethodGame('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisGame" onclick="selectPayMethodGame('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertGame" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceGame" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyGame" class="btn-buy">
+                BELI SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI GAME -->
+<div id="confirmGameModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-gamepad"></i></div>
+                <h3>Konfirmasi Topup</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmGame" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Nickname</span><span id="cg-nick" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">ID Player</span><span id="cg-id" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="cg-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="cg-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="cg-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayGame" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<!-- HALAMAN E-WALLET DANA -->
+<div id="page-ewallet-dana" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackEwallet" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup DANA</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/RzSYWF9Wxz.jpeg" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>DANA E-Wallet</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Aman
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliEwallet" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan Nomor DANA</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="ewalletPhone" class="panel-input" placeholder="Contoh: 08123456789" style="flex: 1;" oninput="checkEwalletInput()">
+                <button id="btnCheckEwallet" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkEwalletNumber()">CEK NOMOR</button>
+            </div>
+            <div id="ewalletUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://img.icons8.com/color/96/dana--v1.png" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nama Pemilik</div>
+                    <div id="ewalletName" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #2ecc71;" id="ewalletStatus">✓ Terdaftar</div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div id="ewalletProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="ewalletProductGrid"></div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeEwallet" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoEwallet" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultEwallet" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoEwallet" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountEwallet" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceEwallet" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoEwallet" onclick="selectPayMethodEwallet('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisEwallet" onclick="selectPayMethodEwallet('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertEwallet" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceEwallet" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyEwallet" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI E-WALLET -->
+<div id="confirmEwalletModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup DANA</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmEwallet" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Penerima</span><span id="ce-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="ce-phone" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="ce-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ce-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="ce-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayEwallet" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div id="page-ewallet-gd" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackEwalletGD" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup GoPay Driver</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #00aa13, #00870f);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/seNZ6Uj3C2.png" class="hero-thumb-img" style="background:white; padding:5px;">
+                <div class="hero-details">
+                <h2>GoPay Driver</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Saldo Pengemudi
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliEwalletGD" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Order
+                </div>
+                </div>
+        </div>
+    </div>
+
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">1</div><div class="step-title">Masukkan Nomor HP</div></div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="ewalletPhoneGD" class="panel-input" placeholder="Nomor Gojek Driver" style="flex: 1;" oninput="checkEwalletInputGD()">
+                <button id="btnCheckEwalletGD" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkEwalletNumberGD()">CEK NOMOR</button>
+            </div>
+            <div id="ewalletUserInfoGD" style="display: none; margin-top: 15px; background: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://img.icons8.com/color/96/go-jek.png" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Status Akun</div>
+                    <div id="ewalletNameGD" style="font-weight: bold; color: #2ecc71; font-size: 14px;">Valid / Aktif</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">2</div><div class="step-title">Pilih Nominal</div></div>
+            <div id="ewalletProductLoadingGD" style="text-align:center; font-size:12px; color:#666; padding:10px;"><i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...</div>
+            <div class="prod-grid" id="ewalletProductGridGD"></div>
+        </div>
+
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header"><div class="step-badge"><i class="fas fa-tag"></i></div><div class="step-title">Punya Kode Promo?</div></div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeEwalletGD" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoEwalletGD" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultEwalletGD" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoEwalletGD" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;"><span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span><span id="discountAmountEwalletGD" style="color: #2ecc71; font-weight: bold;">- Rp 0</span></div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;"><span style="color: var(--text-main);">Total Setelah Diskon</span><span id="finalPriceEwalletGD" style="color: var(--primary-color); font-weight: bold;">Rp 0</span></div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">3</div><div class="step-title">Pilih Pembayaran</div></div>
+            <div class="pay-method-item" id="paySaldoEwalletGD" onclick="selectPayMethodEwalletGD('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;"><i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i><div><div style="font-weight:bold; font-size:14px;">Saldo Akun</div><div style="font-size:11px; color:#888;">Otomatis Proses</div></div></div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+            <div class="pay-method-item" id="payQrisEwalletGD" onclick="selectPayMethodEwalletGD('qris')">
+                <div style="display:flex; align-items:center; gap:10px;"><i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i><div><div style="font-weight:bold; font-size:14px;">QRIS</div><div style="font-size:11px; color:#888;">Scan & Verifikasi</div></div></div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertEwalletGD" class="footer-alert"><i class="fas fa-info-circle"></i> Lengkapi data pemesanan.</div>
+        <div class="footer-action">
+            <div><div style="font-size:12px; color:var(--text-sub);">Total Bayar</div><div id="footerPriceEwalletGD" class="f-price">Rp 0</div></div>
+            <button id="btnBuyEwalletGD" class="btn-buy">TOPUP SEKARANG <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmEwalletModalGD" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;"><div class="icon-shield" style="background:#e8f5e9; color:#2ecc71;"><i class="fas fa-motorcycle"></i></div><h3>Konfirmasi GoPay</h3></div>
+            <i class="fas fa-times" id="btnCloseConfirmEwalletGD" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Produk</span><span id="ce-prod-gd" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="ce-phone-gd" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ce-method-gd" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section"><span class="total-label">Total Bayar</span><span id="ce-total-gd" class="total-val">-</span></div>
+        <button id="btnFinalPayEwalletGD" class="btn-pay-pro" style="background:#00aa13;">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div id="page-ewallet-gopay" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackEwalletGopay" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup GoPay</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #00aedd, #008ab0);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/2nnwaEpb4o.jpeg" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>GoPay Customer</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Saldo Akun Reguler
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliEwalletGopay" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Order
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">1</div><div class="step-title">Masukkan Nomor HP</div></div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="ewalletPhoneGopay" class="panel-input" placeholder="Nomor GoPay" style="flex: 1;" oninput="checkEwalletInputGopay()">
+                <button id="btnCheckEwalletGopay" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkEwalletNumberGopay()">CEK NOMOR</button>
+            </div>
+            <div id="ewalletUserInfoGopay" style="display: none; margin-top: 15px; background: #e3f2fd; border: 1px solid #90caf9; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://img.icons8.com/color/96/go-jek.png" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Status Akun</div>
+                    <div id="ewalletNameGopay" style="font-weight: bold; color: #2196F3; font-size: 14px;">Valid / Aktif</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">2</div><div class="step-title">Pilih Nominal</div></div>
+            <div id="ewalletProductLoadingGopay" style="text-align:center; font-size:12px; color:#666; padding:10px;"><i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...</div>
+            <div class="prod-grid" id="ewalletProductGridGopay"></div>
+        </div>
+
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header"><div class="step-badge"><i class="fas fa-tag"></i></div><div class="step-title">Punya Kode Promo?</div></div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeEwalletGopay" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoEwalletGopay" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultEwalletGopay" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoEwalletGopay" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;"><span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span><span id="discountAmountEwalletGopay" style="color: #2ecc71; font-weight: bold;">- Rp 0</span></div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;"><span style="color: var(--text-main);">Total Setelah Diskon</span><span id="finalPriceEwalletGopay" style="color: var(--primary-color); font-weight: bold;">Rp 0</span></div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header"><div class="step-badge">3</div><div class="step-title">Pilih Pembayaran</div></div>
+            <div class="pay-method-item" id="paySaldoEwalletGopay" onclick="selectPayMethodEwalletGopay('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;"><i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i><div><div style="font-weight:bold; font-size:14px;">Saldo Akun</div><div style="font-size:11px; color:#888;">Otomatis Proses</div></div></div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+            <div class="pay-method-item" id="payQrisEwalletGopay" onclick="selectPayMethodEwalletGopay('qris')">
+                <div style="display:flex; align-items:center; gap:10px;"><i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i><div><div style="font-weight:bold; font-size:14px;">QRIS</div><div style="font-size:11px; color:#888;">Scan & Verifikasi</div></div></div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertEwalletGopay" class="footer-alert"><i class="fas fa-info-circle"></i> Lengkapi data pemesanan.</div>
+        <div class="footer-action">
+            <div><div style="font-size:12px; color:var(--text-sub);">Total Bayar</div><div id="footerPriceEwalletGopay" class="f-price">Rp 0</div></div>
+            <button id="btnBuyEwalletGopay" class="btn-buy">TOPUP SEKARANG <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmEwalletModalGopay" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;"><div class="icon-shield" style="background:#e3f2fd; color:#2196F3;"><i class="fas fa-wallet"></i></div><h3>Konfirmasi GoPay</h3></div>
+            <i class="fas fa-times" id="btnCloseConfirmEwalletGopay" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Produk</span><span id="ce-prod-gopay" class="inv-val" style="font-size: 12px;">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="ce-phone-gopay" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ce-method-gopay" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section"><span class="total-label">Total Bayar</span><span id="ce-total-gopay" class="total-val">-</span></div>
+        <button id="btnFinalPayEwalletGopay" class="btn-pay-pro" style="background:#00aedd;">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<!-- HALAMAN OVO -->
+<div id="page-ewallet-ovo" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackOvo" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup OVO</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #7047A0, #8B5FBC);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/UQWvMAojpT.jpeg" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>OVO E-Wallet</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Aman
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliOvo" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan Nomor OVO</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="ovoPhone" class="panel-input" placeholder="Contoh: 08123456789" style="flex: 1;" oninput="checkOvoInput()">
+                <button id="btnCheckOvo" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkOvoNumber()">CEK NOMOR</button>
+            </div>
+            <div id="ovoUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://api.deline.web.id/UQWvMAojpT.jpeg" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nama Pemilik</div>
+                    <div id="ovoName" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #2ecc71;" id="ovoStatus">✓ Terdaftar</div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div id="ovoProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="ovoProductGrid"></div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeOvo" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoOvo" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultOvo" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoOvo" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountOvo" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceOvo" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoOvo" onclick="selectPayMethodOvo('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisOvo" onclick="selectPayMethodOvo('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertOvo" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceOvo" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyOvo" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI OVO -->
+<div id="confirmOvoModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup OVO</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmOvo" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Penerima</span><span id="co-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="co-phone" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="co-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="co-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="co-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayOvo" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<!-- HALAMAN SHOPEEPAY -->
+<div id="page-ewallet-shopee" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackShopee" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup ShopeePay</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #ee4d2d, #f8532c);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://img.icons8.com/color/96/shopee.png" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>ShopeePay</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Aman
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliShopee" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan Nomor ShopeePay</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="shopeePhone" class="panel-input" placeholder="Contoh: 08123456789" style="flex: 1;" oninput="checkShopeeInput()">
+                <button id="btnCheckShopee" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkShopeeNumber()">CEK NOMOR</button>
+            </div>
+            <div id="shopeeUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://img.icons8.com/color/96/shopee.png" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nama Pemilik</div>
+                    <div id="shopeeName" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #2ecc71;" id="shopeeStatus">✓ Terdaftar</div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div id="shopeeProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="shopeeProductGrid"></div>
+            <div style="margin-top:10px; font-size:11px; color:#f39c12; background:#fff3cd; padding:8px; border-radius:5px;">
+                <i class="fas fa-info-circle"></i> Kode SHP = Produk Admin, SHOPE = Produk Reguler
+            </div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeShopee" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoShopee" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultShopee" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoShopee" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountShopee" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceShopee" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoShopee" onclick="selectPayMethodShopee('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertShopee" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceShopee" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyShopee" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI SHOPEEPAY -->
+<div id="confirmShopeeModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup ShopeePay</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmShopee" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Penerima</span><span id="cs-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="cs-phone" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="cs-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="cs-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="cs-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayShopee" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<!-- HALAMAN LINKAJA -->
+<div id="page-ewallet-linkaja" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackLinkaja" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup LinkAja</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #0055a0, #003b73);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/wCXLHdBsPw.png" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>LinkAja</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Aman
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliLinkaja" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan Nomor LinkAja</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="linkajaPhone" class="panel-input" placeholder="Contoh: 08123456789" style="flex: 1;" oninput="checkLinkajaInput()">
+                <button id="btnCheckLinkaja" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkLinkajaNumber()">CEK NOMOR</button>
+            </div>
+            <div id="linkajaUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://api.deline.web.id/wCXLHdBsPw.png" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nama Pemilik</div>
+                    <div id="linkajaName" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #2ecc71;" id="linkajaStatus">✓ Terdaftar</div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div id="linkajaProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="linkajaProductGrid"></div>
+            <div style="margin-top:10px; font-size:11px; color:#f39c12; background:#fff3cd; padding:8px; border-radius:5px;">
+                <i class="fas fa-info-circle"></i> Kode LJAE = Produk Entitas, LINK = Produk Reguler
+            </div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeLinkaja" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoLinkaja" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultLinkaja" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoLinkaja" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountLinkaja" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceLinkaja" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoLinkaja" onclick="selectPayMethodLinkaja('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisLinkaja" onclick="selectPayMethodLinkaja('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertLinkaja" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceLinkaja" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyLinkaja" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI LINKAJA -->
+<div id="confirmLinkajaModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup LinkAja</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmLinkaja" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Penerima</span><span id="cl-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="cl-phone" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="cl-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="cl-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="cl-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayLinkaja" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<!-- HALAMAN ASTRAPAY -->
+<div id="page-ewallet-astrapay" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackAstrapay" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup Astrapay</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #e31b23, #b3131a);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/R87kIeNath.jpeg" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>Astrapay</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Aman
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliAstrapay" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan Nomor Astrapay</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="astrapayPhone" class="panel-input" placeholder="Contoh: 08123456789" style="flex: 1;" oninput="checkAstrapayInput()">
+                <button id="btnCheckAstrapay" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkAstrapayNumber()">CEK NOMOR</button>
+            </div>
+            <div id="astrapayUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://api.deline.web.id/R87kIeNath.jpeg" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nama Pemilik</div>
+                    <div id="astrapayName" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #2ecc71;" id="astrapayStatus">✓ Terdaftar</div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div id="astrapayProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="astrapayProductGrid"></div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeAstrapay" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoAstrapay" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultAstrapay" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoAstrapay" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountAstrapay" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceAstrapay" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoAstrapay" onclick="selectPayMethodAstrapay('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisAstrapay" onclick="selectPayMethodAstrapay('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertAstrapay" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceAstrapay" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyAstrapay" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI ASTRAPAY -->
+<div id="confirmAstrapayModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup Astrapay</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmAstrapay" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Penerima</span><span id="ca-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="ca-phone" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="ca-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ca-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="ca-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayAstrapay" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<!-- HALAMAN ISAKU -->
+<div id="page-ewallet-isaku" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackIsaku" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup iSaku (Indomaret)</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #ed1c24, #b71c1c);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/wlBGiEQtuX.png" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>iSaku Indomaret</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Aman
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliIsaku" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan Nomor iSaku</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="isakuPhone" class="panel-input" placeholder="Contoh: 08123456789" style="flex: 1;" oninput="checkIsakuInput()">
+                <button id="btnCheckIsaku" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkIsakuNumber()">CEK NOMOR</button>
+            </div>
+            <div id="isakuUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://api.deline.web.id/wlBGiEQtuX.png" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nama Pemilik</div>
+                    <div id="isakuName" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #2ecc71;" id="isakuStatus">✓ Terdaftar</div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div id="isakuProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="isakuProductGrid"></div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeIsaku" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoIsaku" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultIsaku" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoIsaku" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountIsaku" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceIsaku" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoIsaku" onclick="selectPayMethodIsaku('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisIsaku" onclick="selectPayMethodIsaku('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertIsaku" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceIsaku" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyIsaku" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI ISAKU -->
+<div id="confirmIsakuModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup iSaku</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmIsaku" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Penerima</span><span id="ci-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="ci-phone" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="ci-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ci-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="ci-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayIsaku" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<!-- HALAMAN KASPRO -->
+<div id="page-ewallet-kaspro" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackKaspro" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup Kaspro</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #ff6b35, #e54b1b);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://api.deline.web.id/il3T6M0giR.png" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>Kaspro</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Instant & Aman
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliKaspro" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Masukkan Nomor Kaspro</div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="kasproPhone" class="panel-input" placeholder="Contoh: 08123456789" style="flex: 1;" oninput="checkKasproInput()">
+                <button id="btnCheckKaspro" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: auto;" onclick="checkKasproNumber()">CEK NOMOR</button>
+            </div>
+            <div id="kasproUserInfo" style="display: none; margin-top: 15px; background: #f0f9ff; border: 1px solid #b8e2f2; border-radius: 8px; padding: 12px; align-items: center; gap: 12px;">
+                <img src="https://api.deline.web.id/il3T6M0giR.png" style="width: 30px; height: 30px;">
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: #666;">Nama Pemilik</div>
+                    <div id="kasproName" style="font-weight: bold; color: var(--primary-color); font-size: 14px;"></div>
+                </div>
+                <div style="font-size: 11px; color: #2ecc71;" id="kasproStatus">✓ Terdaftar</div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div id="kasproProductLoading" style="text-align:center; font-size:12px; color:#666; padding:10px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat daftar harga...
+            </div>
+            <div class="prod-grid" id="kasproProductGrid"></div>
+            <div style="margin-top:10px; font-size:11px; color:#f39c12; background:#fff3cd; padding:8px; border-radius:5px;">
+                <i class="fas fa-info-circle"></i> Kode DANA1 adalah produk test/trial.
+            </div>
+        </div>
+
+        <!-- KODE PROMO SECTION -->
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeKaspro" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoKaspro" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultKaspro" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoKaspro" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountKaspro" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceKaspro" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoKaspro" onclick="selectPayMethodKaspro('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisKaspro" onclick="selectPayMethodKaspro('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertKaspro" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceKaspro" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyKaspro" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI KASPRO -->
+<div id="confirmKasproModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup Kaspro</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmKaspro" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Penerima</span><span id="ck-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nomor</span><span id="ck-phone" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Paket</span><span id="ck-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ck-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="ck-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayKaspro" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div id="page-nokos" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackNokos" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Beli Nokos OTP</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://img.icons8.com/color/96/sim-card.png" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>Nomor Kosong (OTP)</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Cepat & Otomatis
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliNokos" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Pilih Negara & Operator</div>
+            </div>
+            <div class="form-group-pro">
+                <label>Negara</label>
+                <select id="nokosNegara" class="panel-input" style="background:#fff;">
+                    <option value="">Memuat...</option>
+                </select>
+            </div>
+            <div class="form-group-pro">
+                <label>Operator</label>
+                <select id="nokosOperator" class="panel-input" style="background:#fff;">
+                    <option value="">-- Pilih Negara Dulu --</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Layanan</div>
+            </div>
+            <div class="form-group-pro">
+                <select id="nokosLayanan" class="panel-input" style="background:#fff;">
+                    <option value="">-- Pilih Negara Dulu --</option>
+                </select>
+            </div>
+            <div id="nokosHarga" style="font-size:14px; font-weight:bold; color:var(--primary-color); margin-top:10px; text-align:right;">Harga: Rp 0</div>
+        </div>
+
+        <div class="step-box promo-section" style="margin-top: 15px;">
+            <div class="step-header">
+                <div class="step-badge"><i class="fas fa-tag"></i></div>
+                <div class="step-title">Punya Kode Promo?</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <input type="text" id="promoCodeNokos" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+                <button id="btnApplyPromoNokos" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+            </div>
+            <div id="promoResultNokos" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+            <div id="discountInfoNokos" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+                    <span id="discountAmountNokos" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+                    <span style="color: var(--text-main);">Total Setelah Diskon</span>
+                    <span id="finalPriceNokos" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoNokos" onclick="selectPayMethodNokos('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Proses Otomatis</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisNokos" onclick="selectPayMethodNokos('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertNokos" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceNokos" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyNokos" class="btn-buy">
+                BELI SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmNokosModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield" style="background:#f3e5f5; color:#9b59b6;"><i class="fas fa-sim-card"></i></div>
+                <h3>Konfirmasi Order</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmNokos" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Negara</span><span id="cn-negara" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Operator</span><span id="cn-operator" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Layanan</span><span id="cn-layanan" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="cn-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="cn-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayNokos" class="btn-pay-pro" style="background:#9b59b6;">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div id="page-gacha" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackGacha" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Gacha Harian</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #f39c12, #d35400);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div style="font-size: 40px; margin-bottom: 10px;">🎁</div>
+            <div class="hero-details" style="text-align: center;">
+                <h2>Event Gacha Saldo</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    Dapatkan hingga Rp 500 per putaran!
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box" style="text-align: center; padding: 30px 20px;">
+            <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Poin Kamu Saat Ini:</div>
+            <div id="displayPoinGacha" style="font-size: 40px; font-weight: bold; color: #f39c12; margin-bottom: 20px;">0 <span style="font-size: 16px;">Pts</span></div>
+            
+            <div style="font-size: 11px; background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                <i class="fas fa-info-circle"></i> Cara dapet poin: Lakukan transaksi minimal <b>Rp 10.000</b> (berlaku kelipatan) di semua layanan GILZZOTP.
+            </div>
+
+            <button id="btnPlayGacha" class="btn-pay-pro" style="background: linear-gradient(135deg, #f1c40f, #f39c12); border: none; font-size: 16px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);">
+                <i class="fas fa-play"></i> GACHA SEKARANG (1 Poin)
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="page-thr" class="page-section" style="padding-bottom: 120px; display: none;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackThr" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Berbagi THR Kaget</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div style="font-size: 45px; margin-bottom: 10px;">🧧</div>
+            <div class="hero-details" style="text-align: center;">
+                <h2>Buat THR Kaget</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    Bagi-bagi saldo ke grup, siapa cepat dia dapat!
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box" style="margin-top: -15px; padding: 20px;">
+            <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 20px; color: #333; text-align: center;">Form Pembuatan THR</h3>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 13px; font-weight: bold; color: #555; margin-bottom: 8px;">Total Saldo yang Dibagikan (Rp)</label>
+                <input type="number" id="thrTotal" class="panel-input" placeholder="Min Rp 1.000" style="width: 100%; border: 1px solid #ddd; margin-bottom: 5px;">
+                <div style="font-size: 11px; color: #888;">Contoh: 10000</div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 13px; font-weight: bold; color: #555; margin-bottom: 8px;">Jumlah Pemenang (Orang)</label>
+                <input type="number" id="thrWinners" class="panel-input" placeholder="Misal: 10" style="width: 100%; border: 1px solid #ddd; margin-bottom: 5px;">
+                <div style="font-size: 11px; color: #888;">Contoh: 5</div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-size: 13px; font-weight: bold; color: #555; margin-bottom: 8px;">Tipe Pembagian</label>
+                <select id="thrType" class="panel-input" style="width: 100%; border: 1px solid #ddd; background-color: white;">
+                    <option value="random">Acak (Dapat Beda-Beda)</option>
+                    <option value="equal">Sama Rata</option>
+                </select>
+            </div>
+
+            <button id="btnCreateThr" class="btn-buy" style="background: #e74c3c; width: 100%; border: none; font-size: 15px; padding: 14px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);">
+                <i class="fas fa-magic"></i> BUAT LINK THR KAGET
+            </button>
+
+            <button id="btnRiwayatThr" class="btn-buy" style="background: #34495e; width: 100%; border: none; font-size: 15px; padding: 14px; border-radius: 25px; color: white; margin-top: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(52, 73, 94, 0.3);">
+                <i class="fas fa-history"></i> RIWAYAT THR SAYA
+            </button>
+           </div>
+        <div id="thrResultBox" class="step-box" style="display: none; text-align: center; margin-top: 15px; padding: 20px; border: 2px dashed #2ecc71; background-color: #f0fff4;">
+            <h3 style="color: #2ecc71; margin-bottom: 10px; font-size: 18px;">Berhasil Dibuat! 🎉</h3>
+            <p style="font-size: 12px; color: #555; margin-bottom: 15px;">Salin link di bawah dan bagikan ke grup!</p>
+            <input type="text" id="thrLinkResult" class="panel-input" readonly style="text-align: center; font-weight: bold; color: var(--primary-color); margin-bottom: 15px; background: #fff; width: 100%; border: 1px solid #ddd;">
+            <button onclick="copyThrLink()" class="btn-buy" style="background: #2ecc71; padding: 12px; border-radius: 25px; width: 100%; color: white; border: none; font-weight: bold;">
+                <i class="fas fa-copy"></i> SALIN LINK
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="page-subdomain" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackSubdomain" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Beli Subdomain</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #2980b9, #2c3e50);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://img.icons8.com/color/96/domain--v1.png" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>Subdomain Premium</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Auto Create & Node
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliSubdomain" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Beli
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Data Subdomain</div>
+            </div>
+            
+            <div class="form-group-pro">
+                <label>Nama Subdomain (Huruf Kecil)</label>
+                <input type="text" id="subdomainName" class="panel-input" placeholder="contoh: gilz">
+            </div>
+
+            <div class="form-group-pro">
+                <label>IP Address VPS</label>
+                <input type="text" id="subdomainIP" class="panel-input" placeholder="contoh: 192.168.1.1">
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; background:#f9f9f9; padding:10px; border-radius:8px; border:1px solid #eee;">
+                <div>
+                    <div style="font-size:13px; font-weight:bold; color:#333;">Cloudflare Proxy</div>
+                    <div style="font-size:10px; color:#666;">Aktifkan Proxy (Orange Cloud)?</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="subdomainProxy">
+                  <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Domain Utama</div>
+            </div>
+            <div id="domainListLoading" style="text-align:center; font-size:12px; color:#666;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat Domain...
+            </div>
+            <div class="prod-grid" id="domainGrid"></div>
+        </div>
+
+<!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodeSub" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromoSub" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    <div id="promoResultSub" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    <div id="discountInfoSub" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmountSub" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPriceSub" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoSub" onclick="selectPayMethodSub('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Aktif</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisSub" onclick="selectPayMethodSub('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertSub" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data & pilih domain.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceSub" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuySub" class="btn-buy">
+                BELI SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmSubModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-globe"></i></div>
+                <h3>Konfirmasi</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmSub" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Subdomain</span><span id="cs-name" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Domain</span><span id="cs-domain" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">IP</span><span id="cs-ip" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Proxy</span><span id="cs-proxy" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="cs-method-sub" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="cs-total-sub" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPaySub" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div class="modal" id="modalSubdomainSaya">
+    <div class="modal-content" style="max-width: 400px; text-align: left; max-height: 80vh; overflow-y: auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+            <h3 style="margin:0; font-size:16px; color:var(--primary-color);">🌐 Subdomain Saya</h3>
+            <i class="fas fa-times" id="btnCloseSubList" style="cursor:pointer; color:#888;"></i>
+        </div>
+        <div id="popupSubContent">
+            <div style="text-align:center; color:#888; padding:20px;">Memuat data...</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalRiwayatThr">
+    <div class="modal-content" style="max-width: 500px; max-height: 85vh; display:flex; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; border-bottom:1px solid #eee;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <h3 style="margin:0; font-size:16px; color:#e74c3c;">🧧 Riwayat THR & Pemenang</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseRiwayatThr" style="cursor:pointer; color:#888;"></i>
+        </div>
+        
+        <div style="padding:10px; background:#fff3cd; color:#856404; font-size:11px; margin:10px 0; border-radius:8px; text-align:left;">
+            <i class="fas fa-info-circle"></i> Sisa saldo THR yang tidak diklaim dalam 24 Jam akan otomatis direfund ke saldo Anda.
+        </div>
+
+        <div id="listRiwayatThr" style="overflow-y:auto; flex:1; text-align:left;">
+            <div style="text-align:center; padding:30px;"><i class="fas fa-spinner fa-spin"></i> Memuat data...</div>
+        </div>
+    </div>
+</div>
+
+<!-- HALAMAN UTAMA TOPUP (Pilih Kategori) -->
+<div id="page-topup" class="page-section">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackTopup" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Topup Digital</h1>
+    </div>
+
+    <div class="panel-hero" style="background: linear-gradient(135deg, #9b59b6, #3498db);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://img.icons8.com/color/96/wallet--v1.png" class="hero-thumb-img" style="background:white; padding:5px;">
+            <div class="hero-details">
+                <h2>Topup & Voucher</h2>
+                <div style="font-size:12px; color:white; opacity:0.9;">
+                    <i class="fas fa-bolt"></i> Pulsa, Data, E-Wallet, Token, Game
+                </div>
+                <div class="cara-beli-btn" id="btnCaraBeliTopup" style="margin-top:5px;">
+                    <i class="fas fa-info-circle"></i> Cara Order
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Pilih Kategori</div>
+            </div>
+            <div class="game-grid-display">
+                <div class="game-card-select" onclick="selectTopupCategory('pulsa')">
+                    <img src="https://img.icons8.com/color/96/phone--v1.png">
+                    <p>Pulsa All Operator</p>
+                </div>
+                <div class="game-card-select" onclick="selectTopupCategory('data')">
+                    <img src="https://img.icons8.com/color/96/internet--v1.png">
+                    <p>Paket Data</p>
+                </div>
+                <div class="game-card-select" onclick="selectTopupCategory('ewallet')">
+                    <img src="https://img.icons8.com/color/96/wallet--v1.png">
+                    <p>E-Wallet</p>
+                </div>
+                <div class="game-card-select" onclick="selectTopupCategory('token')">
+                    <img src="https://img.icons8.com/color/96/lightning-bolt--v1.png">
+                    <p>Token PLN</p>
+                </div>
+                <div class="game-card-select" onclick="selectTopupCategory('game')">
+                    <img src="https://img.icons8.com/color/96/controller--v1.png">
+                    <p>Game Voucher</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HALAMAN PULSA & DATA -->
+<div id="page-topup-pulsa" class="page-section">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackPulsa" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;" id="pulsaPageTitle">Pulsa All Operator</h1>
+    </div>
+
+    <div class="panel-content" style="padding-bottom: 120px;">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Nomor Tujuan</div>
+            </div>
+            <div class="input-group-game">
+                <input type="text" id="topupDestination" class="form-input-game" placeholder="Contoh: 08123456789" oninput="checkTopupOrder()">
+            </div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Nominal</div>
+            </div>
+            <div class="product-grid-game" id="topupProductGrid"></div>
+        </div>
+        
+        <!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodeInput" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromo" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    
+    <div id="promoResult" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    
+    <div id="discountInfo" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmount" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPrice" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">3</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoTopup" onclick="selectPayMethodTopup('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Proses</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisTopup" onclick="selectPayMethodTopup('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertTopup" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Lengkapi data pemesanan.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceTopup" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyTopup" class="btn-buy">
+                TOPUP SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI TOPUP -->
+<div id="confirmTopupModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-wallet"></i></div>
+                <h3>Konfirmasi Topup</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmTopup" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Produk</span><span id="ct-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Tujuan</span><span id="ct-dest" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Nominal</span><span id="ct-nominal" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="ct-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="ct-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayTopup" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div id="page-vps" class="page-section" style="padding-bottom: 120px;">
+    <div class="header-clean" style="background:var(--primary-color); color:white; border:none;">
+        <i class="fas fa-arrow-left" id="btnBackVPS" style="font-size:20px; cursor:pointer;"></i>
+        <h1 style="font-size:18px;">Order VPS Murah</h1>
+    </div>
+
+    <div class="panel-hero" style="background: url('images/banner_vps.jpg') center/cover;">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <img src="images/banner_vps.jpg" class="hero-thumb-img" alt="VPS Icon">
+        <div class="hero-details">
+            <h2>VPS High Speed</h2>
+            <div style="font-size:12px; color:white; opacity:0.9;">
+                <i class="fas fa-server"></i> Server SG/Indo
+            </div>
+            
+            <div class="cara-beli-btn" id="btnCaraBeliVPS" style="margin-top:5px;">
+                <i class="fas fa-info-circle"></i> Cara Beli
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <div class="panel-content">
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">1</div>
+                <div class="step-title">Pilih Paket VPS</div>
+            </div>
+            <div class="prod-grid" id="vpsGrid"></div>
+        </div>
+
+<!-- KODE PROMO SECTION (Tambahin di setiap halaman) -->
+<div class="step-box promo-section" style="margin-top: 15px;">
+    <div class="step-header">
+        <div class="step-badge"><i class="fas fa-tag"></i></div>
+        <div class="step-title">Punya Kode Promo?</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+        <input type="text" id="promoCodeVPS" class="panel-input" placeholder="Masukkan kode promo" style="flex: 1;">
+        <button id="btnApplyPromoVPS" class="btn-buy" style="padding: 12px 15px; background: #f39c12; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">CEK</button>
+    </div>
+    <div id="promoResultVPS" style="display: none; padding: 10px; border-radius: 6px; font-size: 12px;"></div>
+    <div id="discountInfoVPS" style="display: none; background: #e8f5e9; padding: 10px; border-radius: 6px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span style="color: #2ecc71; font-weight: bold;">💸 Diskon</span>
+            <span id="discountAmountVPS" style="color: #2ecc71; font-weight: bold;">- Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 5px;">
+            <span style="color: var(--text-main);">Total Setelah Diskon</span>
+            <span id="finalPriceVPS" style="color: var(--primary-color); font-weight: bold;">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+        <div class="step-box">
+            <div class="step-header">
+                <div class="step-badge">2</div>
+                <div class="step-title">Pilih Pembayaran</div>
+            </div>
+            
+            <div class="pay-method-item" id="paySaldoVPS" onclick="selectPayMethodVPS('saldo')" style="margin-bottom:15px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-wallet" style="font-size:24px; color:var(--primary-color);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">Saldo Akun</div>
+                        <div style="font-size:11px; color:#888;">Otomatis Masuk</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="pay-method-item" id="payQrisVPS" onclick="selectPayMethodVPS('qris')">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-qrcode" style="font-size:24px; color:var(--text-main);"></i>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">QRIS (All Payment)</div>
+                        <div style="font-size:11px; color:#888;">Scan & Verifikasi Otomatis</div>
+                    </div>
+                </div>
+                <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <div id="footerAlertVPS" class="footer-alert">
+            <i class="fas fa-info-circle"></i> Silakan pilih paket VPS.
+        </div>
+        <div class="footer-action">
+            <div>
+                <div style="font-size:12px; color:var(--text-sub);">Total Bayar</div>
+                <div id="footerPriceVPS" class="f-price">Rp 0</div>
+            </div>
+            <button id="btnBuyVPS" class="btn-buy">
+                BELI SEKARANG <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmVPSModal" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <h3>Konfirmasi VPS</h3>
+            <i class="fas fa-times" id="btnCloseConfirmVPS" style="cursor:pointer;"></i>
+        </div>
+        <div class="invoice-box">
+            <div class="inv-row"><span class="inv-label">Item</span><span id="cv-prod" class="inv-val">-</span></div>
+            <div class="inv-row"><span class="inv-label">Metode</span><span id="cv-method" class="inv-val">-</span></div>
+        </div>
+        <div class="total-section">
+            <span class="total-label">Total</span>
+            <span id="cv-total" class="total-val">-</span>
+        </div>
+        <button id="btnFinalPayVPS" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+    <div id="page-transaksi" class="page-section">
+        <div class="sticky-nav-wrapper">
+            <div class="header-solid-flex">
+                <h1 style="font-size:20px; margin:0; font-weight:500;">Transaksi</h1>
+                <div style="display:flex; gap:20px;">
+                    <i class="fas fa-search" id="btnSearchTrx" style="font-size:18px; cursor:pointer;"></i>
+                    <i class="fas fa-headset" id="btnHelpTrxTop" style="font-size:18px; cursor:pointer;"></i>
+                </div>
+            </div>
+            <div class="tab-solid-container">
+                <div class="tab-clean tab-solid" id="tabHistoryContainer">
+                    <div class="tab-item-clean active" data-filter="all">SEMUA</div>
+                    <div class="tab-item-clean" data-filter="success">SUKSES</div>
+                    <div class="tab-item-clean" data-filter="pending">PROSES</div>
+                    <div class="tab-item-clean" data-filter="failed">GAGAL</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="empty-state" style="display:none; flex-direction:column; align-items:center; padding-top:100px; color:#aaa;">
+            <i class="fas fa-file-invoice" style="font-size:60px; margin-bottom:15px; color:#e0e0e0;"></i>
+            <p>Tidak Ada Riwayat Transaksi</p>
+        </div>
+
+        <div id="trx-container" class="trx-list" style="padding-bottom:80px;"></div>
+    </div>
+    
+    <div id="page-rekap" class="page-section">
+        <div class="header-solid-flex" style="background: linear-gradient(135deg, var(--primary-color), #004d40);">
+            <div>
+                <h1 style="font-size:20px; margin:0; font-weight:700;">Financial Recap</h1>
+                <p style="font-size:12px; opacity:0.8; margin:0;">Pantau arus keuanganmu</p>
+            </div>
+            <i class="fas fa-chart-pie" style="font-size:24px; opacity:0.8;"></i>
+        </div>
+
+        <div style="padding: 20px; margin-top: -30px;">
+            <div class="chart-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <span style="font-size:12px; color:#fff; opacity:0.8;">Grafik 7 Hari Terakhir</span>
+                    <span class="chart-badge">Live</span>
+                </div>
+                <div style="height: 180px;">
+                    <canvas id="waveChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stats-grid-rekap">
+                <div class="rekap-box">
+                    <div class="rk-icon in"><i class="fas fa-arrow-down"></i></div>
+                    <div>
+                        <div class="rk-label">Pemasukan</div>
+                        <div class="rk-val" id="rekIn">Rp 0</div>
+                    </div>
+                </div>
+                <div class="rekap-box">
+                    <div class="rk-icon out"><i class="fas fa-arrow-up"></i></div>
+                    <div>
+                        <div class="rk-label">Pengeluaran</div>
+                        <div class="rk-val" id="rekOut">Rp 0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-rekap-list">
+                <h3 style="font-size:14px; margin-bottom:15px; color:var(--text-main);">Ringkasan Aktivitas</h3>
+                
+                <div class="rk-row">
+                    <div class="rk-left"><i class="fas fa-shopping-cart" style="color:#3498db;"></i> Total Transaksi</div>
+                    <div class="rk-right" id="rekCount">0x</div>
+                </div>
+                <div class="rk-row">
+                    <div class="rk-left"><i class="fas fa-wallet" style="color:#f1c40f;"></i> Saldo Saat Ini</div>
+                    <div class="rk-right" id="rekBal">Rp 0</div>
+                </div>
+                <div class="rk-row">
+                    <div class="rk-left"><i class="fas fa-chart-line" style="color:#2ecc71;"></i> Net Flow</div>
+                    <div class="rk-right" id="rekNet" style="font-weight:bold;">Rp 0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="page-info" class="page-section">
+        <div class="header-solid" style="padding-bottom:10px;">
+            <h1>Pusat Informasi</h1>
+        </div>
+        
+        <div class="info-tab-container">
+    <div id="tabNotif" class="info-tab-item active" onclick="switchInfoTab('pemberitahuan')">
+        <i class="fas fa-bell"></i> Pemberitahuan
+        <span id="notifBadge" class="tab-badge" style="display: none;">•</span>
+    </div>
+    <div id="tabInfo" class="info-tab-item" onclick="switchInfoTab('informasi')">
+        <i class="fas fa-bullhorn"></i> Informasi Admin
+    </div>
+</div>
+
+        <div class="info-body-wrapper">
+            <div id="listPemberitahuan" class="info-list-container">
+                <div style="text-align:center; padding:50px; color:#aaa;">
+                    <i class="fas fa-spinner fa-spin"></i> Memuat data...
+                </div>
+            </div>
+
+            <div id="listInformasi" class="info-list-container" style="display:none;">
+                </div>
+        </div>
+    </div>
+
+    <div id="page-akun" class="page-section">
+        <div class="profile-header-container">
+            <div class="profile-banner" id="displayBanner">
+                <div class="edit-btn-banner" onclick="document.getElementById('fileBanner').click()">
+                    <i class="fas fa-camera"></i> Ubah Banner
+                </div>
+            </div>
+            <div class="profile-avatar-wrapper">
+                <img src="images/default-user.png" id="displayProfile" alt="Profile">
+                <div class="edit-btn-avatar" onclick="document.getElementById('fileProfile').click()">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+        </div>
+
+        <input type="file" id="fileBanner" accept="image/*" style="display:none">
+        <input type="file" id="fileProfile" accept="image/*" style="display:none">
+
+        <div class="profile-body">
+            <div style="text-align:center; margin-bottom:20px;">
+                <div id="accNameDisplay" style="font-size:18px; font-weight:bold;">Nama User</div>
+                <div style="font-size:12px; color:#888;">
+                    Join: <span id="accJoinDate">-</span> | Saldo: <span id="accBalance" style="color:var(--primary-color); font-weight:bold;">Rp 0</span>
+                </div>
+            </div>
+
+            <div class="account-stats-card">
+                <div class="fin-box">
+                    <div class="fin-icon green"><i class="fas fa-arrow-up"></i></div>
+                    <div>
+                        <div class="fin-label">Uang Masuk</div>
+                        <div class="fin-value green" id="accUangMasuk">Rp 0</div>
+                    </div>
+                </div>
+
+                <div class="fin-separator"></div>
+
+                <div class="fin-box">
+                    <div class="fin-icon orange"><i class="fas fa-arrow-down"></i></div>
+                    <div>
+                        <div class="fin-label">Uang Keluar</div>
+                        <div class="fin-value" id="accUangKeluar">Rp 0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group-pro">
+                <label>Nama Lengkap (Maks 1x per 7 hari)</label>
+                <input type="text" id="editFullname" class="input-pro">
+            </div>
+
+            <div class="form-group-pro">
+                <label>Username (Permanen)</label>
+                <input type="text" id="editUsername" class="input-pro readonly" readonly>
+            </div>
+
+            <div class="form-group-pro">
+                <label>Nomor WhatsApp (Permanen)</label>
+                <input type="text" id="editPhone" class="input-pro readonly" readonly>
+            </div>
+
+            <button id="btnSaveProfile" class="btn-pay-pro" style="margin:20px 0; width:100%;">
+                <i class="fas fa-save"></i> SIMPAN PERUBAHAN
+            </button>
+            
+            <button id="btnLogout" class="btn-pay-pro" style="background:var(--bg-card); color:#e74c3c; border:1px solid #e74c3c; width:100%; margin:0;">
+                <i class="fas fa-sign-out-alt"></i> KELUAR AKUN
+            </button>
+            
+            <div style="height:50px;"></div> 
+        </div>
+    </div>
+
+    <div class="bottom-nav" id="bottomNav">
+        <div class="nav-item active" data-target="home"><i class="fas fa-home"></i><span>Home</span></div>
+        <div class="nav-item" data-target="transaksi"><i class="fas fa-receipt"></i><span>Transaksi</span></div>
+        <div class="nav-item" data-target="rekap"><i class="fas fa-chart-area"></i><span>Rekap</span></div>
+        
+        <div class="nav-item" data-target="info" id="navInfoBtn">
+            <div class="nav-badge" id="infoBadge"></div> <i class="fas fa-bell"></i> <span>Info</span>
+        </div>
+        <div class="nav-item" data-target="akun"><i class="fas fa-user"></i><span>Akun</span></div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom:15px; color:var(--text-main);">Hubungi Kami</h3>
+            <p style="font-size:12px; color:#666; margin-bottom:15px;">Kami siap membantu kendala Anda.</p>
+            
+            <a href="https://wa.me/tidak tersedia" target="_blank" class="cs-btn" style="background:#25D366">
+                <i class="fab fa-whatsapp" style="font-size:18px;"></i> WhatsApp Admin
+            </a>
+
+            <a href="https://t.me/Gilz03" target="_blank" class="cs-btn" style="background:#3498db; margin-top:10px;">
+                <i class="fab fa-telegram" style="font-size:18px;"></i> Telegram Admin
+            </a>
+            
+            <div id="btnCloseHelp" style="margin-top:15px; color:var(--text-sub); cursor:pointer; font-size:13px; font-weight:bold;">Tutup</div>
+        </div>
+    </div>
+
+    <div class="confirm-modal-overlay" id="caraBeliModal">
+        <div class="confirm-box-pro">
+            <div class="confirm-pro-header">
+                <h3>Cara Pembelian</h3>
+                <i class="fas fa-times" id="btnCloseCaraBeli" style="color:var(--text-sub); cursor:pointer;"></i>
+            </div>
+            <div style="padding:20px; text-align:left; font-size:14px; line-height:1.6; color:var(--text-main);">
+                <ol style="padding-left:20px; margin:0;">
+                    <li>Masukkan <b>Username</b> akun Anda.</li>
+                    <li>Pilih <b>Paket Data</b> yang diinginkan.</li>
+                    <li>Pilih <b>Metode Pembayaran</b> (Saldo/QRIS).</li>
+                    <li>Klik tombol <b>Beli Sekarang</b>.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+        <div id="modalDeposit" class="confirm-modal-overlay">
+        <div class="confirm-box-pro">
+            <div class="confirm-pro-header">
+                <h3>Isi Saldo</h3>
+                <i class="fas fa-times" id="btnCloseDeposit" style="cursor:pointer;"></i>
+            </div>
+            
+            <div style="padding:20px; max-height: 70vh; overflow-y: auto;">
+                <p style="font-size:12px; color:#666; margin-bottom:10px; font-weight:bold;">Pilih Nominal Cepat:</p>
+                <div class="preset-grid">
+                    <div class="preset-btn" onclick="selectDepositAmount(5000, this)">5K</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(10000, this)">10K</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(20000, this)">20K</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(50000, this)">50K</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(100000, this)">100K</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(200000, this)">200K</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(500000, this)">500K</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(1000000, this)">1 Jt</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(5000000, this)">5 Jt</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(10000000, this)">10 Jt</div>
+                    <div class="preset-btn" onclick="selectDepositAmount(20000000, this)">20 Jt</div>
+                </div>
+
+                <div style="margin-top: 15px; border-top: 1px dashed #ddd; padding-top: 15px;">
+                    <p style="font-size:12px; color:#666; margin-bottom:5px;">Atau Input Manual (Rp):</p>
+                    <input type="number" id="depoAmount" style="width:100%; padding:12px; font-size:18px; border:1px solid var(--border-color); border-radius:10px; text-align:center; outline:none; color:var(--text-main); background:var(--bg-body); font-weight:bold;" placeholder="Minimal 1.000">
+                </div>
+
+                <button id="btnProsesDeposit" class="btn-pay-pro" style="width:100%; margin:20px 0 0 0;">LANJUT BAYAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customAlertModal" class="confirm-modal-overlay" style="z-index: 9999;">
+        <div class="confirm-box-pro" style="max-width: 300px; text-align:center;">
+            <div style="padding:20px;">
+                <div style="width:50px; height:50px; background:var(--primary-light); color:var(--primary-color); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px auto; font-size:24px;">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <h3 id="alertTitle" style="margin-bottom:10px; color:var(--text-main);">Informasi</h3>
+                <p id="alertMessage" style="font-size:14px; color:var(--text-sub); line-height:1.5;">...</p>
+                <button id="btnAlertOk" class="btn-pay-pro" style="width:100%; margin:20px 0 0 0;">OKE</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModalOverlay" class="confirm-modal-overlay">
+        <div class="confirm-box-pro">
+            <div class="confirm-pro-header">
+                <div style="display:flex; align-items:center;">
+                    <div class="icon-shield"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Konfirmasi</h3>
+                </div>
+                <i class="fas fa-times" id="btnCloseConfirm" style="color:var(--text-sub); cursor:pointer;"></i>
+            </div>
+            <div class="invoice-box">
+                <div class="inv-row"><span class="inv-label">Produk</span><span id="c-prod" class="inv-val">-</span></div>
+                <div class="inv-row"><span class="inv-label">Username</span><span id="c-user" class="inv-val">-</span></div>
+                <div class="inv-row"><span class="inv-label">Metode</span><span id="c-method" class="inv-val">-</span></div>
+            </div>
+            <div class="total-section">
+                <span class="total-label">Total Bayar</span>
+                <span id="c-total" class="total-val">-</span>
+            </div>
+            <button id="btnFinalPay" class="btn-pay-pro">BAYAR SEKARANG</button>
+        </div>
+    </div>
+    
+        <div id="confirmScriptModalOverlay" class="confirm-modal-overlay">
+        <div class="confirm-box-pro">
+            <div class="confirm-pro-header">
+                <div style="display:flex; align-items:center;">
+                    <div class="icon-shield"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Konfirmasi Order</h3>
+                </div>
+                <i class="fas fa-times" id="btnCloseConfirmScript" style="color:var(--text-sub); cursor:pointer;"></i>
+            </div>
+            
+            <div class="invoice-box">
+                <div class="inv-row">
+                    <span class="inv-label">Item</span>
+                    <span id="cscr-prod" class="inv-val">-</span>
+                </div>
+                <div class="inv-row">
+                    <span class="inv-label">Kategori</span>
+                    <span class="inv-val">Full Source Code</span>
+                </div>
+                <div class="inv-row">
+                    <span class="inv-label">Metode</span>
+                    <span id="cscr-method" class="inv-val">-</span>
+                </div>
+            </div>
+            
+            <div class="total-section">
+                <span class="total-label">Total Bayar</span>
+                <span id="cscr-total" class="total-val">-</span>
+            </div>
+            
+            <button id="btnFinalPayScript" class="btn-pay-pro">BAYAR SEKARANG</button>
+        </div>
+    </div>
+    
+    <div id="invoiceModal" class="confirm-modal-overlay">
+        <div class="confirm-box-pro"> 
+            <div id="invHeader" class="confirm-pro-header" style="background:var(--primary-color); color:white;">
+                <h3 id="invStatusTitle" style="color:white;">Transaksi Berhasil</h3>
+                <i class="fas fa-times" id="btnCloseInvoice" style="cursor:pointer; color:white;"></i>
+            </div>
+            <div style="padding: 20px; max-height: 70vh; overflow-y: auto;">
+                <div style="text-align:center; margin-bottom:20px;">
+                    <div id="invIconBg" style="width:60px; height:60px; background:#e0f2f1; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:var(--primary-color); font-size:24px;">
+                        <i id="invIcon" class="fas fa-check"></i>
+                    </div>
+                </div>
+                <div class="invoice-list">
+                    <div class="inv-row-detail">
+                        <span class="inv-lbl">ID Transaksi</span>
+                        <span class="inv-val" id="d-orderId">...</span>
+                    </div>
+                    <div class="inv-row-detail">
+                        <span class="inv-lbl">Tanggal</span>
+                        <span class="inv-val" id="d-date">...</span>
+                    </div>
+                    <div class="inv-row-detail">
+                        <span class="inv-lbl">Produk</span>
+                        <span class="inv-val" id="d-item">Saldo Deposit</span>
+                    </div>
+                     <div class="inv-row-detail">
+                        <span class="inv-lbl">Status</span>
+                        <span class="inv-val" id="d-status">...</span>
+                    </div>
+                </div>
+                <div style="border-top: 1px dashed #ccc; margin: 15px 0;"></div>
+                <div class="inv-row-detail">
+                    <span class="inv-lbl" style="font-weight:bold;">Total Pembayaran</span>
+                    <span class="inv-val price" id="d-total" style="font-size:18px; color:var(--primary-color);">Rp 0</span>
+                </div>
+                <div id="actionPendingArea" style="margin-top:20px; display:none;">
+                    <p style="font-size:11px; text-align:center; color:#e67e22; margin-bottom:10px;">
+                        <i class="fas fa-clock"></i> Menunggu Pembayaran
+                    </p>
+                    <button id="btnLanjutBayar" class="btn-pay-pro" style="background:#e67e22;">LANJUT BAYAR</button>
+                </div>
+                <div id="actionExpiredArea" style="margin-top:20px; display:none;">
+                    <button class="btn-pay-pro" style="background:#95a5a6; cursor:not-allowed;">KADALUARSA</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="dateFilterModal" class="confirm-modal-overlay">
+        <div class="confirm-box-pro" style="max-width: 300px;">
+            <div class="confirm-pro-header">
+                <h3>Cari Tanggal</h3>
+                <i class="fas fa-times" id="btnCloseDateFilter" style="cursor:pointer; color:var(--text-sub);"></i>
+            </div>
+            <div style="padding:20px;">
+                <p style="font-size:13px; color:#666; margin-bottom:10px;">Pilih tanggal transaksi:</p>
+                <input type="date" id="inputDateFilter" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:16px; margin-bottom:20px; outline:none;">
+                <div style="display:flex; gap:10px;">
+                    <button id="btnResetFilter" style="flex:1; background:#95a5a6; color:white; padding:10px; border:none; border-radius:8px; cursor:pointer;">Reset</button>
+                    <button id="btnApplyFilter" style="flex:1; background:var(--primary-color); color:white; padding:10px; border:none; border-radius:8px; cursor:pointer;">Cari</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="cropModal" class="confirm-modal-overlay" style="z-index: 9999;">
+        <div class="confirm-box-pro" style="max-width: 90%; width: 400px; background: #000;">
+            <div class="confirm-pro-header" style="background: #000; color: white; border-bottom: 1px solid #333;">
+                <h3 style="color:white;">Atur Posisi Foto</h3>
+                <i class="fas fa-times" id="btnCloseCrop" style="cursor:pointer; color:white;"></i>
+            </div>
+            <div style="height: 350px; background: #111; display:flex; align-items:center; justify-content:center;">
+                <img id="imageToCrop" style="max-width: 100%; max-height: 100%; display:block;">
+            </div>
+            <div style="padding: 15px; display: flex; gap: 10px; background: #000;">
+                <button id="btnCancelCrop" class="btn-pay-pro" style="background: transparent; border: 1px solid #555; color: white;">Batal</button>
+                <button id="btnApplyCrop" class="btn-pay-pro" style="background: var(--primary-color);">Selesai</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="panelPopupModal">
+        <div class="modal-content" style="max-width: 400px; text-align: left; max-height: 80vh; overflow-y: auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                <h3 style="margin:0; font-size:16px; color:var(--primary-color);">🖥️ Data Panel Anda</h3>
+                <i class="fas fa-times" id="btnClosePanelPopup" style="cursor:pointer; color:#888;"></i>
+            </div>
+            <div id="popupPanelContent">
+                <div style="text-align:center; color:#888; padding:20px;">Memuat data...</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="confirm-modal-overlay" id="keuntunganModal">
+        <div class="confirm-box-pro">
+            <div class="confirm-pro-header">
+                <h3>✨ Keuntungan Premium</h3>
+                <i class="fas fa-times" id="btnCloseKeuntungan" style="color:var(--text-sub); cursor:pointer;"></i>
+            </div>
+            <div style="padding:20px; text-align:left; font-size:13px; line-height:1.6; color:var(--text-main);">
+                <ul style="padding-left:20px; margin:0;">
+                    <li style="margin-bottom:8px;">⚡ <b>Server Stabil & Cepat</b><br>Performa tinggi anti lemot untuk bot Anda.</li>
+                    <li style="margin-bottom:8px;">🛡️ <b>Bergaransi Aktif</b><br>Jaminan ganti baru jika server mati (S&K).</li>
+                    <li style="margin-bottom:8px;">🚀 <b>Proses Otomatis</b><br>Panel langsung aktif detik itu juga setelah bayar.</li>
+                    <li style="margin-bottom:8px;">🔧 <b>Full Akses Control</b><br>Bebas Start, Stop, Restart kapan saja.</li>
+                    <li>💎 <b>Kualitas Sultan</b><br>Harga rakyat, spesifikasi pejabat!</li>
+                </ul>
+                <button id="btnTutupKeuntungan" class="btn-pay-pro" style="margin:20px 0 0 0; width:100%;">PAHAM, LANJUT BELI</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="scriptDownloadModal">
+        <div class="modal-content" style="max-width: 400px; text-align: left; max-height: 80vh; overflow-y: auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                <h3 style="margin:0; font-size:16px; color:var(--primary-color);">📂 Script Anda</h3>
+                <i class="fas fa-times" id="btnCloseScriptDownload" style="cursor:pointer; color:#888;"></i>
+            </div>
+            <div id="popupScriptContent">
+                <div style="text-align:center; color:#888; padding:20px;">Memuat data...</div>
+            </div>
+        </div>
+    </div>
+
+<div id="confirmMuridModalOverlay" class="confirm-modal-overlay">
+    <div class="confirm-box-pro">
+        <div class="confirm-pro-header">
+            <div style="display:flex; align-items:center;">
+                <div class="icon-shield"><i class="fas fa-user-graduate"></i></div>
+                <h3>Konfirmasi Join</h3>
+            </div>
+            <i class="fas fa-times" id="btnCloseConfirmMurid" style="color:var(--text-sub); cursor:pointer;"></i>
+        </div>
+        
+        <div class="invoice-box">
+            <div class="inv-row">
+                <span class="inv-label">Paket</span>
+                <span id="cm-prod" class="inv-val">-</span>
+            </div>
+            <div class="inv-row">
+                <span class="inv-label">Tipe</span>
+                <span class="inv-val">Mentoring & Source Code</span>
+            </div>
+            <div class="inv-row">
+                <span class="inv-label">Metode</span>
+                <span id="cm-method" class="inv-val">-</span>
+            </div>
+        </div>
+        
+        <div class="total-section">
+            <span class="total-label">Total Bayar</span>
+            <span id="cm-total" class="total-val">-</span>
+        </div>
+        
+        <button id="btnFinalPayMurid" class="btn-pay-pro">BAYAR SEKARANG</button>
+    </div>
+</div>
+
+<div class="modal" id="kelasModal">
+    <div class="modal-content" style="max-width: 400px; text-align: left; max-height: 80vh; overflow-y: auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+            <h3 style="margin:0; font-size:16px; color:var(--primary-color);">🎓 Kelas Saya</h3>
+            <i class="fas fa-times" id="btnCloseKelas" style="cursor:pointer; color:#888;"></i>
+        </div>
+        <div id="popupKelasContent">
+            <div style="text-align:center; color:#888; padding:20px;">Memuat data...</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalRiwayatSMM">
+    <div class="modal-content" style="max-width: 500px; max-height: 85vh; display:flex; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; border-bottom:1px solid #eee;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <h3 style="margin:0; font-size:16px; color:var(--primary-color);">📊 Riwayat Suntuik</h3>
+                <div id="btnRefreshSMM" style="cursor:pointer; background:#e0f2f1; color:var(--primary-color); padding:5px 8px; border-radius:50%; font-size:12px; transition:0.3s;" title="Refresh Status">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+            </div>
+            <i class="fas fa-times" id="btnCloseRiwayatSMM" style="cursor:pointer; color:#888;"></i>
+        </div>
+        
+        <div style="padding:10px; background:#fff3cd; color:#856404; font-size:11px; margin:10px 0; border-radius:8px; text-align:left;">
+            <i class="fas fa-info-circle"></i> Status <b>Start</b> & <b>Remains</b> diambil langsung dari server pusat.
+        </div>
+
+        <div id="listRiwayatSMM" style="overflow-y:auto; flex:1; text-align:left;">
+            <div style="text-align:center; padding:30px;"><i class="fas fa-spinner fa-spin"></i> Memuat data...</div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Riwayat Nokos -->
+<div class="modal" id="modalRiwayatNokos">
+    <div class="modal-content" style="max-width: 500px; max-height: 85vh; display:flex; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; border-bottom:1px solid #eee;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <h3 style="margin:0; font-size:16px; color:#9b59b6;">📱 Riwayat Nokos</h3>
+                <div id="btnRefreshNokos" style="cursor:pointer; background:#f3e5f5; color:#9b59b6; padding:5px 8px; border-radius:50%; font-size:12px; transition:0.3s;" title="Refresh Status">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+            </div>
+            <i class="fas fa-times" id="btnCloseRiwayatNokos" style="cursor:pointer; color:#888;"></i>
+        </div>
+        
+        <div style="padding:10px; background:#f3e5f5; color:#6a1b9a; font-size:11px; margin:10px 0; border-radius:8px; text-align:left;">
+            <i class="fas fa-info-circle"></i> OTP akan muncul otomatis setelah masuk. Jika tidak muncul dalam 5 menit, bisa dibatalkan.
+        </div>
+
+        <div id="listRiwayatNokos" style="overflow-y:auto; flex:1; text-align:left;">
+            <div style="text-align:center; padding:30px;"><i class="fas fa-spinner fa-spin"></i> Memuat data...</div>
+        </div>
+    </div>
+</div>
+
+<div class="confirm-modal-overlay" id="promoApkModal" style="z-index: 99999;">
+    <div class="promo-box">
+        <div class="promo-header">
+            <i class="fas fa-times" id="btnClosePromo" style="color:#fff; cursor:pointer; font-size: 20px; position: absolute; right: 15px; top: 15px; z-index: 10; background: rgba(0,0,0,0.5); padding: 8px 10px; border-radius: 50%;"></i>
+        </div>
+        
+        <img id="apkBannerImg" src="https://ar-hosting.pages.dev/1775662030162.jpg" alt="Promo APK" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px; display: block;">
+        
+        <div style="padding: 20px; text-align: center; background: var(--bg-card); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+            <h3 style="margin-bottom: 5px; color: var(--text-main);">Download Versi APK!</h3>
+            <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 15px;">Lebih cepat, ringan, dan nikmati fitur eksklusif lainnya.</p>
+            
+            <div id="eidCountdownContainer"></div>
+            
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; width: 100%; margin: 0 auto;">
+    
+    <a href="https://www.mediafire.com/file/kcybsgaix6vgsam/Rikimarket.apk/file" target="_blank" id="btnDownloadApk" class="btn-pay-pro" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 15px; border-radius: 10px; flex: 1; max-width: 180px;">
+        <i class="fas fa-download"></i> DOWNLOAD
+    </a>
+
+    <a href="https://whatsapp.com/channel/0029VarPajiFMqrW8axOEd2y" target="_blank" class="btn-pay-pro" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 15px; border-radius: 10px; flex: 1; max-width: 180px;">
+        <i class="fas fa-headset"></i> JOIN SALURAN
+    </a>
+
+</div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+            localStorage.setItem("theme", "light");
+        }
+    </script>
+</body>
+</html>

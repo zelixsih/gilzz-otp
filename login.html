@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - Akun</title>
+    <link rel="icon" type="image/jpeg" href="images/Riki.jpg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Tambahan CSS khusus Modal Reset */
+        .modal-reset {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-reset.show { display: flex; }
+        .reset-box {
+            background: white; width: 90%; max-width: 350px; padding: 25px;
+            border-radius: 15px; text-align: center; position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .reset-step { display: none; }
+        .reset-step.active { display: block; animation: fadeIn 0.3s; }
+        .timer-text { font-size: 12px; color: #e74c3c; margin-top: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-page">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Selamat Datang</h1>
+                <p>Silakan masukan akun anda untuk melanjutkan.</p>
+            </div>
+
+            <form id="formLogin">
+                <div class="input-box">
+                    <i class="fas fa-user icon-start"></i>
+                    <input type="text" id="logUser" placeholder="Username" required autocomplete="off" 
+                           oninput="this.value = this.value.toLowerCase().replace(/[^a-z0-9_-]/g, '')">
+                </div>
+                
+                <div class="input-box">
+                    <i class="fas fa-lock icon-start"></i>
+                    <input type="password" id="logPass" placeholder="Kata Sandi" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePass('logPass', this)"></i>
+                </div>
+
+                <div style="text-align:right; margin-bottom:20px;">
+                    <a href="#" onclick="openResetModal()" style="font-size:12px; color:rgba(255,255,255,0.8); text-decoration:none; border-bottom:1px dashed rgba(255,255,255,0.5);">Lupa Password?</a>
+                </div>
+
+                <button type="submit" class="btn-auth" id="btnLogin">MASUK SEKARANG</button>
+            </form>
+
+            <div class="auth-footer">
+                Belum punya akun? <a href="/register">Daftar Disini</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="resetModal" class="modal-reset">
+        <div class="reset-box">
+            <div style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px; color: #888;" onclick="closeResetModal()">&times;</div>
+            
+            <div id="step1" class="reset-step active">
+                <div style="width:50px; height:50px; background:#e0f2f1; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:#00897b; font-size:24px; margin-bottom:15px;">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h3 style="color:#333; margin-bottom:5px;">Reset Password</h3>
+                <p style="font-size:12px; color:#666; margin-bottom:20px;">Masukkan Username atau Nomor WhatsApp terdaftar. Kode OTP akan dikirim ke WA.</p>
+                
+                <div class="input-box" style="margin-bottom:15px;">
+                    <i class="fas fa-user-shield icon-start" style="color:#666;"></i>
+                    <input type="text" id="resetInput" placeholder="Username / No. WA" style="border:1px solid #ddd; background:#f9f9f9;">
+                </div>
+                <button class="btn-auth" id="btnRequestOtp" onclick="requestOtp()">KIRIM KODE OTP</button>
+            </div>
+
+            <div id="step2" class="reset-step">
+                <h3 style="color:#333; margin-bottom:5px;">Verifikasi</h3>
+                <p style="font-size:12px; color:#666; margin-bottom:15px;">Masukkan kode OTP dari WhatsApp dan password baru.</p>
+                
+                <div class="input-box" style="margin-bottom:10px;">
+                    <i class="fas fa-envelope-open-text icon-start" style="color:#666;"></i>
+                    <input type="number" id="resetOtp" placeholder="Kode OTP (6 Digit)" style="border:1px solid #ddd; background:#f9f9f9; text-align:center; letter-spacing:2px; font-weight:bold;">
+                </div>
+                <div class="timer-text" id="otpTimer">01:00</div>
+
+                <div class="input-box" style="margin-bottom:10px; margin-top:15px;">
+                    <i class="fas fa-lock icon-start" style="color:#666;"></i>
+                    <input type="password" id="newPass" placeholder="Password Baru" style="border:1px solid #ddd; background:#f9f9f9;">
+                </div>
+
+                <button class="btn-auth" id="btnResetFinal" onclick="resetPasswordFinal()">UBAH PASSWORD</button>
+                <div style="margin-top:10px; font-size:11px; color:#888; cursor:pointer;" onclick="changeStep(1)">Salah Nomor/User? Kembali</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePass(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // --- FUNGSI LOGIN ---
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnLogin');
+            const user = document.getElementById('logUser').value;
+            const pass = document.getElementById('logPass').value;
+
+            Swal.fire({
+                title: 'Sedang Memproses...', text: 'Mengecek akun anda', allowOutsideClick: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    await Swal.fire({
+                        icon: 'success', title: 'Berhasil Masuk!', showConfirmButton: false,
+                        timer: 1500, timerProgressBar: true
+                    });
+                    window.location.href = '/'; 
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Gagal Masuk', text: data.message || 'Username/Password salah' });
+                }
+            } catch (err) {
+                Swal.fire('Error', 'Gagal terhubung ke server', 'error');
+            }
+        });
+
+        // --- FUNGSI RESET PASSWORD ---
+        let countdown;
+        let identifierVal = '';
+
+        function openResetModal() {
+            document.getElementById('resetModal').classList.add('show');
+            changeStep(1);
+        }
+        function closeResetModal() {
+            document.getElementById('resetModal').classList.remove('show');
+            clearInterval(countdown);
+        }
+        function changeStep(step) {
+            document.querySelectorAll('.reset-step').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+        }
+
+        async function requestOtp() {
+            const input = document.getElementById('resetInput').value;
+            if(!input) return Swal.fire('Error', 'Masukkan Username atau Nomor WA!', 'warning');
+
+            const btn = document.getElementById('btnRequestOtp');
+            btn.innerText = "Mengirim..."; btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/forgot-password/request', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ identifier: input })
+                });
+                const data = await res.json();
+
+                if(data.success) {
+                    identifierVal = input; // Simpan untuk step 2
+                    changeStep(2);
+                    startTimer(60); // Mulai hitung mundur 60 detik
+                    Swal.fire({ icon: 'success', title: 'Kode Terkirim', text: 'Cek WhatsApp Anda!', timer: 2000, showConfirmButton: false });
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch(e) {
+                Swal.fire('Error', 'Gagal koneksi server', 'error');
+            } finally {
+                btn.innerText = "KIRIM KODE OTP"; btn.disabled = false;
+            }
+        }
+
+        async function resetPasswordFinal() {
+            const otp = document.getElementById('resetOtp').value;
+            const newPass = document.getElementById('newPass').value;
+
+            if(!otp || !newPass) return Swal.fire('Error', 'Lengkapi Kode OTP dan Password Baru!', 'warning');
+
+            const btn = document.getElementById('btnResetFinal');
+            btn.innerText = "Memproses..."; btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/forgot-password/reset', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ identifier: identifierVal, otp: otp, newPassword: newPass })
+                });
+                const data = await res.json();
+
+                if(data.success) {
+                    closeResetModal();
+                    Swal.fire('Berhasil!', data.message, 'success');
+                    // Auto fill form login
+                    // Cek apakah input itu username atau bukan, simple logic
+                    if(!/^\d+$/.test(identifierVal)) {
+                        document.getElementById('logUser').value = identifierVal;
+                    }
+                    document.getElementById('logPass').value = newPass;
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch(e) {
+                Swal.fire('Error', 'Gagal koneksi server', 'error');
+            } finally {
+                btn.innerText = "UBAH PASSWORD"; btn.disabled = false;
+            }
+        }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('otpTimer');
+            clearInterval(countdown);
+            
+            countdown = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(countdown);
+                    display.textContent = "Kode Kadaluarsa!";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

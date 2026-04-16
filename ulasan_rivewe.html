@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ulasan Pengguna - GILZOTP</title>
+    <link rel="icon" type="image/jpeg" href="images/Riki.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .review-header {
+            background: linear-gradient(135deg, var(--primary-color), #004d40);
+            padding: 25px 20px 40px 20px;
+            color: white;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .big-score {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .stars-display {
+            font-size: 14px;
+            color: #f1c40f;
+            margin-bottom: 5px;
+        }
+
+        .total-reviews {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* CARD REVIEW */
+        .reviews-container {
+            padding: 0 20px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            transition: transform 0.2s;
+        }
+        /* .review-card:active { transform: scale(0.98); } */
+
+        .r-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .r-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 1px solid #eee;
+        }
+
+        .r-info { flex: 1; }
+        .r-name { font-size: 14px; font-weight: bold; color: #333; display: flex; align-items: center; gap: 5px; }
+        .r-date { font-size: 10px; color: #999; }
+
+        .r-stars { font-size: 12px; color: #f1c40f; margin-bottom: 8px; }
+        .r-msg { font-size: 13px; color: #555; line-height: 1.5; background: #f9f9f9; padding: 10px; border-radius: 8px; margin-bottom: 8px;}
+        .r-cat { 
+            display: inline-block; font-size: 9px; 
+            padding: 2px 8px; border-radius: 10px; 
+            background: #e0f2f1; color: var(--primary-color); 
+            font-weight: bold; margin-top: 5px; 
+        }
+
+        /* STYLING TOMBOL REACTION */
+        .reaction-bar {
+            display: flex;
+            gap: 15px;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .react-btn {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            transition: 0.3s;
+            background: transparent;
+            font-size: 12px;
+            color: #7f8c8d;
+            border: 1px solid transparent;
+        }
+        
+        .react-btn:hover { background: #f5f6fa; }
+        .react-btn:active { transform: scale(0.95); }
+        .react-btn i { font-size: 14px; }
+
+        /* Warna Status AKTIF */
+        .active-love { 
+            color: #e74c3c !important; 
+            background: rgba(231, 76, 60, 0.1);
+            border-color: rgba(231, 76, 60, 0.2);
+            font-weight: bold;
+        }
+        
+        .active-like { 
+            color: #2980b9 !important; 
+            background: rgba(41, 128, 185, 0.1);
+            border-color: rgba(41, 128, 185, 0.2);
+            font-weight: bold;
+        }
+        
+        .active-dislike { 
+            color: #555 !important; 
+            background: rgba(0,0,0, 0.05);
+            border-color: rgba(0,0,0, 0.1);
+            font-weight: bold;
+        }
+
+        /* FLOATING BUTTONS */
+        .fab-add {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.2s;
+        }
+        .fab-add:active { transform: scale(0.9); }
+
+        .btn-home-float {
+            position: fixed; bottom: 20px; left: 20px;
+            background: var(--primary-color); color: white;
+            border: none; padding: 10px 20px; border-radius: 25px;
+            font-weight: bold; font-size: 14px;
+            box-shadow: 0 5px 20px rgba(0, 137, 123, 0.4);
+            cursor: pointer; z-index: 100;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; justify-content:center; align-items:center; }
+        .modal.show { display: flex; }
+        .modal-box { background:white; width:90%; max-width:350px; padding:25px; border-radius:15px; position:relative; }
+        
+        .rating-select { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+        .star-opt { font-size: 30px; color: #ddd; cursor: pointer; transition: 0.2s; }
+        .star-opt.active { color: #f1c40f; transform: scale(1.1); }
+        
+        .badge-replied {
+            background-color: #e0f2f1;
+            color: #00695c;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid #b2dfdb;
+            margin-left: auto; 
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="review-header">
+        <div class="header-content">
+            <h2 style="margin:0; font-size:20px;">Ulasan Pelanggan</h2>
+            <div style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:15px; font-size:12px;">
+                <i class="fas fa-check-circle"></i> Terverifikasi
+            </div>
+        </div>
+        
+        <div class="rating-summary">
+            <div class="big-score" id="avgScore">0.0</div>
+            <div>
+                <div class="stars-display" id="avgStars">
+                    <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                </div>
+                <div class="total-reviews"><span id="totalCount">0</span> Ulasan Total</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews-container" id="listReviews">
+        <div style="text-align:center; padding:50px; color:#aaa;">
+            <i class="fas fa-spinner fa-spin"></i> Memuat Ulasan...
+        </div>
+    </div>
+
+    <button class="btn-home-float" onclick="window.location.href='/'">
+        <i class="fas fa-home"></i> Home
+    </button>
+
+    <div class="fab-add" onclick="openReviewModal()">
+        <i class="fas fa-pen"></i>
+    </div>
+
+    <div class="modal" id="reviewModal">
+        <div class="modal-box">
+            <h3 style="margin-top:0; text-align:center;">Tulis Ulasan</h3>
+            <p style="font-size:12px; color:#666; text-align:center; margin-bottom:15px;">Bagikan pengalaman belanja Anda.</p>
+            
+            <div class="rating-select" id="starSelector">
+                <i class="fas fa-star star-opt" data-val="1"></i>
+                <i class="fas fa-star star-opt" data-val="2"></i>
+                <i class="fas fa-star star-opt" data-val="3"></i>
+                <i class="fas fa-star star-opt" data-val="4"></i>
+                <i class="fas fa-star star-opt" data-val="5"></i>
+            </div>
+
+            <div class="form-group-pro">
+                <label>Kategori Produk</label>
+                <select id="reviewCat" class="input-pro" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ddd;">
+                    <option value="">Memuat produk...</option>
+                </select>
+            </div>
+
+            <div class="form-group-pro" style="margin-top:10px;">
+                <label>Pesan Anda</label>
+                <textarea id="reviewMsg" rows="3" class="input-pro" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Pelayanan cepat, panel ngebut..."></textarea>
+            </div>
+
+            <button onclick="submitReview()" id="btnSubmit" style="width:100%; background:var(--primary-color); color:white; border:none; padding:12px; border-radius:10px; font-weight:bold; margin-top:20px; cursor:pointer;">KIRIM ULASAN</button>
+            <div onclick="document.getElementById('reviewModal').classList.remove('show')" style="text-align:center; margin-top:10px; color:#888; font-size:12px; cursor:pointer;">Batal</div>
+        </div>
+    </div>
+
+<script>
+    let selectedRating = 5;
+    let currentUser = null; // Menyimpan username yang sedang login
+    let isAdmin = false; // Flag apakah user adalah admin
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        checkLogin(); // Cek siapa yang login
+        loadReviews();
+        setupStars();
+        loadProductOptions();
+    });
+
+    // --- CEK LOGIN & DECODE TOKEN ---
+    function checkLogin() {
+        const token = localStorage.getItem('token');
+        const adminKey = localStorage.getItem('adminKey');
+        
+        // Cek apakah admin
+        if (adminKey) {
+            isAdmin = true;
+            currentUser = "Admin";
+            return;
+        }
+        
+        if (token) {
+            try {
+                // Decode payload JWT
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                
+                const decoded = JSON.parse(jsonPayload);
+                currentUser = decoded.username; // Simpan username
+            } catch (e) {
+                console.log("Token invalid");
+                currentUser = null;
+            }
+        }
+    }
+
+    // --- MENGAMBIL PRODUK UNTUK PILIHAN KATEGORI ---
+    async function loadProductOptions() {
+        const select = document.getElementById('reviewCat');
+        try {
+            const [resPanel, resScript, resVps, resMurid, resApp, resSub] = await Promise.all([
+                fetch('/api/products').then(r => r.json()),
+                fetch('/api/scripts').then(r => r.json()),
+                fetch('/api/vps').then(r => r.json()),
+                fetch('/api/murid').then(r => r.json()),
+                fetch('/api/apps').then(r => r.json()),
+                fetch('/api/cf-zones').then(r => r.json())
+            ]);
+
+            let html = '';
+            html += `<option value="Pelayanan Admin">⭐ Pelayanan Admin</option>`;
+            
+            const createOptGroup = (label, data) => {
+                if(data && data.length > 0) {
+                    let opts = `<optgroup label="${label}">`;
+                    data.forEach(item => opts += `<option value="${item.name}">${item.name}</option>`);
+                    opts += `</optgroup>`;
+                    return opts;
+                }
+                return '';
+            };
+
+            if(resPanel.success) html += createOptGroup('Panel Pterodactyl', resPanel.data);
+            if(resScript.success) html += createOptGroup('Script Bot', resScript.data);
+            if(resVps.success) html += createOptGroup('VPS Server', resVps.data);
+            if(resMurid.success) html += createOptGroup('Kelas Murid', resMurid.data);
+            if(resApp.success) html += createOptGroup('Aplikasi Premium', resApp.data);
+            if(resSub.success) {
+                html += `<optgroup label="Subdomain">`;
+                resSub.data.forEach(z => html += `<option value="Domain ${z.name}">Domain ${z.name}</option>`);
+                html += `</optgroup>`;
+            }
+
+            html += `<optgroup label="Lainnya"><option value="Layanan Sosmed">🚀 Layanan Sosmed</option></optgroup>`;
+            select.innerHTML = html;
+
+        } catch (e) {
+            console.error("Gagal load produk", e);
+            select.innerHTML = `<option value="Umum">Layanan Umum</option>`; 
+        }
+    }
+
+    function setupStars() {
+        const stars = document.querySelectorAll('.star-opt');
+        stars.forEach(s => {
+            s.addEventListener('click', () => {
+                selectedRating = s.getAttribute('data-val');
+                updateStarsUI(selectedRating);
+            });
+        });
+        updateStarsUI(5);
+    }
+
+    function updateStarsUI(val) {
+        document.querySelectorAll('.star-opt').forEach(s => {
+            if(s.getAttribute('data-val') <= val) s.classList.add('active');
+            else s.classList.remove('active');
+        });
+    }
+
+    function openReviewModal() {
+        const token = localStorage.getItem('token');
+        if(!token) {
+            Swal.fire({
+                title: 'Login Diperlukan',
+                text: 'Silakan login terlebih dahulu untuk menulis ulasan',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Login',
+                cancelButtonText: 'Batal'
+            }).then(result => {
+                if(result.isConfirmed) {
+                    window.location.href = '/login';
+                }
+            });
+            return;
+        }
+        document.getElementById('reviewModal').classList.add('show');
+    }
+
+    // --- LOAD REVIEWS DARI SERVER ---
+    async function loadReviews() {
+        try {
+            const res = await fetch('/api/reviews');
+            const json = await res.json();
+            
+            if(json.success) {
+                renderStats(json.average, json.total);
+                renderList(json.data);
+            }
+        } catch(e) { 
+            console.log(e); 
+        }
+    }
+
+    function renderStats(avg, total) {
+        document.getElementById('avgScore').innerText = avg;
+        document.getElementById('totalCount').innerText = total;
+        let starsHtml = '';
+        for(let i=1; i<=5; i++) {
+            starsHtml += (i <= Math.round(avg)) ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+        }
+        document.getElementById('avgStars').innerHTML = starsHtml;
+    }
+
+    // --- RENDER LIST DENGAN LOGIKA REACTION ---
+    function renderList(data) {
+        const container = document.getElementById('listReviews');
+        if(data.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:40px; color:#aaa;">Belum ada ulasan. Jadilah yang pertama!</div>';
+            return;
+        }
+
+        let html = '';
+        data.forEach(r => {
+            // 1. HITUNG JUMLAH REACTION
+            let likes = 0, loves = 0, dislikes = 0;
+            let myType = null; // Menyimpan tipe reaction user saat ini
+
+            if (r.reactions && Array.isArray(r.reactions)) {
+                likes = r.reactions.filter(x => x.type === 'like').length;
+                loves = r.reactions.filter(x => x.type === 'love').length;
+                dislikes = r.reactions.filter(x => x.type === 'dislike').length;
+
+                // Cek apakah user yang login sudah bereaksi
+                if (currentUser) {
+                    const myReact = r.reactions.find(x => x.user === currentUser);
+                    if (myReact) myType = myReact.type;
+                }
+            }
+
+            // 2. TENTUKAN CLASS CSS BERDASARKAN STATUS
+            const clsLove = myType === 'love' ? 'active-love' : '';
+            const icoLove = myType === 'love' ? 'fas fa-heart' : 'far fa-heart';
+            
+            const clsLike = myType === 'like' ? 'active-like' : '';
+            const icoLike = myType === 'like' ? 'fas fa-thumbs-up' : 'far fa-thumbs-up';
+            
+            const clsDislike = myType === 'dislike' ? 'active-dislike' : '';
+            const icoDislike = myType === 'dislike' ? 'fas fa-thumbs-down' : 'far fa-thumbs-down';
+
+            // 3. LOGIKA BALASAN ADMIN
+            let replyBadge = '';
+            let adminReplyHtml = '';
+
+            if(r.admin_reply) {
+                replyBadge = `
+                    <div class="badge-replied">
+                        <i class="fas fa-check-circle"></i> Dijawab
+                    </div>
+                `;
+                adminReplyHtml = `
+                    <div style="margin-top:10px; background:#e0f2f1; padding:10px; border-radius:8px; border-left: 3px solid #00897b; font-size:12px; color:#00695c;">
+                        <div style="font-weight:bold; margin-bottom:2px; display:flex; align-items:center; gap:5px;">
+                            <i class="fas fa-user-shield"></i> Balasan Admin
+                        </div>
+                        ${r.admin_reply}
+                    </div>`;
+            }
+
+            // 4. SUSUN HTML KARTU
+            html += `
+                <div class="review-card">
+                    <div class="r-header">
+                        <img src="${r.profile_img || 'images/default-user.png'}" class="r-avatar">
+                        <div class="r-info">
+                            <div class="r-name">${r.fullname} ${r.is_sultan ? '<i class="fas fa-crown" style="color:gold; margin-left:3px;"></i>' : ''}</div>
+                            <div class="r-date">${new Date(r.date).toLocaleDateString('id-ID')}</div>
+                        </div>
+                        ${replyBadge}
+                    </div>
+                    
+                    <div class="r-stars" style="color:#f1c40f; font-size:12px;">
+                        ${'<i class="fas fa-star"></i>'.repeat(r.rating)}<span style="color:#eee;">${'<i class="fas fa-star"></i>'.repeat(5-r.rating)}</span>
+                    </div>
+                    
+                    <div class="r-msg">"${r.message}"</div>
+                    <div class="r-cat"><i class="fas fa-tag"></i> ${r.category}</div>
+                    
+                    ${adminReplyHtml}
+
+                    <div class="reaction-bar">
+                        <div class="react-btn ${clsLove}" onclick="sendReaction('${r.id}', 'love')">
+                            <i class="${icoLove}"></i> <span>${loves > 0 ? loves : 'Love'}</span>
+                        </div>
+                        <div class="react-btn ${clsLike}" onclick="sendReaction('${r.id}', 'like')">
+                            <i class="${icoLike}"></i> <span>${likes > 0 ? likes : 'Suka'}</span>
+                        </div>
+                        <div class="react-btn ${clsDislike}" onclick="sendReaction('${r.id}', 'dislike')">
+                            <i class="${icoDislike}"></i> <span>${dislikes > 0 ? dislikes : 'Tidak Suka'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    // --- FUNGSI KIRIM REACTION KE SERVER ---
+    async function sendReaction(reviewId, type) {
+        const token = localStorage.getItem('token');
+        const adminPass = localStorage.getItem('adminKey');
+        
+        // Data yang akan dikirim
+        const payload = { review_id: reviewId, type: type };
+        
+        // Jika admin, kirim admin_pass
+        if (adminPass) {
+            payload.admin_pass = adminPass;
+        } else if (token) {
+            payload.token = token;
+        } else {
+            Swal.fire('Akses Ditolak', 'Silakan login terlebih dahulu untuk memberikan reaksi.', 'warning');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/react-review', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            
+            const json = await res.json();
+            if(json.success) {
+                // Tampilkan notifikasi sukses
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Reaksi Dikirim!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                // Reload data agar jumlah dan status terupdate
+                loadReviews(); 
+            } else {
+                Swal.fire('Gagal', json.message, 'error');
+            }
+        } catch(e) { 
+            console.log(e); 
+            Swal.fire('Error', 'Gagal terhubung ke server', 'error');
+        }
+    }
+
+    // --- FUNGSI KIRIM ULASAN BARU ---
+    async function submitReview() {
+        const token = localStorage.getItem('token');
+        if(!token) {
+            Swal.fire('Login Dulu', 'Silakan login untuk mengirim ulasan.', 'warning');
+            return;
+        }
+
+        const cat = document.getElementById('reviewCat').value;
+        const msg = document.getElementById('reviewMsg').value;
+        const btn = document.getElementById('btnSubmit');
+
+        if(!msg) return Swal.fire('Gagal', 'Pesan ulasan tidak boleh kosong.', 'error');
+        if(!cat) return Swal.fire('Gagal', 'Silakan pilih produk yang diulas.', 'error');
+
+        btn.innerText = "Mengirim..."; 
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/api/submit-review', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    token,
+                    rating: selectedRating,
+                    category: cat,
+                    message: msg
+                })
+            });
+            const json = await res.json();
+
+            if(json.success) {
+                Swal.fire('Berhasil', json.message, 'success');
+                document.getElementById('reviewModal').classList.remove('show');
+                document.getElementById('reviewMsg').value = '';
+                loadReviews(); 
+            } else {
+                Swal.fire('Gagal', json.message, 'warning'); 
+            }
+        } catch(e) {
+            Swal.fire('Error', 'Gagal koneksi.', 'error');
+        } finally {
+            btn.innerText = "KIRIM ULASAN"; 
+            btn.disabled = false;
+        }
+    }
+</script>
+</body>
+</html>

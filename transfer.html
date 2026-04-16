@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Transfer & QRIS - GILZOTP</title>
+    <link rel="icon" type="image/jpeg" href="images/Riki.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+/* Font System iOS & Reset */
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat ditap di HP */
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Background menggunakan variabel aslimu */
+.transfer-page {
+    background-color: var(--bg-body);
+    min-height: 100vh;
+    color: var(--text-main);
+}
+
+/* Header Bersih ala iOS dengan warna card */
+.transfer-header {
+    background: var(--bg-card);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 0.5px solid var(--border-color); /* Border sangat tipis ala iOS */
+}
+
+.transfer-header i {
+    font-size: 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 4px;
+}
+
+.transfer-header h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-main);
+}
+
+.saldo-mini {
+    background: var(--bg-body);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+}
+
+/* Segmented Control ala iOS (Tab) menggunakan variabel aslimu */
+.tab-container-modern {
+    display: flex;
+    background: var(--border-color); /* Background tab container sedikit lebih gelap dari card */
+    padding: 3px;
+    margin: 15px 20px;
+    border-radius: 8px;
+    position: sticky;
+    top: 75px;
+    z-index: 99;
+}
+
+.tab-btn-modern {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-sub);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tab-btn-modern.active {
+    background: var(--bg-card);
+    color: var(--primary-color);
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Shadow sangat ringan khusus tab aktif */
+}
+
+.tab-content-modern {
+    display: none;
+    padding: 0 20px 20px 20px;
+    animation: fadeIn 0.3s ease; /* Animasi diganti yang lebih ringan */
+}
+
+.tab-content-modern.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Card Info Modern (Lebih ringan) */
+.info-card-modern {
+    background: var(--primary-light);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.info-card-modern i {
+    color: var(--primary-color);
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.info-card-modern.warning {
+    background: #FFF4CE; /* Tetap kuning pucat untuk warning */
+}
+
+.info-card-modern.warning i {
+    color: #FF9500;
+}
+
+.info-card-modern div {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-main);
+}
+
+/* Grid Preset Nominal ala Tombol iOS */
+.preset-grid-modern {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.preset-btn-modern {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 5px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.preset-btn-modern.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Input Group ala iOS Settings */
+.input-group-modern {
+    margin: 15px 0;
+}
+
+.input-group-modern label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-sub);
+    margin-bottom: 6px;
+    margin-left: 10px;
+    text-transform: uppercase;
+}
+
+.input-group-modern input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-card);
+    color: var(--text-main);
+    font-size: 16px;
+    outline: none;
+}
+
+.input-group-modern input:focus {
+    outline: 2px solid var(--primary-color);
+    border-color: transparent;
+}
+
+/* Primary Button iOS */
+.btn-primary-modern {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.btn-primary-modern:active {
+    opacity: 0.8;
+}
+
+/* Upload Area */
+.upload-area {
+    background: var(--bg-card);
+    border: 1px dashed var(--primary-color);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.upload-area i {
+    font-size: 36px;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.upload-area p {
+    font-size: 14px;
+    color: var(--text-main);
+    font-weight: 500;
+    margin: 0 0 4px 0;
+}
+
+.upload-area small {
+    font-size: 12px;
+    color: var(--text-sub);
+}
+
+/* Card Khusus (QRIS Transfer) */
+.qris-card-modern {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--border-color);
+}
+
+.qr-container-modern {
+    background: white; /* QRIS biasanya butuh background putih murni agar mudah discan */
+    padding: 10px;
+    border-radius: 12px;
+    margin: 15px 0;
+    border: 1px solid var(--border-color);
+}
+
+.qris-code-modern {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+/* List History ala iOS Table View */
+.history-section {
+    margin-top: 25px;
+}
+
+.history-title-modern {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+.history-list {
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.history-item-modern {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid var(--border-color);
+}
+
+.history-item-modern:last-child {
+    border-bottom: none;
+}
+
+.history-left-modern {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.history-icon-modern {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.history-icon-modern.in { background: var(--primary-light); color: var(--primary-color); }
+.history-icon-modern.out { background: #FF3B301A; color: #FF3B30; }
+.history-icon-modern.pending { background: #FF95001A; color: #FF9500; }
+
+.history-details-modern h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-main);
+    margin: 0 0 2px 0;
+}
+
+.history-details-modern p {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin: 0;
+}
+
+.history-amount-modern {
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    text-align: right;
+}
+
+.amount-in-modern { color: #2ecc71; } 
+.amount-out-modern { color: var(--text-main); }
+.amount-pending-modern { color: #f39c12; } 
+
+.badge-status-modern {
+    font-size: 9px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.badge-success-modern { background: #e8f5e9; color: #2ecc71; }
+.badge-pending-modern { background: #fff3e0; color: #f39c12; }
+
+/* Modal Super Ringan (Tanpa Blur) */
+.modal-modern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Transparan biasa, sangat ringan */
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-modern.show {
+    display: flex;
+}
+
+.modal-content-modern {
+    background: var(--bg-card);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 320px;
+    animation: modalScale 0.2s ease;
+}
+
+@keyframes modalScale {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header-modern {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 0.5px solid var(--border-color);
+    position: relative;
+}
+
+.modal-header-modern h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-main);
+}
+
+.modal-close-modern {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    background: var(--bg-body);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    border: 1px solid var(--border-color);
+}
+
+.modal-body-modern {
+    padding: 20px;
+}
+
+.empty-state-modern {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-sub);
+}
+
+.empty-state-modern i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: var(--border-color);
+}
+
+    </style>
+</head>
+<body class="transfer-page">
+    <div class="transfer-header">
+        <i class="fas fa-arrow-left" onclick="window.location.href='/'"></i>
+        <h3>💸 Dompet Digital</h3>
+        <div style="flex:1;"></div>
+        <div class="saldo-mini" id="headerSaldo" style="background:rgba(255,255,255,0.2); padding:6px 12px; border-radius:20px; font-size:13px; font-weight:600;">
+            Rp <span id="headerSaldoValue">0</span>
+        </div>
+    </div>
+
+    <div class="tab-container-modern">
+        <div class="tab-btn-modern active" onclick="switchTabModern('deposit')">
+            <i class="fas fa-plus-circle"></i> Deposit
+        </div>
+        <div class="tab-btn-modern" onclick="switchTabModern('transfer')">
+            <i class="fas fa-paper-plane"></i> Transfer
+        </div>
+        <div class="tab-btn-modern" onclick="switchTabModern('qrisku')">
+            <i class="fas fa-qrcode"></i> QRIS-ku
+        </div>
+    </div>
+
+    <!-- TAB DEPOSIT -->
+    <div class="tab-content-modern active" id="tab-deposit-modern">
+        <div class="info-card-modern">
+            <i class="fas fa-info-circle"></i>
+            <div>Scan QRIS untuk menambah saldo. <b>Verifikasi otomatis</b> dalam 1-2 menit.</div>
+        </div>
+
+        <div class="preset-grid-modern">
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(10000, this)">10K</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(20000, this)">20K</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(50000, this)">50K</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(100000, this)">100K</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(200000, this)">200K</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(500000, this)">500K</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(1000000, this)">1JT</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(2000000, this)">2JT</div>
+            <div class="preset-btn-modern" onclick="selectDepositAmountModern(5000000, this)">5JT</div>
+        </div>
+
+        <div class="input-group-modern">
+            <label>ATAU MASUKKAN NOMINAL MANUAL</label>
+            <input type="number" id="depositAmountModern" placeholder="Rp 1.000 - Rp 10.000.000" min="1000" max="10000000">
+        </div>
+
+        <button class="btn-primary-modern" onclick="processDepositModern()">
+            <i class="fas fa-qrcode"></i> BUAT QRIS DEPOSIT
+        </button>
+
+        <div class="history-section">
+            <div class="history-title-modern">
+                <i class="fas fa-history"></i> Riwayat Deposit
+            </div>
+            <div id="depositHistoryListModern" class="history-list">
+                <div class="empty-state-modern">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada riwayat deposit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB TRANSFER -->
+    <div class="tab-content-modern" id="tab-transfer-modern">
+        <div class="info-card-modern warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>Pastikan username penerima benar. <b>Transfer tidak bisa dibatalkan!</b></div>
+        </div>
+
+        <!-- SCANNER DIHAPUS - Upload QRIS saja -->
+        <div class="upload-area" onclick="document.getElementById('qrisUploadInputModern').click()" style="margin-bottom: 20px;">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Klik untuk upload gambar QRIS</p>
+            <small>Format: JPG, PNG (Maks 2MB)</small>
+        </div>
+        
+        <div style="text-align:center; margin:15px 0; font-size:12px; color:var(--text-sub); position:relative;">
+            <span style="background:var(--bg-card); padding:0 10px; position:relative; z-index:2;">atau input manual</span>
+            <div style="border-top:1px solid var(--border-color); margin-top:-9px;"></div>
+        </div>
+
+        <div class="input-group-modern">
+            <label><i class="fas fa-user"></i> USERNAME PENERIMA</label>
+            <input type="text" id="recipientUsernameModern" placeholder="Contoh: johndoe" style="text-transform:lowercase;">
+        </div>
+
+        <div class="input-group-modern">
+            <label><i class="fas fa-coins"></i> JUMLAH TRANSFER</label>
+            <input type="number" id="transferAmountModern" placeholder="Minimal Rp 1.000" min="1000">
+        </div>
+
+        <button class="btn-primary-modern" onclick="showTransferConfirmModern()">
+            <i class="fas fa-paper-plane"></i> KIRIM TRANSFER (SALDO)
+        </button>
+
+        <!-- CARD QRIS TRANSFER VIA PAKASIR - INI PENTING, JANGAN DIHAPUS -->
+        <div class="qris-card-modern" style="margin-top: 20px; background: var(--primary-light); border: 2px dashed var(--primary-color);">
+            <i class="fas fa-paper-plane" style="font-size:40px; color:var(--primary-color); margin-bottom:10px;"></i>
+            <h4 style="font-size:16px; color:var(--text-main); font-weight:bold;">💸 Transfer via QRIS</h4>
+            <p style="font-size:12px; color:var(--text-sub); margin-bottom:15px;">Generate QRIS untuk transfer ke teman</p>
+            
+            <div class="input-group-modern" style="margin-top: 10px;">
+                <label style="font-weight:bold; color:var(--primary-color);">👤 Username Penerima</label>
+                <input type="text" id="qrisRecipient" placeholder="Contoh: johndoe" style="text-transform:lowercase; background:var(--bg-card);">
+            </div>
+
+            <div class="input-group-modern">
+                <label style="font-weight:bold; color:var(--primary-color);">💰 Jumlah Transfer</label>
+                <input type="number" id="qrisAmount" placeholder="Minimal Rp 1.000" min="1000" style="background:var(--bg-card);">
+            </div>
+
+            <button class="btn-primary-modern" onclick="generateQRISTransfer()" style="margin-top: 15px; background: #2ecc71; font-weight:bold;">
+                <i class="fas fa-qrcode"></i> BUAT QRIS TRANSFER
+            </button>
+            
+            <div style="margin-top:15px; padding:10px; background:#fff3e0; border-radius:8px; font-size:11px; color:#e67e22; text-align:left;">
+                <i class="fas fa-info-circle"></i> Penerima akan mendapat notifikasi otomatis via WA begitu transfer sukses!
+            </div>
+        </div>
+
+        <div class="history-section">
+            <div class="history-title-modern">
+                <i class="fas fa-exchange-alt"></i> Riwayat Transfer
+            </div>
+            <div id="transferHistoryListModern" class="history-list">
+                <div class="empty-state-modern">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada riwayat transfer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB QRIS-KU -->
+    <div class="tab-content-modern" id="tab-qrisku-modern">
+        <div class="qris-card-modern">
+            <i class="fas fa-qrcode" style="font-size:48px; color:var(--primary-color); margin-bottom:10px;"></i>
+            <h4 style="font-size:16px; color:var(--text-main);">QRIS Personal Kamu</h4>
+            
+            <div class="qr-container-modern" id="personalQRContainerModern">
+                <img id="personalQRImageModern" src="" style="width: 220px; height: 220px; display: block; margin: 0 auto; border-radius: 8px;">
+            </div>
+            
+            <div class="qris-code-modern" id="personalQRISCodeModern">@username</div>
+
+            <p style="font-size:12px; color:var(--text-sub); margin:10px 0;">
+                <i class="fas fa-info-circle"></i> Kirim QRIS ini ke teman. Saat di-scan, username otomatis terisi.
+            </p>
+
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary-modern" onclick="downloadPersonalQRModern()" style="margin:0; flex:1;">
+                    <i class="fas fa-download"></i> Simpan
+                </button>
+                <button class="btn-primary-modern" onclick="copyPersonalQRCodeModern()" style="margin:0; flex:1; background:#2ecc71;">
+                    <i class="fas fa-copy"></i> Salin
+                </button>
+            </div>
+        </div>
+
+        <div class="history-section">
+            <div class="history-title-modern">
+                <i class="fas fa-arrow-down"></i> Transfer Masuk (Menunggu)
+            </div>
+            <div id="incomingTransferListModern" class="history-list">
+                <div class="empty-state-modern">
+                    <i class="fas fa-hourglass-half"></i>
+                    <p>Tidak ada transfer masuk</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Transfer -->
+    <div class="modal-modern" id="confirmTransferModalModern">
+        <div class="modal-content-modern">
+            <div class="modal-header-modern">
+                <h3><i class="fas fa-shield-alt"></i> Konfirmasi Transfer</h3>
+                <div class="modal-close-modern" onclick="closeModalModern('confirmTransferModalModern')">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body-modern">
+                <div style="background:var(--bg-body); padding:20px; border-radius:14px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                        <span style="color:var(--text-sub);">Penerima</span>
+                        <span style="font-weight:700;" id="confirmRecipientModern">-</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                        <span style="color:var(--text-sub);">Jumlah</span>
+                        <span style="font-weight:700; color:var(--primary-color);" id="confirmAmountModern">-</span>
+                    </div>
+                    <div style="border-top:2px dashed var(--border-color); margin:15px 0; padding-top:15px;">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span style="font-weight:600;">Total</span>
+                            <span style="font-weight:800; font-size:18px; color:var(--primary-color);" id="confirmTotalModern">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:0 25px 25px 25px;">
+                <button class="btn-primary-modern" onclick="executeTransferModern()">KONFIRMASI TRANSFER</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hasil Scan QR -->
+    <div class="modal-modern" id="scanResultModalModern">
+        <div class="modal-content-modern">
+            <div class="modal-header-modern" style="background:#2ecc71;">
+                <h3><i class="fas fa-check-circle"></i> QRIS Terbaca!</h3>
+                <div class="modal-close-modern" onclick="closeModalModern('scanResultModalModern')">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body-modern" style="text-align:center;">
+                <div style="width:70px; height:70px; background:#e8f5e9; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px auto;">
+                    <i class="fas fa-check-circle" style="font-size:40px; color:#2ecc71;"></i>
+                </div>
+                <h4 style="margin-bottom:10px;">Username Penerima:</h4>
+                <div style="font-size:24px; font-weight:bold; color:var(--primary-color); margin:15px 0; background:var(--primary-light); padding:12px; border-radius:12px;" id="scannedUsernameDisplayModern">@username</div>
+                <p style="font-size:13px; color:var(--text-sub);">Username sudah terisi otomatis</p>
+            </div>
+            <div style="padding:0 25px 25px 25px;">
+                <button class="btn-primary-modern" onclick="closeModalModern('scanResultModalModern')" style="background:#2ecc71;">OKE, LANJUT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input file upload QR -->
+    <input type="file" id="qrisUploadInputModern" accept="image/*" style="display: none;" onchange="handleQRUploadModern(event)">
+
+    <script>
+        // ============ VARIABLES ============
+        let currentBalanceModern = 0;
+
+        // ============ INIT ============
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadUserBalanceModern();
+            loadDepositHistoryModern();
+            loadTransferHistoryModern();
+            loadIncomingTransfersModern();
+            generatePersonalQRModern();
+        });
+
+        // ============ TAB SWITCH ============
+        function switchTabModern(tab) {
+            document.querySelectorAll('.tab-btn-modern').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content-modern').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`.tab-btn-modern[onclick*="${tab}"]`).classList.add('active');
+            document.getElementById(`tab-${tab}-modern`).classList.add('active');
+        }
+
+        // ============ LOAD USER BALANCE ============
+        async function loadUserBalanceModern() {
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = '/login';
+
+            try {
+                const res = await fetch('/api/get-user', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ token })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    currentBalanceModern = data.user.balance;
+                    document.getElementById('headerSaldoValue').innerText = currentBalanceModern.toLocaleString('id-ID');
+                }
+            } catch(e) {}
+        }
+
+        // ============ DEPOSIT FUNCTIONS ============
+        function selectDepositAmountModern(amount, element) {
+            document.getElementById('depositAmountModern').value = amount;
+            document.querySelectorAll('.preset-btn-modern').forEach(btn => btn.classList.remove('active'));
+            if (element) element.classList.add('active');
+        }
+
+        async function processDepositModern() {
+            const amount = document.getElementById('depositAmountModern').value;
+            if (amount < 1000) return Swal.fire('Error', 'Minimal deposit Rp 1.000', 'warning');
+
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = '/login';
+
+            try {
+                const res = await fetch('/api/deposit', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ token, amount })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    const expireTime = Date.now() + (5 * 60 * 1000);
+                    localStorage.setItem('pendingTrx', JSON.stringify({
+                        order_id: data.order_id,
+                        pay_amount: data.pay_amount,
+                        deposit_amount: data.amount,
+                        qr_string: data.qr_string,
+                        expire_at: expireTime,
+                        username: data.username,
+                        trx_type: 'deposit'
+                    }));
+                    window.location.href = '/payment';
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch(e) {
+                Swal.fire('Error', 'Gagal terhubung ke server', 'error');
+            }
+        }
+
+        // ============ HANDLE UPLOAD QR ============
+        function handleQRUploadModern(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            Swal.fire({
+                title: 'Membaca QRIS...',
+                html: 'Sedang mengekstrak data dari gambar',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    
+                    // Gunakan jsQR untuk membaca QR
+                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                        inversionAttempts: "attemptBoth",
+                    });
+
+                    Swal.close();
+
+                    if (code) {
+                        if (code.data.startsWith('GILZTRF:')) {
+                            const username = code.data.replace('GILZTRF:', '');
+                            document.getElementById('recipientUsernameModern').value = username;
+                            
+                            // Tampilkan modal hasil
+                            document.getElementById('scannedUsernameDisplayModern').innerText = '@' + username;
+                            document.getElementById('scanResultModalModern').classList.add('show');
+                            
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'QRIS Terbaca!',
+                                text: `Penerima: @${username}`,
+                                timer: 2000,
+                                showConfirmButton: false,
+                                position: 'top-end',
+                                toast: true
+                            });
+                        } else {
+                            Swal.fire('Error', 'Ini bukan QRIS GILZOTP!', 'error');
+                        }
+                    } else {
+                        Swal.fire('Gagal', 'Tidak menemukan kode QR di gambar ini.', 'error');
+                    }
+                    
+                    event.target.value = '';
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+// ============ GENERATE PERSONAL QR ============
+function generatePersonalQRModern() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    
+    if (user.username) {
+        const qrImage = document.getElementById('personalQRImageModern');
+        if (!qrImage) return;
+        
+        const qrText = `GILZTRF:${user.username}`;
+        document.getElementById('personalQRISCodeModern').innerText = '@' + user.username;
+        
+        let profileImgUrl = user.profile_img;
+        let finalImageUrl = '';
+        
+        // Cek apakah pakai foto default/kosong atau foto sendiri
+        if (!profileImgUrl || !profileImgUrl.startsWith('http')) {
+            // Gambar inisial otomatis dari UI-Avatars (sudah kita setting bulat dengan rounded=true)
+            finalImageUrl = `https://ui-avatars.com/api/?name=${user.username}&background=2196F3&color=fff&rounded=true&size=128`;
+        } else {
+            // Jika user punya foto sendiri (biasanya kotak), kita sulap jadi bulat!
+            // Menggunakan wsrv.nl dengan parameter &mask=circle dan &output=png (biar transparan)
+            finalImageUrl = `https://wsrv.nl/?url=${encodeURIComponent(profileImgUrl)}&w=150&h=150&fit=cover&mask=circle&output=png`;
+        }
+
+        const encodedProfileUrl = encodeURIComponent(finalImageUrl);
+        const encodedQrText = encodeURIComponent(qrText);
+        
+        // Generate QR Code dengan logo yang sudah pasti bulat
+        const qrUrl = `https://quickchart.io/qr?text=${encodedQrText}&size=300&ecLevel=H&centerImageUrl=${encodedProfileUrl}&centerImageSizeRatio=0.25&margin=2`;
+        
+        qrImage.src = qrUrl;
+        
+        // Fallback kalau internet lagi lambat
+        qrImage.onerror = function() {
+            this.src = `https://quickchart.io/qr?text=${encodedQrText}&size=300&margin=2`;
+        };
+    }
+}
+
+        function downloadPersonalQRModern() {
+            const qrImage = document.getElementById('personalQRImageModern');
+            if (!qrImage || !qrImage.src) return;
+            
+            Swal.fire({
+                title: 'Menyiapkan QRIS...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            fetch(qrImage.src)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = `QRIS-${document.getElementById('personalQRISCodeModern').innerText}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(blobUrl);
+                    
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'QRIS Disimpan!',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                })
+                .catch(() => {
+                    Swal.close();
+                    window.open(qrImage.src, '_blank');
+                });
+        }
+
+        function copyPersonalQRCodeModern() {
+            const username = document.getElementById('personalQRISCodeModern').innerText.replace('@', '');
+            navigator.clipboard.writeText(username).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Username Disalin!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        }
+
+        // ============ TRANSFER FUNCTIONS ============
+        function showTransferConfirmModern() {
+            const recipient = document.getElementById('recipientUsernameModern').value.toLowerCase().trim();
+            const amount = parseInt(document.getElementById('transferAmountModern').value);
+
+            if (!recipient) return Swal.fire('Error', 'Masukkan username penerima', 'warning');
+            if (amount < 1000) return Swal.fire('Error', 'Minimal transfer Rp 1.000', 'warning');
+            
+            if (amount > currentBalanceModern) {
+                return Swal.fire('Error', 'Saldo tidak cukup. Silakan deposit terlebih dahulu.', 'warning');
+            }
+
+            document.getElementById('confirmRecipientModern').innerText = '@' + recipient;
+            document.getElementById('confirmAmountModern').innerText = 'Rp ' + amount.toLocaleString('id-ID');
+            document.getElementById('confirmTotalModern').innerText = 'Rp ' + amount.toLocaleString('id-ID');
+            
+            openModalModern('confirmTransferModalModern');
+        }
+
+        async function executeTransferModern() {
+            const recipient = document.getElementById('recipientUsernameModern').value.toLowerCase().trim();
+            const amount = document.getElementById('transferAmountModern').value;
+            const token = localStorage.getItem('token');
+
+            closeModalModern('confirmTransferModalModern');
+
+            Swal.fire({
+                title: 'Memproses Transfer...',
+                html: 'Mohon tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            try {
+                const res = await fetch('/api/process-transfer', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ 
+                        token, 
+                        recipient_username: recipient,
+                        amount: amount,
+                        method: 'saldo'
+                    })
+                });
+                const data = await res.json();
+
+                Swal.close();
+
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Transfer Berhasil!',
+                        html: `
+                            <div style="text-align:center;">
+                                <div style="font-size:24px; font-weight:bold; color:var(--primary-color); margin:10px 0;">
+                                    Rp ${parseInt(amount).toLocaleString('id-ID')}
+                                </div>
+                                <div>ke @${recipient}</div>
+                            </div>
+                        `,
+                        confirmButtonText: 'Oke'
+                    }).then(() => {
+                        document.getElementById('recipientUsernameModern').value = '';
+                        document.getElementById('transferAmountModern').value = '';
+                        loadTransferHistoryModern();
+                        loadUserBalanceModern();
+                    });
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch(e) {
+                Swal.close();
+                Swal.fire('Error', 'Gagal memproses transfer', 'error');
+            }
+        }
+
+        // ============ GENERATE QRIS TRANSFER (VIA PAKASIR) ============
+        async function generateQRISTransfer() {
+            const recipient = document.getElementById('qrisRecipient').value.toLowerCase().trim();
+            const amount = document.getElementById('qrisAmount').value;
+
+            if (!recipient) {
+                Swal.fire('Error', 'Masukkan username penerima', 'warning');
+                return;
+            }
+            if (amount < 1000) {
+                Swal.fire('Error', 'Minimal transfer Rp 1.000', 'warning');
+                return;
+            }
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/login';
+                return;
+            }
+
+            Swal.fire({
+                title: 'Memproses...',
+                html: 'Membuat QRIS Transfer',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            try {
+                const res = await fetch('/api/generate-transfer-qris', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ token, recipient, amount })
+                });
+                const data = await res.json();
+
+                Swal.close();
+
+                if (data.success) {
+                    const expireTime = Date.now() + (5 * 60 * 1000);
+                    localStorage.setItem('pendingTrx', JSON.stringify({
+                        order_id: data.order_id,
+                        pay_amount: data.pay_amount,
+                        deposit_amount: data.amount,
+                        qr_string: data.qr_string,
+                        expire_at: expireTime,
+                        username: data.username,
+                        recipient: recipient,
+                        trx_type: 'transfer_qris'
+                    }));
+                    window.location.href = '/payment';
+                } else {
+                    Swal.fire('Gagal', data.message, 'error');
+                }
+            } catch(e) {
+                Swal.close();
+                Swal.fire('Error', 'Gagal terhubung ke server', 'error');
+            }
+        }
+
+        // ============ LOAD HISTORIES ============
+        async function loadDepositHistoryModern() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch('/api/history', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ token })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    const deposits = data.data.filter(t => t.type === 'deposit').slice(0, 5);
+                    const list = document.getElementById('depositHistoryListModern');
+                    
+                    if (deposits.length === 0) {
+                        list.innerHTML = '<div class="empty-state-modern"><i class="fas fa-inbox"></i><p>Belum ada riwayat deposit</p></div>';
+                        return;
+                    }
+
+                    list.innerHTML = '';
+                    deposits.forEach(d => {
+                        list.innerHTML += `
+                            <div class="history-item-modern">
+                                <div class="history-left-modern">
+                                    <div class="history-icon-modern in">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                    <div class="history-details-modern">
+                                        <h4>Deposit Saldo</h4>
+                                        <p>${new Date(d.date).toLocaleDateString('id-ID')}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="history-amount-modern amount-in-modern">+Rp ${d.amount.toLocaleString('id-ID')}</span>
+                                    <span class="badge-status-modern ${d.status === 'success' ? 'badge-success-modern' : 'badge-pending-modern'}">${d.status.toUpperCase()}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            } catch(e) {}
+        }
+
+        async function loadTransferHistoryModern() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch('/api/history', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ token })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    const transfers = data.data.filter(t => t.type === 'transfer_out' || t.type === 'transfer_in').slice(0, 5);
+                    const list = document.getElementById('transferHistoryListModern');
+                    
+                    if (transfers.length === 0) {
+                        list.innerHTML = '<div class="empty-state-modern"><i class="fas fa-inbox"></i><p>Belum ada riwayat transfer</p></div>';
+                        return;
+                    }
+
+                    list.innerHTML = '';
+                    transfers.forEach(t => {
+                        const isOut = t.type === 'transfer_out';
+                        const partner = isOut ? t.product_data?.recipient : t.product_data?.sender;
+                        list.innerHTML += `
+                            <div class="history-item-modern">
+                                <div class="history-left-modern">
+                                    <div class="history-icon-modern ${isOut ? 'out' : 'in'}">
+                                        <i class="fas ${isOut ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                                    </div>
+                                    <div class="history-details-modern">
+                                        <h4>${isOut ? 'Transfer ke' : 'Transfer dari'} @${partner}</h4>
+                                        <p>${new Date(t.date).toLocaleDateString('id-ID')}</p>
+                                    </div>
+                                </div>
+                                <span class="history-amount-modern ${isOut ? 'amount-out-modern' : 'amount-in-modern'}">
+                                    ${isOut ? '-' : '+'}Rp ${t.amount.toLocaleString('id-ID')}
+                                </span>
+                            </div>
+                        `;
+                    });
+                }
+            } catch(e) {}
+        }
+
+        async function loadIncomingTransfersModern() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch('/api/check-incoming-transfer', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ token })
+                });
+                const data = await res.json();
+
+                const list = document.getElementById('incomingTransferListModern');
+                
+                if (!data.success || data.data.length === 0) {
+                    list.innerHTML = '<div class="empty-state-modern"><i class="fas fa-hourglass-half"></i><p>Tidak ada transfer masuk</p></div>';
+                    return;
+                }
+
+                list.innerHTML = '';
+                data.data.forEach(t => {
+                    list.innerHTML += `
+                        <div class="history-item-modern">
+                            <div class="history-left-modern">
+                                <div class="history-icon-modern pending">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="history-details-modern">
+                                    <h4>Transfer Masuk</h4>
+                                    <p>${new Date(t.date).toLocaleDateString('id-ID')}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="history-amount-modern amount-pending-modern">Rp ${t.amount.toLocaleString('id-ID')}</span>
+                                <span class="badge-status-modern badge-pending-modern">MENUNGGU</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch(e) {}
+        }
+
+        // ============ UTILITY FUNCTIONS ============
+        function openModalModern(id) {
+            document.getElementById(id).classList.add('show');
+        }
+
+        function closeModalModern(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        // Close modals on outside click
+        document.querySelectorAll('.modal-modern').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('show');
+            });
+        });
+
+        // Auto-refresh balance
+        setInterval(loadUserBalanceModern, 10000);
+    </script>
+
+    <!-- Include jsQR untuk membaca QR dari gambar -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</body>
+</html>

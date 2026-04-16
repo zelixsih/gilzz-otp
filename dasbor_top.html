@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Top Sultan - Gilzzotp</title>
+    <link rel="icon" type="image/jpeg" href="images/Riki.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- LAYOUT UTAMA --- */
+        body {
+            /* Background Hijau Mewah (Sesuai Tema Utama) */
+            background: radial-gradient(circle at 50% 10%, #2196F3 0%, #2196F3 100%);
+            background: linear-gradient(180deg, #2196F3 0%, #2196F3 50%, #e0f2f1 100%);
+            
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Kunci scroll body utama */
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* HEADER ATAS (FIXED) */
+        .top-fixed-area {
+            flex-shrink: 0;
+            z-index: 10;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        /* Tombol Refresh & Judul */
+        .sultan-header {
+            padding: 20px 20px 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .sultan-header h2 {
+            font-size: 18px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-refresh {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+        .btn-refresh:active { transform: rotate(180deg) scale(0.9); background: rgba(255,255,255,0.4); }
+
+        .reset-badge {
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 50;
+        }
+        .reset-pill {
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- PODIUM MEWAH (3D LOOK) --- */
+        .podium-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 0 20px;
+            perspective: 1000px;
+            margin-top: 10px;
+        }
+
+        .podium-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 30%;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0; animation: popUp 0.8s forwards;
+        }
+        .rank-2 { animation-delay: 0.2s; z-index: 2; }
+        .rank-1 { animation-delay: 0.4s; z-index: 3; width: 36%; margin-bottom: 10px; } 
+        .rank-3 { animation-delay: 0.6s; z-index: 1; }
+
+        @keyframes popUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Avatar Box */
+        .avatar-box { position: relative; margin-bottom: 8px; }
+        
+        .p-avatar {
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: #fff;
+        }
+        
+        .rank-1 .p-avatar { width: 80px; height: 80px; border-color: #FFD700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+        .rank-2 .p-avatar { width: 60px; height: 60px; border-color: #C0C0C0; }
+        .rank-3 .p-avatar { width: 60px; height: 60px; border-color: #CD7F32; }
+
+        .crown {
+            position: absolute;
+            top: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            color: #FFD700;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            animation: float 3s ease-in-out infinite;
+            z-index: 5;
+        }
+        @keyframes float { 
+            0%, 100% { transform: translate(-50%, 0); } 
+            50% { transform: translate(-50%, -10px); } 
+        }
+
+        .p-name { color: white; font-weight: bold; font-size: 12px; margin-bottom: 2px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .p-total { font-size: 10px; color: #e3f2fd; background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 8px; }
+
+        /* Balok Podium 3D */
+        .block {
+            width: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.5);
+            border-left: 1px solid rgba(255,255,255,0.2);
+            border-right: 1px solid rgba(255,255,255,0.2);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            position: relative;
+            display: flex; justify-content: center; align-items: flex-end; padding-bottom: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .rank-1 .block { height: 130px; background: linear-gradient(180deg, rgba(255, 215, 0, 0.4) 0%, rgba(255, 215, 0, 0.1) 100%); border-top-color: #FFD700; }
+        .rank-2 .block { height: 90px; background: linear-gradient(180deg, rgba(192, 192, 192, 0.4) 0%, rgba(192, 192, 192, 0.1) 100%); border-top-color: #C0C0C0; }
+        .rank-3 .block { height: 70px; background: linear-gradient(180deg, rgba(205, 127, 50, 0.4) 0%, rgba(205, 127, 50, 0.1) 100%); border-top-color: #CD7F32; }
+
+        .rank-num { font-size: 40px; font-weight: 900; opacity: 0.3; color: white; position: absolute; bottom: 5px; }
+
+        /* --- LIST AREA (SCROLLABLE) --- */
+        .list-scroll-area {
+            flex-grow: 1;
+            background: white;
+            border-radius: 30px 30px 0 0;
+            padding: 25px 20px 100px 20px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 20;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+        }
+
+        .list-title {
+            font-size: 14px; font-weight: 700; color: #333; margin-bottom: 15px;
+            padding-left: 10px; border-left: 4px solid var(--primary-color);
+        }
+
+        /* ITEM CARD */
+        .sultan-item {
+            display: flex; align-items: center;
+            padding: 12px;
+            background: #fff;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .sultan-item:active { transform: scale(0.98); }
+
+        /* --- BANNER MAHKOTA KHUSUS TOP 3 --- */
+        .ribbon-box {
+            position: absolute;
+            top: 0; right: 0;
+            width: 60px; height: 60px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .ribbon {
+            position: absolute;
+            top: 10px; right: -22px;
+            transform: rotate(45deg);
+            width: 80px;
+            text-align: center;
+            font-size: 9px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+
+        /* Styling Khusus Rank 1, 2, 3 di List */
+        .sultan-item.gold {
+            background: linear-gradient(to right, #fff, #fffde7);
+            border: 1px solid #fbc02d;
+        }
+        .sultan-item.gold .ribbon { background: #fbc02d; }
+        .sultan-item.gold .item-rank { background: #fbc02d; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.2); }
+
+        .sultan-item.silver {
+            background: linear-gradient(to right, #fff, #f5f5f5);
+            border: 1px solid #bdc3c7;
+        }
+        .sultan-item.silver .ribbon { background: #bdc3c7; }
+        .sultan-item.silver .item-rank { background: #bdc3c7; color: #fff; }
+
+        .sultan-item.bronze {
+            background: linear-gradient(to right, #fff, #fff3e0);
+            border: 1px solid #d35400;
+        }
+        .sultan-item.bronze .ribbon { background: #d35400; }
+        .sultan-item.bronze .item-rank { background: #d35400; color: #fff; }
+
+        /* Normal Rank */
+        .item-rank {
+            width: 35px; height: 35px;
+            background: #f1f2f6; color: #57606f;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 14px;
+            margin-right: 12px; flex-shrink: 0;
+        }
+
+        .item-avatar-wrap { position: relative; margin-right: 12px; }
+        .item-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 1px solid #eee; }
+        
+        .crown-float { position: absolute; top: -8px; left: -5px; color: #FFD700; font-size: 16px; transform: rotate(-15deg); filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
+
+        .item-info { flex: 1; }
+        .item-name { font-size: 14px; font-weight: bold; color: #2c3e50; display: flex; align-items: center; gap: 5px; }
+        .member-gold .item-name { color: #f39c12 !important; text-shadow: 0 0 1px rgba(0,0,0,0.1); } 
+
+        .item-stats { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+        .stat-money { font-weight: bold; color: var(--primary-color); font-size: 13px; }
+        .stat-trx { font-size: 10px; background: #e0f2f1; padding: 2px 6px; border-radius: 4px; color: #00695c; font-weight: bold; }
+        
+        .item-time { font-size: 9px; color: #999; margin-top: 2px; text-align: right; }
+
+        .btn-home-float {
+            position: fixed; bottom: 20px; left: 20px; right: 20px;
+            background: var(--primary-color); color: white;
+            border: none; padding: 15px; border-radius: 15px;
+            font-weight: bold; font-size: 14px;
+            box-shadow: 0 5px 20px rgba(0, 137, 123, 0.4);
+            cursor: pointer; z-index: 100;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: transform 0.2s;
+        }
+        .btn-home-float:active { transform: scale(0.95); }
+
+        .loading-spin { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-fixed-area">
+        <div class="sultan-header">
+            <h2>TOP SULTAN</h2>
+            <div class="btn-refresh" onclick="refreshData(this)">
+                <i class="fas fa-sync-alt"></i>
+            </div>
+        </div>
+
+        <div class="reset-badge">
+            <div class="reset-pill">
+                <i class="fas fa-history"></i> Reset dalam <span id="resetDays">...</span> hari
+            </div>
+        </div>
+
+        <div class="podium-container" id="podiumArea">
+            <div style="color:white; font-size:12px; padding:40px; text-align:center;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat Data...
+            </div>
+        </div>
+    </div>
+
+    <div class="list-scroll-area">
+        <div class="list-title">Leaderboard Bulan Ini</div>
+        <div id="listArea"></div>
+    </div>
+
+    <button class="btn-home-float" onclick="window.location.href='/'">
+        <i class="fas fa-home"></i> KEMBALI KE MEMBER AREA
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTopSultan();
+        });
+
+        // Fitur Refresh Manual
+        function refreshData(btn) {
+            const icon = btn.querySelector('i');
+            icon.classList.add('loading-spin');
+            
+            setTimeout(() => {
+                loadTopSultan().then(() => {
+                    icon.classList.remove('loading-spin');
+                });
+            }, 500);
+        }
+
+        async function loadTopSultan() {
+            try {
+                const res = await fetch('/api/top-sultan');
+                const json = await res.json();
+                
+                if(json.success) {
+                    document.getElementById('resetDays').innerText = json.season_reset_in;
+                    renderVisuals(json.data);
+                }
+            } catch(e) { console.log(e); }
+        }
+
+        function timeAgo(timestamp) {
+            if(!timestamp) return "-";
+            const seconds = Math.floor((new Date() - timestamp) / 1000);
+            let interval = seconds / 3600;
+            if (interval > 1) return Math.floor(interval) + " jam lalu";
+            interval = seconds / 60;
+            if (interval > 1) return Math.floor(interval) + " menit lalu";
+            return "Baru saja";
+        }
+
+        function renderVisuals(data) {
+            const podiumArea = document.getElementById('podiumArea');
+            const listArea = document.getElementById('listArea');
+            
+            const top3 = [
+                data[1] || null, // Rank 2
+                data[0] || null, // Rank 1
+                data[2] || null  // Rank 3
+            ];
+
+            // 1. RENDER PODIUM 3D
+            let podiumHTML = '';
+            podiumHTML += createPodiumBlock(top3[0], 2); // Silver
+            podiumHTML += createPodiumBlock(top3[1], 1); // Gold
+            podiumHTML += createPodiumBlock(top3[2], 3); // Bronze
+            podiumArea.innerHTML = podiumHTML;
+
+            // 2. RENDER LIST DENGAN BANNER MAHKOTA
+            let listHTML = '';
+            
+            if(data.length > 0) {
+                data.forEach((item, index) => {
+                    const rank = index + 1;
+                    const isSultan = item.trx_count > 50; 
+                    
+                    let cardClass = '';
+                    let ribbonHTML = '';
+                    
+                    if(rank === 1) { 
+                        cardClass = 'gold'; 
+                        ribbonHTML = '<div class="ribbon-box"><div class="ribbon">KING</div></div>'; 
+                    } else if (rank === 2) { 
+                        cardClass = 'silver'; 
+                        ribbonHTML = '<div class="ribbon-box"><div class="ribbon">ELITE</div></div>'; 
+                    } else if (rank === 3) { 
+                        cardClass = 'bronze'; 
+                        ribbonHTML = '<div class="ribbon-box"><div class="ribbon">PRO</div></div>'; 
+                    }
+
+                    let sultanBadge = isSultan ? '<i class="fas fa-crown crown-float"></i>' : '';
+                    let sultanNameClass = isSultan ? 'member-gold' : '';
+                    let checkMark = isSultan ? '<i class="fas fa-check-circle" style="color:#2980b9; margin-left:4px; font-size:12px;"></i>' : '';
+
+                    listHTML += `
+                        <div class="sultan-item ${cardClass} ${sultanNameClass}">
+                            ${ribbonHTML}
+                            <div class="item-rank">${rank}</div>
+                            
+                            <div class="item-avatar-wrap">
+                                ${sultanBadge}
+                                <img src="${item.profile_img}" class="item-avatar">
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-name">${item.username_masked} ${checkMark}</div>
+                                
+                                <div class="item-stats">
+                                    <span class="stat-money">Rp ${parseInt(item.total_spent).toLocaleString('id-ID')}</span>
+                                    <span class="stat-trx">${item.trx_count}x Trx</span>
+                                </div>
+                                <div class="item-time"><i class="far fa-clock"></i> ${timeAgo(item.last_trx_time)}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                listHTML = `<div style="text-align:center; padding:40px; color:#aaa;">Belum ada penantang bulan ini.</div>`;
+            }
+            listArea.innerHTML = listHTML;
+        }
+
+        function createPodiumBlock(user, rank) {
+            let name = '...';
+            let avatar = 'images/default-user.png';
+            let total = 'Rp 0';
+            let crown = '';
+            
+            if(rank === 1) crown = '<i class="fas fa-crown crown"></i>';
+
+            if(user) {
+                name = user.username_masked;
+                avatar = user.profile_img;
+                total = 'Rp ' + parseInt(user.total_spent).toLocaleString('id-ID');
+            }
+
+            return `
+                <div class="podium-wrapper rank-${rank}">
+                    <div class="avatar-box">
+                        ${crown}
+                        <img src="${avatar}" class="p-avatar">
+                    </div>
+                    <div class="p-name">${name}</div>
+                    <div class="p-total">${total}</div>
+                    <div class="block">
+                        <div class="rank-num">${rank}</div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
