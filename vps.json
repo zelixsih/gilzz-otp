@@ -1,0 +1,20 @@
+[
+  {
+    "code": "vps-1gb",
+    "name": "VPS SG 1GB",
+    "price": 15000,
+    "spec": "RAM 1GB | 1 Core"
+  },
+  {
+    "code": "vps-2gb",
+    "name": "VPS SG 2GB",
+    "price": 25000,
+    "spec": "RAM 2GB | 1 Core"
+  },
+  {
+    "code": "vps-4gb",
+    "name": "VPS SG 4GB",
+    "price": 45000,
+    "spec": "RAM 4GB | 2 Core"
+  }
+]
